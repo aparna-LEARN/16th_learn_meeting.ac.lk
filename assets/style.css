@@ -37,12 +37,12 @@ img{max-width:100%;height:auto;display:block}
 
 /* LOGO sizing (top-left brand) */
 .brand img{
-  height:40px;     /* adjust to 30–36px if you want bigger */
+  height:36px;     /* adjust to 30–36px if you want bigger */
   width:auto;
   display:block;
 }
 @media (min-width: 900px){
-  .brand img{ height:40px; }
+  .brand img{ height:38px; }
 }
 
 .menu{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
