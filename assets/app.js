@@ -116,141 +116,90 @@ window.addEventListener('load', ()=>{ updateDayDate('day1'); drawTimeline(); });
 window.addEventListener('resize', ()=>{ clearTimeout(window.__tlr); window.__tlr=setTimeout(drawTimeline, 120); });
 window.addEventListener('orientationchange', ()=> setTimeout(drawTimeline,150));
 
-/* ===========================================================
-   Optional: Network Lines Background (bluish/greenish)
-   - Full-screen fixed canvas behind content
-   - Looks subtle on white sections via CSS mix-blend:multiply
-   - Auto-resizes and honors prefers-reduced-motion
-   =========================================================== */
-(function initNetworkLines(){
-  const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+/* ===== Network background (anchored shimmer) ===== */
+(function(){
   const canvas = document.getElementById('net-bg');
-  if(!canvas || prefersReduced) return;
+  if(!canvas) return;
+
+  // honor reduced motion
+  const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+  if (prefersReduced) { canvas.remove(); return; }
 
   const ctx = canvas.getContext('2d');
-  let dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-  let W = 0, H = 0, particles = [], mouse = {x:0, y:0, active:false};
-  let running = true;
 
-  // number of particles based on viewport area
-  function targetCount(){ return Math.round((W*H) / 16000); } // ~60–100 typical
+  let W, H, nodes = [], t0 = performance.now();
+  let density = 0.00012;     // nodes per pixel (tweak)
+  let maxDist = 120;         // link distance in px
+  let pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
 
   function resize(){
-    W = window.innerWidth; H = window.innerHeight;
-    canvas.width = Math.floor(W * dpr);
-    canvas.height = Math.floor(H * dpr);
-    canvas.style.width = W + 'px';
-    canvas.style.height = H + 'px';
-    ctx.setTransform(dpr,0,0,dpr,0,0);
+    W = canvas.width  = Math.floor(window.innerWidth  * pixelRatio);
+    H = canvas.height = Math.floor(window.innerHeight * pixelRatio);
+    canvas.style.width  = window.innerWidth  + 'px';
+    canvas.style.height = window.innerHeight + 'px';
 
-    // adjust particle pool
-    const n = targetCount();
-    if(particles.length < n){
-      for(let i=particles.length;i<n;i++) particles.push(newParticle());
-    }else if(particles.length > n){
-      particles.length = n;
-    }
+    // number of nodes scales with area (cap for perf)
+    const target = Math.max(50, Math.min(160, Math.floor((W*H/pixelRatio/pixelRatio) * density)));
+
+    nodes = Array.from({length: target}, () => {
+      const bx = (Math.random() * W);
+      const by = (Math.random() * H);
+      return {
+        bx, by,                           // base (anchor)
+        amp: 12 + Math.random()*20,       // movement radius
+        spd: 0.4 + Math.random()*0.6,     // angular speed (rad/s)
+        ph:  Math.random()*Math.PI*2,     // phase
+        r:   1.6 + Math.random()*1.2,     // dot radius
+        hue: Math.random() < 0.5 ? 190 : 160  // two hues: sky/mint
+      };
+    });
   }
 
-  function rand(min,max){ return Math.random()*(max-min)+min; }
-
-  function newParticle(){
-    // subtle velocity
-    const speed = rand(0.12,0.35);
-    const angle = rand(0, Math.PI*2);
-    return {
-      x: rand(0, W), y: rand(0, H),
-      vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed,
-      r: rand(1.2, 2.2)
-    };
-  }
-
-  function update(){
-    for(const p of particles){
-      // mild parallax toward mouse
-      if(mouse.active){
-        const dx = (mouse.x - p.x), dy = (mouse.y - p.y);
-        p.vx += dx * 0.00002;
-        p.vy += dy * 0.00002;
-      }
-      p.x += p.vx; p.y += p.vy;
-
-      // soft wrap edges
-      if(p.x < -10) p.x = W+10;
-      if(p.x > W+10) p.x = -10;
-      if(p.y < -10) p.y = H+10;
-      if(p.y > H+10) p.y = -10;
-
-      // tiny friction so parallax doesn’t explode
-      p.vx *= 0.995; p.vy *= 0.995;
-    }
-  }
-
-  function draw(){
+  function draw(now){
+    const t = (now - t0) / 1000; // seconds
     ctx.clearRect(0,0,W,H);
 
-    // connections
-    const maxDist = 140;
-    for(let i=0;i<particles.length;i++){
-      const a = particles[i];
-      for(let j=i+1;j<particles.length;j++){
-        const b = particles[j];
-        const dx=a.x-b.x, dy=a.y-b.y;
-        const d2 = dx*dx + dy*dy;
-        if(d2 < maxDist*maxDist){
-          const t = 1 - (Math.sqrt(d2)/maxDist);
-          ctx.globalAlpha = Math.max(0, Math.min(0.55, t*0.65));
-          const g = ctx.createLinearGradient(a.x,a.y,b.x,b.y);
-          g.addColorStop(0,'#2dd4bf'); // mint
-          g.addColorStop(1,'#38bdf8'); // sky
-          ctx.strokeStyle = g;
-          ctx.lineWidth = 1;
+    // precompute positions (anchored shimmer)
+    for(const n of nodes){
+      n.x = n.bx + Math.cos(n.ph + t*n.spd) * n.amp;
+      n.y = n.by + Math.sin(n.ph + t*n.spd) * n.amp;
+    }
+
+    // dots
+    for(const n of nodes){
+      ctx.beginPath();
+      ctx.fillStyle = `hsla(${n.hue}, 80%, 60%, 0.85)`;
+      ctx.arc(n.x, n.y, n.r*pixelRatio, 0, Math.PI*2);
+      ctx.fill();
+    }
+
+    // links
+    for(let i=0;i<nodes.length;i++){
+      const a = nodes[i];
+      for(let j=i+1;j<nodes.length;j++){
+        const b = nodes[j];
+        const dx = a.x-b.x, dy = a.y-b.y;
+        const d  = Math.hypot(dx,dy);
+        if(d < maxDist*pixelRatio){
+          const alpha = 1 - (d/(maxDist*pixelRatio));
+          // soft mint/sky tint
+          ctx.strokeStyle = `rgba(${alpha<0.5?52:56}, ${alpha<0.5?211:189}, ${alpha<0.5?153:248}, ${alpha*0.55})`;
+          ctx.lineWidth = Math.max(0.5, 1.0*pixelRatio*alpha);
           ctx.beginPath();
-          ctx.moveTo(a.x,a.y);
-          ctx.lineTo(b.x,b.y);
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
           ctx.stroke();
         }
       }
     }
 
-    // dots
-    ctx.globalAlpha = 0.7;
-    ctx.fillStyle = '#0a79a733'; // transparent brand-2
-    for(const p of particles){
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fill();
-    }
-    ctx.globalAlpha = 1;
+    requestAnimationFrame(draw);
   }
 
-  function loop(){
-    if(!running) return;
-    update(); draw();
-    window.requestAnimationFrame(loop);
-  }
-
-  // input
-  window.addEventListener('mousemove', e=>{
-    mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true;
-  }, {passive:true});
-  window.addEventListener('mouseleave', ()=>{ mouse.active = false; });
-
-  // lifecycle / performance
-  document.addEventListener('visibilitychange', ()=>{
-    running = (document.visibilityState === 'visible');
-    if(running) loop();
-  });
-
-  window.addEventListener('resize', ()=>{
-    clearTimeout(window.__net_rz);
-    window.__net_rz = setTimeout(resize, 120);
-  });
-  window.addEventListener('orientationchange', ()=> setTimeout(resize, 150));
-
-  // init
+  // boot
+  window.addEventListener('resize', resize);
   resize();
-  particles = Array.from({length: targetCount()}, newParticle);
-  loop();
+  requestAnimationFrame(draw);
 })();
+
 
