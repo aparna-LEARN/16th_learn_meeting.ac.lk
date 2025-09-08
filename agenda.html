@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Agenda — 16th LEARN Meeting</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Two days packed with working groups, sessions, and networking.">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="page-dark">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="./" style="color:#eaf2ff"><span class="dot"></span> LEARN Meeting</a>
+      <div class="menu">
+        <a href="./">Home</a>
+        <a href="agenda.html">Agenda</a>
+        <a class="btn btn-outline" href="./#register">Register</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <header class="ag-hero">
+    <div class="container">
+      <h1 style="background:linear-gradient(90deg,#38bdf8,#2dd4bf);-webkit-background-clip:text;background-clip:text;color:transparent">Event Agenda</h1>
+      <p class="muted" style="color:#9fb2d3">Two days packed with WGs, sessions, and networking.</p>
+      <div class="tabs">
+        <button id="tabDay1" class="tab active" onclick="switchDay('day1')">Day 1</button>
+        <button id="tabDay2" class="tab" onclick="switchDay('day2')">Day 2</button>
+      </div>
+      <div id="dayDate" style="color:#9fb2d3">Thursday, October 23, 2025</div>
+    </div>
+  </header>
+
+  <!-- TIMELINE -->
+  <section>
+    <div class="container">
+      <div id="timeline" class="timeline">
+        <!-- Day 1 -->
+        <div id="day1">
+          <!-- 09:00 parallel -->
+          <div class="slot">
+            <div class="timecell"><strong>09:00</strong></div>
+            <div class="cards">
+              <div class="ag-card">
+                <h3>WG 1 (AgriTech): Initiation, ToR &amp; Keynote</h3>
+                <p>Initiation, Terms of Reference &amp; Keynote</p>
+              </div>
+              <div class="ag-card">
+                <h3>WG 2 (GenAI): Initiation, ToR &amp; Keynote</h3>
+                <p>Initiation, Terms of Reference &amp; Keynote</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="slot">
+            <div class="timecell"><strong>10:30</strong></div>
+            <div class="cards">
+              <div class="ag-card">
+                <span class="pill">10:30–11:00</span>
+                <h3>Tea Break</h3>
+              </div>
+            </div>
+          </div>
+
+          <div class="slot">
+            <div class="timecell"><strong>11:00</strong></div>
+            <div class="cards">
+              <div class="ag-card">
+                <span class="pill">11:00–12:30</span>
+                <h3>WG 1: Use Cases &amp; Landscape</h3>
+              </div>
+              <div class="ag-card">
+                <span class="pill">11:00–12:30</span>
+                <h3>WG 2: Use Cases &amp; Opportunities</h3>
+              </div>
+            </div>
+          </div>
+
+          <div class="slot">
+            <div class="timecell"><strong>12:30</strong></div>
+            <div class="cards">
+              <div class="ag-card">
+                <span class="pill">12:30–13:30</span>
+                <h3>Lunch</h3>
+              </div>
+            </div>
+          </div>
+
+          <div class="slot">
+            <div class="timecell"><strong>13:30</strong></div>
+            <div class="cards">
+              <div class="ag-card">
+                <span class="pill">13:30–15:00</span>
+                <h3>Strategic Focus Areas</h3>
+                <p>Parallel tracks define 2025–26 priorities &amp; milestones.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="slot">
+            <div class="timecell"><strong>15:00</strong></div>
+            <div class="cards">
+              <div class="ag-card">
+                <span class="pill">15:00–15:30</span>
+                <h3>Tea Break</h3>
+              </div>
+            </div>
+          </div>
+
+          <div class="slot">
+            <div class="timecell"><strong>15:30</strong></div>
+            <div class="cards">
+              <div class="ag-card" style="border-color:#2dd4bf">
+                <span class="pill">15:30–17:00</span>
+                <h3>Opening Ceremony of LEARN Meetings</h3>
+                <p style="color:#bff9ef">Welcome • Remarks • Keynote</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="slot">
+            <div class="timecell"><strong>17:00</strong></div>
+            <div class="cards">
+              <div class="ag-card">
+                <span class="pill">17:00–19:00</span>
+                <h3>LEARN Board Meeting</h3>
+                <p>Board members only.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="slot">
+            <div class="timecell"><strong>19:00</strong></div>
+            <div class="cards">
+              <div class="ag-card">
+                <span class="pill">19:00 onwards</span>
+                <h3>LEARN Social Dinner</h3>
+                <p>Meet, connect, and celebrate the kickoff.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 2 -->
+        <div id="day2" style="display:none">
+          <div class="slot">
+            <div class="timecell"><strong>09:00</strong></div>
+            <div class="cards">
+              <div class="ag-card">
+                <span class="pill">09:00–10:30</span>
+                <h3>WG 1: Draft Roadmap Development</h3>
+              </div>
+              <div class="ag-card">
+                <span class="pill">09:00–10:30</span>
+                <h3>WG 2: Draft Roadmap Development</h3>
+              </div>
+            </div>
+          </div>
+
+          <div class="slot">
+            <div class="timecell"><strong>10:30</strong></div>
+            <div class="cards">
+              <div class="ag-card">
+                <span class="pill">10:30–11:00</span>
+                <h3>Tea Break</h3>
+              </div>
+            </div>
+          </div>
+
+          <div class="slot">
+            <div class="timecell"><strong>11:00</strong></div>
+            <div class="cards">
+              <div class="ag-card">
+                <span class="pill">11:00–12:30</span>
+                <h3>Finalize Roadmaps (WG 1 &amp; WG 2)</h3>
+              </div>
+              <div class="ag-card" style="border-color:#2dd4bf">
+                <span class="pill">11:00–12:30</span>
+                <h3>16th Annual General Meeting (AGM)</h3>
+              </div>
+            </div>
+          </div>
+
+          <div class="slot">
+            <div class="timecell"><strong>12:30</strong></div>
+            <div class="cards">
+              <div class="ag-card">
+                <span class="pill">12:30–13:30</span>
+                <h3>Lunch</h3>
+              </div>
+            </div>
+          </div>
+
+          <div class="slot">
+            <div class="timecell"><strong>13:30</strong></div>
+            <div class="cards">
+              <div class="ag-card">
+                <span class="pill">13:30–15:00</span>
+                <h3>LEARN Services Awareness Session</h3>
+                <p>Identity (eduID, eduGAIN) • Mobility (eduroam, eduVPN) • Security (CSIRT, TAC) • Collaboration &amp; Cloud.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="slot">
+            <div class="timecell"><strong>15:00</strong></div>
+            <div class="cards">
+              <div class="ag-card">
+                <span class="pill">15:00–15:30</span>
+                <h3>Tea Break</h3>
+              </div>
+            </div>
+          </div>
+
+          <div class="slot">
+            <div class="timecell"><strong>15:30</strong></div>
+            <div class="cards">
+              <div class="ag-card" style="border-color:#2dd4bf">
+                <span class="pill">15:30–17:00</span>
+                <h3>Closing Ceremony</h3>
+                <p style="color:#bff9ef">WG Reports &amp; Closing Remarks.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> <!-- /timeline -->
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <small>&copy; <span id="y"></span> LEARN — Lanka Education &amp; Research Network</small>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+  <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>
