@@ -179,7 +179,112 @@ window.addEventListener('resize', () => {
   clearTimeout(window.__tlr);
   window.__tlr = setTimeout(drawTimeline, 120);
 });
-window.addEventListener('orientationchange', () => setTimeout(drawTimeline, 150));
+window.addEventListener('orientationchange', () =>
+  setTimeout(drawTimeline, 150)
+);
 
+/* ===========================================================
+   Network background (anchored shimmer) — DENSER + WIDER LINKS
+   =========================================================== */
+(function () {
+  const canvas = document.getElementById('net-bg');
+  if (!canvas) return;
 
+  // honor reduced motion
+  const prefersReduced =
+    window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+  if (prefersReduced) {
+    canvas.remove();
+    return;
+  }
 
+  const ctx = canvas.getContext('2d');
+
+  let W,
+    H,
+    nodes = [],
+    t0 = performance.now();
+  const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+
+  // >>> your requested tweaks <<<
+  let density = 0.00022; // ↑ was 0.00012 — more nodes (fuller web)
+  let maxDist = 170;     // ↑ was 120     — longer links
+
+  function resize() {
+    W = canvas.width = Math.floor(window.innerWidth * pixelRatio);
+    H = canvas.height = Math.floor(window.innerHeight * pixelRatio);
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+
+    // scale node count with area (guard rails for perf)
+    const target = Math.max(
+      80,
+      Math.min(240, Math.floor((W * H) / (pixelRatio * pixelRatio) * density))
+    );
+
+    nodes = Array.from({ length: target }, () => {
+      const bx = Math.random() * W;
+      const by = Math.random() * H;
+      return {
+        bx,
+        by, // base (anchor)
+        amp: 16 + Math.random() * 28, // movement radius
+        spd: 0.35 + Math.random() * 0.55, // angular speed (rad/s)
+        ph: Math.random() * Math.PI * 2, // phase
+        r: 1.6 + Math.random() * 1.3, // dot radius
+        hue: Math.random() < 0.5 ? 190 : 160, // sky / mint
+      };
+    });
+  }
+
+  function draw(now) {
+    const t = (now - t0) / 1000; // seconds
+    ctx.clearRect(0, 0, W, H);
+
+    // positions (anchored shimmer)
+    for (const n of nodes) {
+      n.x = n.bx + Math.cos(n.ph + t * n.spd) * n.amp;
+      n.y = n.by + Math.sin(n.ph + t * n.spd) * n.amp;
+    }
+
+    // dots
+    for (const n of nodes) {
+      ctx.beginPath();
+      ctx.fillStyle = `hsla(${n.hue}, 80%, 60%, 0.9)`;
+      ctx.arc(n.x, n.y, n.r * pixelRatio, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // links
+    const linkCutoff = maxDist * pixelRatio;
+    for (let i = 0; i < nodes.length; i++) {
+      const a = nodes[i];
+      for (let j = i + 1; j < nodes.length; j++) {
+        const b = nodes[j];
+        const dx = a.x - b.x,
+          dy = a.y - b.y;
+        const d = Math.hypot(dx, dy);
+        if (d < linkCutoff) {
+          const alpha = 1 - d / linkCutoff; // closer => stronger
+          // mint/sky blend
+          ctx.strokeStyle = `rgba(${alpha < 0.5 ? 52 : 56}, ${
+            alpha < 0.5 ? 211 : 189
+          }, ${alpha < 0.5 ? 153 : 248}, ${alpha * 0.6})`;
+          ctx.lineWidth = Math.max(0.6, pixelRatio * alpha);
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  // boot
+  window.addEventListener('resize', resize, { passive: true });
+  window.addEventListener('orientationchange', () => setTimeout(resize, 120));
+  resize();
+  requestAnimationFrame(draw);
+})();
