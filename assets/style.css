@@ -46,14 +46,35 @@ img{max-width:100%;height:auto;display:block}
   .brand img{ height:48px; margin:-8px 0; }
 }
 
-.menu{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.menu{
+  display:flex;
+  gap:14px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+/* normal menu links */
 .menu a:not(.btn){
   padding:8px 12px;
   border-radius:12px;
   color:#0a2e63;
 }
-.btn{display:inline-flex;align-items:center;gap:10px;border-radius:14px;padding:10px 14px;border:2px solid transparent;transition:transform .15s ease, box-shadow .15s ease, filter .15s ease}
-.btn:hover{transform:translateY(-2px)}
+
+/* base button style */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  border-radius:14px;
+  padding:10px 14px;
+  border:2px solid transparent;
+  transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+.btn:hover{
+  transform:translateY(-2px);
+}
+
+/* primary button (Register) */
 .btn-primary{
   background:var(--teal);
   color:#ffffff !important;   /* force white text */
@@ -65,7 +86,14 @@ img{max-width:100%;height:auto;display:block}
   background:#0d3a3a;
   color:#ffffff !important;
 }
-.btn-outline{background:#fff;border-color:#d2d9e7;color:#0a2e63}
+
+/* outline button (e.g. secondary CTAs) */
+.btn-outline{
+  background:#fff;
+  border-color:#d2d9e7;
+  color:#0a2e63;
+}
+
 
 /* hero */
 .hero{background:linear-gradient(180deg,#0a2e63 0%,#0b1831 100%);color:#fff;position:relative;overflow:hidden}
