@@ -211,12 +211,11 @@ section.container > *:first-child{ margin-top:0; }
    Page Ambient Background (soft animated blobs)
    =========================================================== */
 .page-ambient{
-  position:fixed; inset:0; z-index:0;
-  pointer-events:none; overflow:hidden;
+  position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
 }
 .page-ambient .orb{
-  position:absolute; width:520px; height:520px;
-  border-radius:50%; filter:blur(20px); opacity:.28;
+  position:absolute; width:520px; height:520px; border-radius:50%;
+  filter:blur(20px); opacity:.28;
   background:radial-gradient(closest-side, rgba(56,189,248,.55), rgba(45,212,191,.25) 55%, transparent 70%);
   mix-blend-mode:screen; transform:translate3d(0,0,0);
 }
@@ -230,6 +229,20 @@ section.container > *:first-child{ margin-top:0; }
 
 /* keep content above ambient layer */
 .nav, header, section, footer { position:relative; z-index:1; }
+
+/* ===========================================================
+   (Optional) Network Lines Canvas (used with #net-bg canvas)
+   =========================================================== */
+#net-bg{
+  position:fixed;
+  left:0;
+  /* top/height are set by JS so it starts below the hero */
+  width:100vw;
+  z-index:0;
+  pointer-events:none;
+  opacity:.45;
+  mix-blend-mode:multiply; /* subtle on white */
+}
 
 /* ===========================================================
    Hero Ambient Glow (animated background)
@@ -274,8 +287,14 @@ section.container > *:first-child{ margin-top:0; }
   animation: heroDrift2 18s ease-in-out infinite;
 }
 
-@keyframes heroDrift{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(-10px,8px) scale(1.04); } }
-@keyframes heroDrift2{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(12px,-10px) scale(0.98); } }
+@keyframes heroDrift{
+  0%,100%{ transform:translate(0,0) scale(1); }
+  50%     { transform:translate(-10px,8px) scale(1.04); }
+}
+@keyframes heroDrift2{
+  0%,100%{ transform:translate(0,0) scale(1); }
+  50%     { transform:translate(12px,-10px) scale(0.98); }
+}
 
 @media (max-width: 680px){
   .hero::after,.hero::before{ opacity:.28; right:-28vw; top:160px; }
@@ -283,10 +302,7 @@ section.container > *:first-child{ margin-top:0; }
 
 /* Accessibility: honor reduced motion */
 @media (prefers-reduced-motion: reduce){
-  .page-ambient .orb,
-  .hero::after,
-  .hero::before,
-  .floaty{
+  .page-ambient .orb, .hero::after, .hero::before, .floaty{
     animation:none !important;
   }
 }
