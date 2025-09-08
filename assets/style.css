@@ -34,6 +34,17 @@ img{max-width:100%;height:auto;display:block}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0}
 .brand{display:flex;align-items:center;gap:10px;color:var(--brand);font-weight:700}
 .brand .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(90deg,var(--mint),var(--sky))}
+
+/* LOGO sizing (top-left brand) */
+.brand img{
+  height:28px;     /* adjust to 30–36px if you want bigger */
+  width:auto;
+  display:block;
+}
+@media (min-width: 900px){
+  .brand img{ height:32px; }
+}
+
 .menu{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
 .menu a{padding:8px 12px;border-radius:12px;color:#0a2e63}
 .btn{display:inline-flex;align-items:center;gap:10px;border-radius:14px;padding:10px 14px;border:2px solid transparent;transition:transform .15s ease, box-shadow .15s ease, filter .15s ease}
