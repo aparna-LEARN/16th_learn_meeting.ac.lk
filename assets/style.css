@@ -166,7 +166,6 @@ section.container > *:first-child{ margin-top:0; }
    Working Groups (creative styles)
    =========================================================== */
 #wgs .wg-sub{color:var(--muted);margin-top:-6px;margin-bottom:14px}
-
 .wg-card{position:relative;overflow:hidden}
 .wg-card::after{
   content:'';
@@ -208,56 +207,21 @@ section.container > *:first-child{ margin-top:0; }
 .join .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(90deg,var(--mint),var(--sky))}
 
 /* ===========================================================
-   ALWAYS-ON CSS Network Lines Background (no canvas)
-   =========================================================== */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-  opacity:.22;                     /* strength */
-  mix-blend-mode:multiply;         /* sits nicely under white cards */
-  background:
-    repeating-linear-gradient(120deg,
-      rgba(56,189,248,.28) 0px,    /* sky */
-      rgba(56,189,248,.28) 1px,
-      transparent 1px,
-      transparent 22px),
-    repeating-linear-gradient(60deg,
-      rgba(45,212,191,.26) 0px,    /* mint */
-      rgba(45,212,191,.26) 1px,
-      transparent 1px,
-      transparent 24px);
-  background-size: 1400px 1400px, 1400px 1400px;
-  animation: grid-pan 60s linear infinite;
-}
-@keyframes grid-pan{
-  0%   { background-position: 0 0, 0 0; }
-  100% { background-position: 2000px 0, -1800px 0; }
-}
-
-/* keep content above ambient/background layers */
-.nav, header, section, footer { position:relative; z-index:1; }
-
-/* ===========================================================
-   (Optional) Network Lines Canvas (if you keep a #net-bg)
+   Network Lines Canvas (animated background)
    =========================================================== */
 #net-bg{
   position:fixed;
   inset:0;
   width:100vw;
   height:100vh;
-  z-index:0;
+  z-index:0;                 /* behind content but above page background */
   pointer-events:none;
-  opacity:.55;
+  opacity:.70;               /* stronger so it’s always visible */
+  mix-blend-mode:multiply;   /* reads well under white cards */
 }
 
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce){
-  body::before{ animation:none; }
-  #net-bg{ display:none; }
-}
+/* keep all content above background layers */
+.nav, header, section, footer { position:relative; z-index:1; }
 
 /* ===========================================================
    Page Ambient Background (soft animated blobs)
@@ -340,6 +304,6 @@ body::before{
   .page-ambient .orb, .hero::after, .hero::before, .floaty{
     animation:none !important;
   }
+  #net-bg{ display:none; }
 }
-
 
