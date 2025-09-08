@@ -208,6 +208,58 @@ section.container > *:first-child{ margin-top:0; }
 .join .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(90deg,var(--mint),var(--sky))}
 
 /* ===========================================================
+   ALWAYS-ON CSS Network Lines Background (no canvas)
+   =========================================================== */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:.22;                     /* strength */
+  mix-blend-mode:multiply;         /* sits nicely under white cards */
+  background:
+    repeating-linear-gradient(120deg,
+      rgba(56,189,248,.28) 0px,    /* sky */
+      rgba(56,189,248,.28) 1px,
+      transparent 1px,
+      transparent 22px),
+    repeating-linear-gradient(60deg,
+      rgba(45,212,191,.26) 0px,    /* mint */
+      rgba(45,212,191,.26) 1px,
+      transparent 1px,
+      transparent 24px);
+  background-size: 1400px 1400px, 1400px 1400px;
+  animation: grid-pan 60s linear infinite;
+}
+@keyframes grid-pan{
+  0%   { background-position: 0 0, 0 0; }
+  100% { background-position: 2000px 0, -1800px 0; }
+}
+
+/* keep content above ambient/background layers */
+.nav, header, section, footer { position:relative; z-index:1; }
+
+/* ===========================================================
+   (Optional) Network Lines Canvas (if you keep a #net-bg)
+   =========================================================== */
+#net-bg{
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100vh;
+  z-index:0;
+  pointer-events:none;
+  opacity:.55;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  body::before{ animation:none; }
+  #net-bg{ display:none; }
+}
+
+/* ===========================================================
    Page Ambient Background (soft animated blobs)
    =========================================================== */
 .page-ambient{
@@ -226,30 +278,6 @@ section.container > *:first-child{ margin-top:0; }
 @keyframes orb-drift-1{ 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(-40px,26px) scale(1.06)} 100%{transform:translate(0,0) scale(1)} }
 @keyframes orb-drift-2{ 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(34px,-28px) scale(1.05)} 100%{transform:translate(0,0) scale(1)} }
 @keyframes orb-drift-3{ 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(-28px,18px) scale(1.04)} 100%{transform:translate(0,0) scale(1)} }
-
-/* keep content above ambient layer */
-.nav, header, section, footer { position:relative; z-index:1; }
-
-/* ===========================================================
-   (Optional) Network Lines Canvas (used with #net-bg canvas)
-   =========================================================== */
-#net-bg{
-  position:fixed;
-  inset:0;                 /* top:0; right:0; bottom:0; left:0 */
-  width:100vw;
-  height:100vh;
-  z-index:0;
-  pointer-events:none;
-  opacity:.55;            /* tweak overall strength */
-}
-
-/* Make sure your content sits above the canvas */
-.nav, header, section, footer { position:relative; z-index:1; }
-
-/* Respect reduced-motion */
-@media (prefers-reduced-motion: reduce){
-  #net-bg{ display:none; }
-}
 
 /* ===========================================================
    Hero Ambient Glow (animated background)
@@ -313,6 +341,5 @@ section.container > *:first-child{ margin-top:0; }
     animation:none !important;
   }
 }
-
 
 
