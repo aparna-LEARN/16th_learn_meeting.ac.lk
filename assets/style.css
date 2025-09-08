@@ -37,7 +37,7 @@ img{max-width:100%;height:auto;display:block}
 
 /* LOGO sizing (top-left brand) */
 .brand img{
-  height:44px;     /* adjust to 30–36px if you want bigger */
+  height:44px;
   width:auto;
   display:block;
   margin:-6px 0;
@@ -70,14 +70,12 @@ img{max-width:100%;height:auto;display:block}
   border:2px solid transparent;
   transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
 }
-.btn:hover{
-  transform:translateY(-2px);
-}
+.btn:hover{ transform:translateY(-2px); }
 
 /* primary button (Register) */
 .btn-primary{
   background:var(--teal);
-  color:#ffffff !important;   /* force white text */
+  color:#ffffff !important;
   font-weight:600;
   border-color:#0b8f8f;
   box-shadow:0 10px 26px rgba(13,148,136,.28);
@@ -93,7 +91,6 @@ img{max-width:100%;height:auto;display:block}
   border-color:#d2d9e7;
   color:#0a2e63;
 }
-
 
 /* hero */
 .hero{background:linear-gradient(180deg,#0a2e63 0%,#0b1831 100%);color:#fff;position:relative;overflow:hidden}
@@ -155,3 +152,49 @@ section{padding:36px 0}
 /* micro */
 .floaty{animation:floaty 6s ease-in-out infinite}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+/* ===========================================================
+   Working Groups (creative styles)
+   =========================================================== */
+#wgs .wg-sub{color:var(--muted);margin-top:-6px;margin-bottom:14px}
+
+.wg-card{position:relative;overflow:hidden}
+.wg-card::after{
+  content:'';
+  position:absolute;
+  inset:auto -20px -20px auto;
+  width:120px;height:120px;border-radius:50%;
+  background:radial-gradient(closest-side, rgba(56,189,248,.18), rgba(45,212,191,.08) 60%, transparent 70%);
+  filter:blur(2px);
+  pointer-events:none;
+}
+.wg-card:hover{transform:translateY(-2px);transition:transform .2s ease}
+
+.wg-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:8px}
+.wg-icon{
+  flex:0 0 42px;height:42px;border-radius:12px;
+  border:1px solid rgba(10,121,167,.28);
+  background:linear-gradient(135deg, rgba(56,189,248,.12), rgba(45,212,191,.06));
+  display:grid;place-items:center
+}
+
+.wg-title{margin:0;color:var(--brand-2)}
+.wg-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chip{
+  font-size:12px;line-height:1;
+  background:linear-gradient(90deg,#e6f9ff,#eefcf9);
+  border:1px solid var(--ring);color:#0a2e63;
+  border-radius:999px;padding:6px 10px
+}
+
+.wg-acc{margin-top:10px;border:1px dashed var(--ring);border-radius:12px;padding:10px 12px;background:#fff}
+.wg-acc > summary{cursor:pointer;list-style:none;font-weight:600;color:var(--brand);display:flex;align-items:center;gap:8px}
+.wg-acc > summary::before{content:'▸';color:var(--brand-2);transition:transform .2s ease}
+.wg-acc[open] > summary::before{transform:rotate(90deg)}
+.wg-list{margin:8px 0 0 18px}
+.wg-list li{margin:6px 0}
+
+.wg-foot{margin-top:10px}
+.join{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--brand)}
+.join .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(90deg,var(--mint),var(--sky))}
+
