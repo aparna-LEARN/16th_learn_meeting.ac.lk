@@ -1,4 +1,6 @@
-// smooth scroll for in-page anchors
+/* =========================
+   Smooth scroll for anchors
+   ========================= */
 document.addEventListener('click', (e)=>{
   const a = e.target.closest('a[href^="#"]');
   if(!a) return;
@@ -7,7 +9,9 @@ document.addEventListener('click', (e)=>{
   if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth'}); }
 });
 
-// copy email helper
+/* =========================
+   Copy email helper
+   ========================= */
 window.copyEmail = function(id='emailLink'){
   const text = document.getElementById(id)?.textContent?.trim();
   if(!text) return;
@@ -21,7 +25,9 @@ window.copyEmail = function(id='emailLink'){
   });
 };
 
-// agenda tabs + timeline rail
+/* ==========================================
+   Agenda tabs + dynamic vertical timeline rail
+   ========================================== */
 function updateDayDate(which){
   const el = document.getElementById('dayDate');
   if(!el) return;
@@ -40,7 +46,8 @@ function drawTimeline(){
   const timeline = document.getElementById('timeline');
   if(!timeline) return;
   Array.from(timeline.querySelectorAll('.tl-dyn')).forEach(el=>el.remove());
-  const day = (document.getElementById('day1').style.display==='none') ? document.getElementById('day2') : document.getElementById('day1');
+  const day = (document.getElementById('day1') && document.getElementById('day1').style.display==='none') ? document.getElementById('day2') : document.getElementById('day1');
+  if(!day) return;
   const slots = Array.from(day.querySelectorAll('.slot'));
   if(!slots.length) return;
 
@@ -108,3 +115,142 @@ function drawTimeline(){
 window.addEventListener('load', ()=>{ updateDayDate('day1'); drawTimeline(); });
 window.addEventListener('resize', ()=>{ clearTimeout(window.__tlr); window.__tlr=setTimeout(drawTimeline, 120); });
 window.addEventListener('orientationchange', ()=> setTimeout(drawTimeline,150));
+
+/* ===========================================================
+   Optional: Network Lines Background (bluish/greenish)
+   - Full-screen fixed canvas behind content
+   - Looks subtle on white sections via CSS mix-blend:multiply
+   - Auto-resizes and honors prefers-reduced-motion
+   =========================================================== */
+(function initNetworkLines(){
+  const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+  const canvas = document.getElementById('net-bg');
+  if(!canvas || prefersReduced) return;
+
+  const ctx = canvas.getContext('2d');
+  let dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+  let W = 0, H = 0, particles = [], mouse = {x:0, y:0, active:false};
+  let running = true;
+
+  // number of particles based on viewport area
+  function targetCount(){ return Math.round((W*H) / 16000); } // ~60–100 typical
+
+  function resize(){
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = Math.floor(W * dpr);
+    canvas.height = Math.floor(H * dpr);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+
+    // adjust particle pool
+    const n = targetCount();
+    if(particles.length < n){
+      for(let i=particles.length;i<n;i++) particles.push(newParticle());
+    }else if(particles.length > n){
+      particles.length = n;
+    }
+  }
+
+  function rand(min,max){ return Math.random()*(max-min)+min; }
+
+  function newParticle(){
+    // subtle velocity
+    const speed = rand(0.12,0.35);
+    const angle = rand(0, Math.PI*2);
+    return {
+      x: rand(0, W), y: rand(0, H),
+      vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed,
+      r: rand(1.2, 2.2)
+    };
+  }
+
+  function update(){
+    for(const p of particles){
+      // mild parallax toward mouse
+      if(mouse.active){
+        const dx = (mouse.x - p.x), dy = (mouse.y - p.y);
+        p.vx += dx * 0.00002;
+        p.vy += dy * 0.00002;
+      }
+      p.x += p.vx; p.y += p.vy;
+
+      // soft wrap edges
+      if(p.x < -10) p.x = W+10;
+      if(p.x > W+10) p.x = -10;
+      if(p.y < -10) p.y = H+10;
+      if(p.y > H+10) p.y = -10;
+
+      // tiny friction so parallax doesn’t explode
+      p.vx *= 0.995; p.vy *= 0.995;
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+
+    // connections
+    const maxDist = 140;
+    for(let i=0;i<particles.length;i++){
+      const a = particles[i];
+      for(let j=i+1;j<particles.length;j++){
+        const b = particles[j];
+        const dx=a.x-b.x, dy=a.y-b.y;
+        const d2 = dx*dx + dy*dy;
+        if(d2 < maxDist*maxDist){
+          const t = 1 - (Math.sqrt(d2)/maxDist);
+          ctx.globalAlpha = Math.max(0, Math.min(0.55, t*0.65));
+          const g = ctx.createLinearGradient(a.x,a.y,b.x,b.y);
+          g.addColorStop(0,'#2dd4bf'); // mint
+          g.addColorStop(1,'#38bdf8'); // sky
+          ctx.strokeStyle = g;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y);
+          ctx.lineTo(b.x,b.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // dots
+    ctx.globalAlpha = 0.7;
+    ctx.fillStyle = '#0a79a733'; // transparent brand-2
+    for(const p of particles){
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function loop(){
+    if(!running) return;
+    update(); draw();
+    window.requestAnimationFrame(loop);
+  }
+
+  // input
+  window.addEventListener('mousemove', e=>{
+    mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true;
+  }, {passive:true});
+  window.addEventListener('mouseleave', ()=>{ mouse.active = false; });
+
+  // lifecycle / performance
+  document.addEventListener('visibilitychange', ()=>{
+    running = (document.visibilityState === 'visible');
+    if(running) loop();
+  });
+
+  window.addEventListener('resize', ()=>{
+    clearTimeout(window.__net_rz);
+    window.__net_rz = setTimeout(resize, 120);
+  });
+  window.addEventListener('orientationchange', ()=> setTimeout(resize, 150));
+
+  // init
+  resize();
+  particles = Array.from({length: targetCount()}, newParticle);
+  loop();
+})();
+
