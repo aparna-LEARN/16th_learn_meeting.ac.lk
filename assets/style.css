@@ -240,7 +240,7 @@ section.container > *:first-child{ margin-top:0; }
   height:100vh;
   z-index:0;                 /* behind content but above page background */
   pointer-events:none;
-  opacity:.70;               /* stronger so itâ€™s always visible */
+  opacity:.70;               /* stronger so it’s always visible */
   mix-blend-mode:multiply;   /* reads well under white cards */
 }
 
@@ -426,3 +426,18 @@ section.container > *:first-child{ margin-top:0; }
   .about-top{ grid-template-columns:1fr; }
 }
 
+/* === Keep the two About/Carousel headings on ONE line === */
+.about-top .about-carousel-title .section-title{
+  font-size: clamp(18px, 2.2vw, 26px);  /* a touch smaller to prevent wrap */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.about-top .about-carousel-title .muted{ font-size:14px; }
+
+/* (Optional) If you want to give the right heading extra room on desktop) */
+/*
+@media (min-width:981px){
+  .about-top{ grid-template-columns: 1.1fr 1.15fr; }
+}
+*/
