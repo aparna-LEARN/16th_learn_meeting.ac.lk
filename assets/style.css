@@ -327,12 +327,15 @@ section.container > *:first-child{ margin-top:0; }
    =========================================================== */
 .apg-grid{
   display:grid;
-  grid-template-columns: 1fr 1fr;        /* equal halves on top row */
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr); /* instead of 1fr 1fr */
   grid-template-areas:
     "text robot"
     "carousel cta";
-  gap:18px; align-items:stretch;
+  gap:18px;
+  align-items:stretch;
 }
+.apg-grid > *{ min-width:0; }
+
 .apg-text{ grid-area:text; width:100%; }
 .apg-robot{ grid-area:robot; width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
 .apg-carousel{ grid-area:carousel; width:100%; }
