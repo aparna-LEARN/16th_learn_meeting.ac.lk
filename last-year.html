@@ -69,21 +69,22 @@
   </article>
 
     <!-- Right: animated robot -->
-  <aside class="apg-robot">
+  <!-- right column -->
+  <aside class="apg-robot card">
     <model-viewer
-      id="apgBot"
       src="assets/apgained/robot.glb"
-      alt="Friendly AP-GAINED robot"
+      alt="Friendly AI robot"
       camera-controls
       auto-rotate
-      rotation-per-second="15deg"
-      environment-image="neutral"         <!-- no skybox; keeps background transparent -->
-      shadow-intensity="0.25"             <!-- set 0 for no ground shadow -->
-      poster="assets/apgained/robot-poster.png"
-      style="background:transparent; --poster-color:transparent;">
+      shadow-intensity="0.25"
+      camera-orbit="0deg 85deg 1.1m"   <!-- closer = looks bigger -->
+      field-of-view="20deg"            <!-- smaller fov = zooms in -->
+      exposure="0.9"
+      interaction-prompt="none"
+      style="background-color:transparent; --poster-color:transparent;">
     </model-viewer>
-    <noscript><img src="assets/apgained/robot-poster.png" alt="AP-GAINED robot"></noscript>
   </aside>
+
 
 
     <!-- Row 2: full-width carousel -->
