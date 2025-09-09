@@ -9,41 +9,56 @@
 </head>
 <body class="page-dark">
 
+  <!-- Ambient network canvas (optional, used by app.js) -->
+  <canvas id="net-bg" aria-hidden="true"></canvas>
+
   <!-- NAV -->
   <nav class="nav">
     <div class="container nav-inner">
-      <a class="brand" href="./" aria-label="LEARN"><img src="assets/Learn_Log.png" alt="LEARN"></a>
+      <a class="brand" href="./" aria-label="LEARN">
+        <img src="assets/Learn_Log.png" alt="LEARN">
+      </a>
 
       <div class="menu">
         <a href="./">Home</a>
-        <a href="agenda.html">Agenda</a>
+        <a href="agenda.html" aria-current="page">Agenda</a>
         <a class="btn btn-outline" href="./#register">Register</a>
       </div>
     </div>
   </nav>
 
   <!-- PAGE HERO -->
-<header class="ag-hero">
-  <div class="container">
-    <h1 style="background:linear-gradient(90deg,#38bdf8,#2dd4bf);-webkit-background-clip:text;background-clip:text;color:transparent">Event Agenda</h1>
-    <p class="muted" style="color:#9fb2d3">Two days packed with WGs, sessions, and networking.</p>
-
-    <div class="tabs">
-      <button id="tabDay1" class="tab active" onclick="switchDay('day1')">Day 1</button>
-      <button id="tabDay2" class="tab" onclick="switchDay('day2')">Day 2</button>
-    </div>
-
-    <div id="dayDate" style="color:#9fb2d3">Thursday, October 23, 2025</div>
-  </div>
-</header>
-
-
-
-  <!-- TIMELINE -->
-  <section>
+  <header class="ag-hero">
     <div class="container">
+      <h1 style="background:linear-gradient(90deg,#38bdf8,#2dd4bf);-webkit-background-clip:text;background-clip:text;color:transparent">Event Agenda</h1>
+      <p class="muted" style="color:#9fb2d3">Two days packed with WGs, sessions, and networking.</p>
+
+      <div class="tabs" style="gap:12px; justify-content:center; flex-wrap:wrap;">
+        <button id="tabDay1" class="tab active" onclick="switchDay('day1')">Day 1</button>
+        <button id="tabDay2" class="tab" onclick="switchDay('day2')">Day 2</button>
+
+        <!-- View switch -->
+        <div class="view-switch">
+          <button id="viewBtn" class="view-btn" aria-haspopup="true" aria-expanded="false">
+            <span class="view-eye" aria-hidden="true">👁️</span> View <span class="caret" aria-hidden="true">▾</span>
+          </button>
+          <div id="viewMenu" class="view-menu" hidden role="menu" aria-label="Agenda view options">
+            <button class="view-opt is-active" role="menuitemradio" aria-checked="true" data-view="simple">Simple</button>
+            <button class="view-opt" role="menuitemradio" aria-checked="false" data-view="grid">Grid</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="dayDate" style="color:#9fb2d3">Thursday, October 23, 2025</div>
+    </div>
+  </header>
+
+  <!-- TIMELINE / GRID HOST -->
+  <section id="agenda">
+    <div class="container">
+      <!-- Simple timeline host (shown in Simple view) -->
       <div id="timeline" class="timeline">
-        <!-- Day 1 -->
+        <!-- ===== Day 1 ===== -->
         <div id="day1">
           <!-- 09:00 parallel -->
           <div class="slot">
@@ -60,6 +75,7 @@
             </div>
           </div>
 
+          <!-- 10:30 -->
           <div class="slot">
             <div class="timecell"><strong>10:30</strong></div>
             <div class="cards">
@@ -70,6 +86,7 @@
             </div>
           </div>
 
+          <!-- 11:00 parallel -->
           <div class="slot">
             <div class="timecell"><strong>11:00</strong></div>
             <div class="cards">
@@ -84,6 +101,7 @@
             </div>
           </div>
 
+          <!-- 12:30 -->
           <div class="slot">
             <div class="timecell"><strong>12:30</strong></div>
             <div class="cards">
@@ -94,6 +112,7 @@
             </div>
           </div>
 
+          <!-- 13:30 -->
           <div class="slot">
             <div class="timecell"><strong>13:30</strong></div>
             <div class="cards">
@@ -105,6 +124,7 @@
             </div>
           </div>
 
+          <!-- 15:00 -->
           <div class="slot">
             <div class="timecell"><strong>15:00</strong></div>
             <div class="cards">
@@ -115,6 +135,7 @@
             </div>
           </div>
 
+          <!-- 15:30 -->
           <div class="slot">
             <div class="timecell"><strong>15:30</strong></div>
             <div class="cards">
@@ -126,6 +147,7 @@
             </div>
           </div>
 
+          <!-- 17:00 -->
           <div class="slot">
             <div class="timecell"><strong>17:00</strong></div>
             <div class="cards">
@@ -137,6 +159,7 @@
             </div>
           </div>
 
+          <!-- 19:00 -->
           <div class="slot">
             <div class="timecell"><strong>19:00</strong></div>
             <div class="cards">
@@ -149,8 +172,9 @@
           </div>
         </div>
 
-        <!-- Day 2 -->
+        <!-- ===== Day 2 ===== -->
         <div id="day2" style="display:none">
+          <!-- 09:00 -->
           <div class="slot">
             <div class="timecell"><strong>09:00</strong></div>
             <div class="cards">
@@ -165,6 +189,7 @@
             </div>
           </div>
 
+          <!-- 10:30 -->
           <div class="slot">
             <div class="timecell"><strong>10:30</strong></div>
             <div class="cards">
@@ -175,6 +200,7 @@
             </div>
           </div>
 
+          <!-- 11:00 (WGs + AGM) -->
           <div class="slot">
             <div class="timecell"><strong>11:00</strong></div>
             <div class="cards">
@@ -193,6 +219,7 @@
             </div>
           </div>
 
+          <!-- 12:30 -->
           <div class="slot">
             <div class="timecell"><strong>12:30</strong></div>
             <div class="cards">
@@ -203,6 +230,7 @@
             </div>
           </div>
 
+          <!-- 13:30 -->
           <div class="slot">
             <div class="timecell"><strong>13:30</strong></div>
             <div class="cards">
@@ -214,6 +242,7 @@
             </div>
           </div>
 
+          <!-- 15:00 -->
           <div class="slot">
             <div class="timecell"><strong>15:00</strong></div>
             <div class="cards">
@@ -224,6 +253,7 @@
             </div>
           </div>
 
+          <!-- 15:30 -->
           <div class="slot">
             <div class="timecell"><strong>15:30</strong></div>
             <div class="cards">
@@ -236,6 +266,10 @@
           </div>
         </div>
       </div> <!-- /timeline -->
+
+      <!-- Grid view containers are created by app.js after #timeline -->
+      <!-- (No extra markup needed here) -->
+
     </div>
   </section>
 
@@ -249,3 +283,4 @@
   <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
 </body>
 </html>
+
