@@ -424,24 +424,4 @@ section.container > *:first-child{ margin-top:0; }
 @keyframes pulse{ 0%,100%{opacity:1; transform:scale(1)} 50%{opacity:.5; transform:scale(.8)} }
 
 
-/* ===========================================================
-   Line-animated robot
-   =========================================================== */
-.linebot{height:auto;display:block}
-.linebot .stroke{
-  fill:none; stroke:url(#wire); stroke-width:3; stroke-linecap:round; stroke-linejoin:round;
-  stroke-dasharray:1; stroke-dashoffset:1; animation:bot-draw 1.4s ease forwards; filter:saturate(110%);
-}
-.linebot .body .stroke{ animation-delay:.3s; }
-.linebot .antenna .stroke{ animation-delay:.6s; }
-@keyframes bot-draw{ to{ stroke-dashoffset:0 } }
-.linebot .bot{ animation:bot-float 6s ease-in-out infinite; }
-@keyframes bot-float{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
-.linebot .visor{ fill:url(#visor); animation:visor-scan 4s ease-in-out infinite; }
-@keyframes visor-scan{ 0%{transform:translateX(-6px)} 50%{transform:translateX(6px)} 100%{transform:translateX(-6px)} }
-.linebot .blink{ fill:#fff; opacity:.9; animation:blink 4.2s infinite; }
-.linebot .blink:nth-of-type(2){ animation-delay:.2s; }
-@keyframes blink{ 0%,45%,55%,100%{opacity:.9; height:2px; y:98} 48%,52%{opacity:.2; height:1px; y:100} }
-.linebot .dot{ fill:#2dd4bf; animation:pulse 1.8s ease-in-out infinite; }
-.linebot .joint{ fill:#38bdf8; opacity:.9; }
-@keyframes pulse{ 0%,100%{opacity:1; transform:scale(1)} 50%{opacity:.5; transform:scale(.8)} }
+
