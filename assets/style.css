@@ -327,10 +327,11 @@ section.container > *:first-child{ margin-top:0; }
    AP-GAINED layout (compact)
    ========================= */
 
+
 /* Space between hero banner and AP-GAINED section */
 #ap-gained{
-  margin-top: clamp(24px, 4vw, 56px);  /* adjust as you like */
-  scroll-margin-top: 96px;             /* keeps section visible when linked */
+  margin-top: clamp(24px, 4vw, 56px);
+  scroll-margin-top: 96px;
 }
 
 .apg-grid{
@@ -338,7 +339,7 @@ section.container > *:first-child{ margin-top:0; }
   grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   grid-template-areas:
     "text robot"
-    "carousel carousel";       /* full-width carousel row */
+    "carousel carousel";      /* full-width carousel row */
   gap:18px;
   align-items:start;
   grid-auto-rows:auto;
@@ -358,15 +359,24 @@ section.container > *:first-child{ margin-top:0; }
   padding:0;
 }
 
-/* 3D robot (<model-viewer>) — SMALLER sizing */
-.apg-robot model-viewer{
-  display:block;
-  width:min(380px, 100%);           /* was 420/500 — slightly smaller */
-  height:clamp(190px, 24vw, 300px); /* nudged down a bit */
-  background-color:transparent;
-  --poster-color:transparent;
-  margin-inline:auto;
+/* ------- Robot viewer frame (clips overflow) ------- */
+.apg-robot-frame{
+  width: min(500px, 100%);     /* adjust if you want a larger/smaller box */
+  aspect-ratio: 1 / 1.12;      /* portrait-ish window for the bot */
+  border-radius: var(--radius);
+  overflow: hidden;            /* <-- ensures no model edges escape */
+  margin-inline: auto;
+  contain: paint;              /* keeps the viewer rendering inside */
 }
+/* Viewer fills the frame */
+.apg-robot-frame model-viewer{
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: transparent;
+}
+/* If older rules existed sizing model-viewer directly, neutralize them */
+.apg-robot model-viewer{ width:100%; height:100%; }
 
 /* line/SVG robot fallback */
 .apg-robot .linebot,
@@ -392,7 +402,7 @@ section.container > *:first-child{ margin-top:0; }
 .apg-carousel .track,
 .apg-carousel .slide{ overflow-anchor:none; }
 
-/* Stack on narrow screens + smaller robot there too */
+/* Stack on narrow screens + frame resize */
 @media (max-width:980px){
   .apg-grid{
     grid-template-columns:1fr;
@@ -401,12 +411,11 @@ section.container > *:first-child{ margin-top:0; }
       "robot"
       "carousel";
   }
-  .apg-robot model-viewer{
-    width:100%;
-    height:clamp(170px, 38vw, 280px); /* smaller mobile/tablet */
+  .apg-robot-frame{
+    width: min(360px, 100%);
+    aspect-ratio: 1 / 1.2;
   }
 }
-
 
 /* =============== (optional) line-animated robot bits =============== */
 .linebot{height:auto;display:block}
