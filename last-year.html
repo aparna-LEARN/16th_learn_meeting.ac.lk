@@ -71,29 +71,28 @@
     <!-- Right: animated robot -->
   <!-- right column -->
   <aside class="card apg-robot">
-    <model-viewer
-      src="assets/apgained/robot.glb"
-      poster="assets/apgained/robot-poster.png"
-      alt="AP-GAINED robot"
-      camera-controls
-      interaction-prompt="none"
-      exposure="0.9"
-    
-      /* a touch farther + slightly wider FOV so it feels smaller */
-      field-of-view="50deg"
-      camera-orbit="0deg 75deg 155%"
-    
-      /* auto-rotate */
-      auto-rotate
-      auto-rotate-delay="0"
-      rotation-per-second="12deg"
-    
-      environment-image="neutral"
-      shadow-intensity="0.25"
-      style="background-color:transparent; --poster-color:transparent;">
-    </model-viewer>
-
+    <div class="apg-robot-frame">
+      <model-viewer
+        src="assets/apgained/robot.glb"
+        alt="AP-GAINED robot"
+        camera-controls
+        auto-rotate
+        auto-rotate-delay="1500"
+        rotation-per-second="12deg"
+        interaction-prompt="none"
+        disable-zoom
+        environment-image="neutral"
+        camera-orbit="0deg 78deg 135%"
+        min-camera-orbit="auto auto 115%"
+        max-camera-orbit="auto auto 170%"
+        field-of-view="18deg"
+        min-field-of-view="16deg"
+        max-field-of-view="22deg"
+        style="background-color:transparent; --poster-color:transparent;">
+      </model-viewer>
+    </div>
   </aside>
+
 
 
 
