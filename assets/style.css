@@ -135,9 +135,33 @@ section.container > *:first-child{ margin-top:0; }
 
 .ag-hero{padding:56px 0 28px;text-align:center}
 .ag-hero h1{font-size:clamp(32px,6vw,56px);margin:0}
+
+/* ----- Tabs (Day 1 / Day 2) ----- */
 .tabs{display:flex;gap:12px;justify-content:center;margin:14px 0 6px}
-.tab{padding:10px 16px;border-radius:14px;border:2px solid #d2d9e7;background:#111827;color:#e5e7eb;cursor:pointer}
-.tab.active{background:var(--teal);color:#fff;border-color:transparent}
+.tab{
+  padding:10px 16px;
+  border-radius:14px;
+  border:2px solid #d2d9e7;
+  background:#111827;       /* inactive = dark */
+  color:#e5e7eb;
+  cursor:pointer;
+  transition:background .18s,color .18s,border-color .18s,
+             box-shadow .18s,transform .18s,filter .18s;
+}
+.tab:hover{ transform:translateY(-2px); filter:brightness(1.05); }
+/* ACTIVE = bright / white with light border */
+.tab.active{
+  background:#ffffff;
+  color:#0b2d2d;
+  border-color:#eef3fb;
+  box-shadow:0 10px 24px rgba(2,6,23,.16),
+             0 0 0 2px rgba(255,255,255,.85) inset;
+}
+/* Keyboard accessibility */
+.tab:focus-visible{
+  outline:3px solid #80e1e6;
+  outline-offset:2px;
+}
 
 /* timeline */
 .timeline{position:relative;margin-top:8px}
@@ -306,4 +330,5 @@ section.container > *:first-child{ margin-top:0; }
   }
   #net-bg{ display:none; }
 }
+
 
