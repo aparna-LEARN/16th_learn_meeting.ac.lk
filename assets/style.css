@@ -326,9 +326,7 @@ section.container > *:first-child{ margin-top:0; }
 /* =========================
    AP-GAINED layout (compact)
    ========================= */
-/* =========================
-   AP-GAINED (section styles)
-   ========================= */
+
 .apg-grid{
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(0,1fr);
@@ -357,8 +355,8 @@ section.container > *:first-child{ margin-top:0; }
 /* 3D robot (<model-viewer>) — SMALLER sizing */
 .apg-robot model-viewer{
   display:block;
-  width:min(420px, 100%);          /* smaller width */
-  height:clamp(200px, 26vw, 340px);/* smaller height */
+  width:min(380px, 100%);           /* was 420/500 — slightly smaller */
+  height:clamp(190px, 24vw, 300px); /* nudged down a bit */
   background-color:transparent;
   --poster-color:transparent;
   margin-inline:auto;
@@ -399,7 +397,7 @@ section.container > *:first-child{ margin-top:0; }
   }
   .apg-robot model-viewer{
     width:100%;
-    height:clamp(180px, 42vw, 300px); /* smaller mobile/tablet */
+    height:clamp(170px, 38vw, 280px); /* smaller mobile/tablet */
   }
 }
 
