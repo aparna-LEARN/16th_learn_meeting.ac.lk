@@ -149,7 +149,6 @@ section.container > *:first-child{ margin-top:0; }
              box-shadow .18s,transform .18s,filter .18s;
 }
 .tab:hover{ transform:translateY(-2px); filter:brightness(1.05); }
-/* ACTIVE = bright / white with light border */
 .tab.active{
   background:#ffffff;
   color:#0b2d2d;
@@ -157,7 +156,6 @@ section.container > *:first-child{ margin-top:0; }
   box-shadow:0 10px 24px rgba(2,6,23,.16),
              0 0 0 2px rgba(255,255,255,.85) inset;
 }
-/* Keyboard accessibility */
 .tab:focus-visible{
   outline:3px solid #80e1e6;
   outline-offset:2px;
@@ -238,10 +236,10 @@ section.container > *:first-child{ margin-top:0; }
   inset:0;
   width:100vw;
   height:100vh;
-  z-index:0;                 /* behind content but above page background */
+  z-index:0;
   pointer-events:none;
-  opacity:.70;               /* stronger so it’s always visible */
-  mix-blend-mode:multiply;   /* reads well under white cards */
+  opacity:.70;
+  mix-blend-mode:multiply;
 }
 
 /* keep all content above background layers */
@@ -380,8 +378,6 @@ section.container > *:first-child{ margin-top:0; }
 /* ===========================================================
    About + Carousel split layout (and fallback for current markup)
    =========================================================== */
-
-/* If you wrap the section with .about-split and use .split-grid: */
 .about-split .split-grid{
   display:grid;
   grid-template-columns: 1.25fr 1fr; /* left bigger than right */
@@ -391,15 +387,14 @@ section.container > *:first-child{ margin-top:0; }
 @media (max-width: 980px){
   .about-split .split-grid{ grid-template-columns: 1fr; }
 }
-/* Make the right-column carousel fill the card neatly */
-.about-split .carousel .slide{ flex-basis:100%; }  /* override 80/88/92% */
+.about-split .carousel .slide{ flex-basis:100%; }
 .about-split .c-btn.prev{ left:8px; }
 .about-split .c-btn.next{ right:8px; }
 .about-split .dots{ padding:10px 0 14px; }
 
-/* Fallback that matches your current #about markup */
+/* Fallback for current #about markup */
 #about > .container > .grid.cols-2{
-  grid-template-columns: 1.25fr 1fr;  /* left wider */
+  grid-template-columns: 1.25fr 1fr;
   gap:24px;
   align-items:start;
 }
@@ -411,33 +406,42 @@ section.container > *:first-child{ margin-top:0; }
 #about .c-btn.next{ right:8px; }
 #about .dots{ padding:10px 0 14px; }
 
-/* Top row so both headings align on one baseline */
+/* ------ Top row so both headings align on one line ------ */
 .about-top{
   display:grid;
   grid-template-columns: 1.25fr 1fr;
   gap:24px;
   align-items:end;            /* baseline alignment */
-  margin-bottom:12px;         /* space before the two-column content */
+  margin-bottom:12px;
 }
-.about-top .about-carousel-title{ padding:12px 16px; }
+
+/* Right heading card — centered within its column */
+.about-top .about-carousel-title{
+  padding:12px 16px;
+  justify-self:center;        /* horizontally center the card in the right column */
+  text-align:center;          /* center text inside the card */
+  width:fit-content;          /* shrink to content so it doesn't span full width */
+  max-width:100%;
+}
+
 .about-top .section-title{ margin:0; }
 
-@media (max-width:980px){
-  .about-top{ grid-template-columns:1fr; }
-}
-
-/* === Keep the two About/Carousel headings on ONE line === */
+/* Keep the right heading to a single line on desktop */
 .about-top .about-carousel-title .section-title{
-  font-size: clamp(18px, 2.2vw, 26px);  /* a touch smaller to prevent wrap */
+  font-size: clamp(18px, 2.2vw, 26px);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .about-top .about-carousel-title .muted{ font-size:14px; }
 
-/* (Optional) If you want to give the right heading extra room on desktop) */
-/*
-@media (min-width:981px){
-  .about-top{ grid-template-columns: 1.1fr 1.15fr; }
+/* Mobile: stack and let the right title stretch naturally */
+@media (max-width:980px){
+  .about-top{ grid-template-columns:1fr; }
+  .about-top .about-carousel-title{
+    justify-self:stretch;
+    text-align:left;
+    width:auto;
+  }
 }
-*/
+
