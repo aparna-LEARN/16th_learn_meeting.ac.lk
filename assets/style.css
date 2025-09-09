@@ -325,42 +325,50 @@ section.container > *:first-child{ margin-top:0; }
 /* ===========================================================
    Last Year page — AP-GAINED (2×2 layout)
    =========================================================== */
+/* ===== AP-GAINED layout: row1 = text | robot, row2 = full-width carousel ===== */
 .apg-grid{
   display:grid;
-  grid-template-columns: minmax(0,1fr) minmax(0,1fr); /* instead of 1fr 1fr */
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr); /* equal halves that can shrink */
   grid-template-areas:
     "text robot"
-    "carousel cta";
+    "carousel carousel";
   gap:18px;
   align-items:stretch;
 }
+/* Let children shrink inside columns (prevents squeeze after fonts load) */
 .apg-grid > *{ min-width:0; }
 
-.apg-text{ grid-area:text; width:100%; }
-.apg-robot{ grid-area:robot; width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
-.apg-carousel{ grid-area:carousel; width:100%; }
-.apg-cta{ grid-area:cta; width:100%; display:flex; flex-direction:column; justify-content:center; gap:10px; }
+.apg-text{ grid-area:text; }
+.apg-robot{ grid-area:robot; display:grid; place-items:center; text-align:center; }
+.apg-carousel{ grid-area:carousel; }
+
+/* CTA inline inside left card */
+.apg-cta-inline{
+  margin-top:14px;
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+}
+.apg-cta-inline .cta-copy{ line-height:1.25; }
 
 /* Robot sizing */
 .apg-robot .linebot{ width:100%; max-width:360px; }
-.apg-robot .robot-text{ font-size:14px; color:var(--muted); margin-top:8px; }
+.apg-robot .robot-text{ font-size:14px; color:var(--muted); }
 
-/* Carousel inside this section */
+/* Carousel should fill neatly and be stable height */
 .apg-carousel .carousel .slide{ flex-basis:100%; aspect-ratio:16/9; }
 .apg-carousel .carousel .slide img{ height:100%; object-fit:cover; }
+.apg-carousel .carousel, .apg-carousel .track, .apg-carousel .slide{ overflow-anchor:none; }
 
-/* Stack on mobile */
-@media (max-width: 980px){
+@media (max-width:980px){
   .apg-grid{
     grid-template-columns:1fr;
     grid-template-areas:
       "text"
       "robot"
-      "carousel"
-      "cta";
+      "carousel";
   }
   .apg-robot .linebot{ max-width:320px; }
 }
+
 
 /* ===========================================================
    Line-animated robot
