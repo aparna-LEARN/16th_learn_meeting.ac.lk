@@ -327,6 +327,7 @@ section.container > *:first-child{ margin-top:0; }
 /* =========================
    AP-GAINED layout (compact)
    ========================= */
+
 .apg-grid{
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(0,1fr);
@@ -353,17 +354,36 @@ section.container > *:first-child{ margin-top:0; }
   width:auto;
 }
 
-/* Optional: slightly tighter vertical padding on the two top cards */
+/* Slightly tighter vertical padding on the two top cards */
 .apg-text.card,
 .apg-robot.card{ padding-block:14px; }
 
-/* Independent, full-width carousel (second row) */
+/* ===== Inline CTA (Want more?) ===== */
+.apg-cta-inline{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+/* Add the gap between the paragraph and this CTA row */
+.apg-text p + .apg-cta-inline{ margin-top:16px; }  /* adjust to taste (12–20px) */
+
+.apg-cta-inline .muted{ margin:0; line-height:1.3; }
+
+/* Mobile niceties */
+@media (max-width:560px){
+  .apg-cta-inline{ align-items:flex-start; }
+  .apg-cta-inline .btn{ margin-top:6px; }
+}
+
+/* ===== Independent, full-width carousel (second row) ===== */
 .apg-carousel .carousel .slide{ flex-basis:100%; aspect-ratio:16/9; }
 .apg-carousel .carousel .slide img{ height:100%; object-fit:cover; }
 .apg-carousel .carousel,
 .apg-carousel .track,
 .apg-carousel .slide{ overflow-anchor:none; }
 
+/* Stack on narrow screens */
 @media (max-width:980px){
   .apg-grid{
     grid-template-columns:1fr;
@@ -375,6 +395,7 @@ section.container > *:first-child{ margin-top:0; }
   /* allow a bit more height on small screens */
   .apg-robot .linebot{ height:clamp(160px, 36vw, 260px); }
 }
+
 
 
 
