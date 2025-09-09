@@ -45,9 +45,9 @@ function updateDayDate(which) {
 
 window.switchDay = function (which) {
   const d1 = document.getElementById('day1'),
-    d2 = document.getElementById('day2');
+        d2 = document.getElementById('day2');
   const t1 = document.getElementById('tabDay1'),
-    t2 = document.getElementById('tabDay2');
+        t2 = document.getElementById('tabDay2');
 
   if (which === 'day1') {
     if (d1) d1.style.display = '';
@@ -62,7 +62,7 @@ window.switchDay = function (which) {
   }
 
   updateDayDate(which);
-  setTimeout(drawTimeline, 60);
+  if (typeof drawTimeline === 'function') setTimeout(drawTimeline, 60);
 };
 
 function drawTimeline() {
@@ -171,10 +171,24 @@ function drawTimeline() {
   }
 }
 
+/* Initial state + redraw hooks */
 window.addEventListener('load', () => {
+  // Ensure Day 1 is active/visible and styled on first paint
+  try {
+    // if sections exist, set their display states explicitly
+    const d1 = document.getElementById('day1');
+    const d2 = document.getElementById('day2');
+    if (d1) d1.style.display = '';
+    if (d2) d2.style.display = 'none';
+    const t1 = document.getElementById('tabDay1');
+    const t2 = document.getElementById('tabDay2');
+    if (t1) t1.classList.add('active');
+    if (t2) t2.classList.remove('active');
+  } catch (_) {}
   updateDayDate('day1');
   drawTimeline();
 });
+
 window.addEventListener('resize', () => {
   clearTimeout(window.__tlr);
   window.__tlr = setTimeout(drawTimeline, 120);
@@ -200,15 +214,12 @@ window.addEventListener('orientationchange', () =>
 
   const ctx = canvas.getContext('2d');
 
-  let W,
-    H,
-    nodes = [],
-    t0 = performance.now();
+  let W, H, nodes = [], t0 = performance.now();
   const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
 
-  // >>> your requested tweaks <<<
-  let density = 0.00022; // ↑ was 0.00012 — more nodes (fuller web)
-  let maxDist = 170;     // ↑ was 120     — longer links
+  // Tweaks: denser nodes + longer links
+  let density = 0.00022;
+  let maxDist = 170;
 
   function resize() {
     W = canvas.width = Math.floor(window.innerWidth * pixelRatio);
@@ -227,11 +238,11 @@ window.addEventListener('orientationchange', () =>
       const by = Math.random() * H;
       return {
         bx,
-        by, // base (anchor)
-        amp: 16 + Math.random() * 28, // movement radius
-        spd: 0.35 + Math.random() * 0.55, // angular speed (rad/s)
-        ph: Math.random() * Math.PI * 2, // phase
-        r: 1.6 + Math.random() * 1.3, // dot radius
+        by,                                // base (anchor)
+        amp: 16 + Math.random() * 28,      // movement radius
+        spd: 0.35 + Math.random() * 0.55,  // angular speed (rad/s)
+        ph: Math.random() * Math.PI * 2,   // phase
+        r: 1.6 + Math.random() * 1.3,      // dot radius
         hue: Math.random() < 0.5 ? 190 : 160, // sky / mint
       };
     });
@@ -261,8 +272,7 @@ window.addEventListener('orientationchange', () =>
       const a = nodes[i];
       for (let j = i + 1; j < nodes.length; j++) {
         const b = nodes[j];
-        const dx = a.x - b.x,
-          dy = a.y - b.y;
+        const dx = a.x - b.x, dy = a.y - b.y;
         const d = Math.hypot(dx, dy);
         if (d < linkCutoff) {
           const alpha = 1 - d / linkCutoff; // closer => stronger
@@ -288,3 +298,4 @@ window.addEventListener('orientationchange', () =>
   resize();
   requestAnimationFrame(draw);
 })();
+
