@@ -502,78 +502,91 @@ section.container > *:first-child{ margin-top:0; }
 }
 
 /* =============================
-   Full-day Agenda Grid (00–24h)
+   Full-day agenda grid with custom start/end
    ============================= */
-.page-dark .card.schedule{
+
+.schedule {
   background:#0f1a33;
   border:1px solid #21314c;
-  color:#eaf2ff;
   border-radius:18px;
-  padding:18px;
+  padding:14px;
 }
-.schedule.scroll{ overflow:auto; }
 
-/* Grid: first col = time ruler, rest = tracks */
 .schedule-grid{
-  --start-min:0;      /* 0..1440 */
-  --end-min:1440;
-  --step:30;          /* minutes per row */
-  --row-h:32px;       /* height per step row */
-  --cols:2;
+  /* minutes -> pixels scale + paddings */
+  --minute-h: 1.0px;                  /* height of 1 minute (taller = more spaced) */
+  --gridpad: 18px;                     /* top/bottom padding inside the grid */
 
+  /* default day window (can be overridden inline) */
+  --day-start: 0;                      /* minutes from 00:00; 480 = 08:00 */
+  --day-end: 1440;                     /* minutes from 00:00; 1440 = 24:00 */
+
+  position:relative;
   display:grid;
-  grid-template-columns: 80px repeat(var(--cols), 1fr);
-  grid-auto-rows: var(--row-h);
-  gap: 0 12px;
-  position: relative;
+  grid-template-columns: 110px repeat(var(--tracks, 2), 1fr);
+  gap:12px;
+  padding: var(--gridpad) 0;
+  border-radius:14px;
+  background:#0b162a;
+  overflow: hidden;
+  /* total height matches the visible day window */
+  height: calc((var(--day-end) - var(--day-start)) * var(--minute-h) + var(--gridpad) * 2);
 }
 
-/* set how many parallel tracks */
-.schedule-grid.tracks-2{ --cols:2; }
-.schedule-grid.tracks-3{ --cols:3; }
-.schedule-grid.tracks-4{ --cols:4; }
+/* tracks helper: add tracks-2/3/4 on the element */
+.schedule-grid.tracks-2{ --tracks:2; }
+.schedule-grid.tracks-3{ --tracks:3; }
+.schedule-grid.tracks-4{ --tracks:4; }
 
-/* Hour labels & faint guide lines */
+/* hour labels line up to minutes; pass minute-of-day via --at */
 .schedule-grid .time{
   grid-column:1;
-  align-self:start;
-  padding-right:10px;
+  position:absolute;
+  left:14px;
+  top: calc((var(--at) - var(--day-start)) * var(--minute-h) + var(--gridpad));
+  transform: translateY(-0.5em);
   font-size:12px;
   color:#9fb2d3;
-  position:relative;
-  grid-row: calc((var(--at) - var(--start-min)) / var(--step) + 1);
+  white-space:nowrap;
 }
-/* horizontal guide line */
 .schedule-grid .time::after{
   content:"";
-  position:absolute; left:64px; right:0; top:calc(50% - .5px);
-  height:1px; background:#1b2a46; opacity:.55;
+  position:absolute;
+  left:80px; right:14px;
+  top:0.95em;
+  height:1px;
+  background:#1b2b4a;
+  opacity:.6;
 }
 
-/* Events */
+/* events: position with --start (from 00:00), duration with --dur, choose column with --col */
 .schedule-grid .event{
-  grid-column: calc(var(--col,1) + 1);
-  grid-row:
-    calc((var(--start) - var(--start-min)) / var(--step) + 1)
-    / span calc(var(--dur) / var(--step));
-  background:#0c1a31;
-  border:1px solid #264063;
+  position:absolute;
+  grid-column: calc(1 + var(--col));
+  left: calc(110px + (var(--col) - 1) * (12px));  /* visual separation; not critical */
+  right:14px;
+  top: calc((var(--start) - var(--day-start)) * var(--minute-h) + var(--gridpad));
+  height: calc(var(--dur) * var(--minute-h));
+  padding:12px 14px;
   border-radius:12px;
-  padding:10px 12px;
-  box-shadow:0 6px 14px rgba(2,6,23,.25);
+  border:1px solid #21314c;
+  background:#0f1f3a;
+  color:#eaf2ff;
+  box-shadow: 0 4px 14px rgba(2,6,23,.24);
+  overflow:hidden;
 }
-.schedule-grid .event .ev-title{ font-weight:700; }
-.schedule-grid .event .ev-meta{ font-size:12px; color:#9fb2d3; }
-/* breaks/plenary variants */
-.schedule-grid .event.break{
-  background:#0e243f; border-style:dashed; border-color:#31527c;
-}
-.schedule-grid .event.span-all{ grid-column: 2 / -1; }
 
-/* Smaller screens: allow horizontal scroll if many tracks */
-@media (max-width: 680px){
-  .schedule-grid{ grid-template-columns: 64px repeat(var(--cols), minmax(240px,1fr)); overflow:auto; }
+/* stretch across all tracks (breaks, ceremonies) */
+.schedule-grid .event.span-all{
+  grid-column: 1 / -1;
+  left:110px; right:14px;
 }
+
+/* subtle variants */
+.schedule-grid .event.break{ background:#0e2330; border-color:#1f3a46; }
+.schedule-grid .event .ev-title{ font-weight:700; margin:0 0 4px; }
+.schedule-grid .event .ev-meta{ font-size:12px; color:#9fb2d3; }
+
 
 
 
