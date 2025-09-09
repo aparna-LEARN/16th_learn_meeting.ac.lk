@@ -495,4 +495,23 @@ section.container > *:first-child{ margin-top:0; }
 }
 
 
+/* Make the right column (video) a bit wider than the text column */
+#aide .grid.cols-2{
+  grid-template-columns: 1.05fr 1.35fr;   /* was 1fr 1fr */
+  gap: 24px;
+  align-items: start;
+}
+
+/* Let the video fill the card, and reduce inner padding a little */
+#aide .video-card{ padding: 12px; }       /* default was 18px */
+#aide .video-card .video-frame{ width: 100%; aspect-ratio: 16 / 9; }
+#aide .video-card .video-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+/* Stack normally on mobile */
+@media (max-width: 980px){
+  #aide .grid.cols-2{ grid-template-columns: 1fr; }
+  #aide .video-card{ padding: 14px; }     /* a touch more padding on small screens */
+}
+
+
 
