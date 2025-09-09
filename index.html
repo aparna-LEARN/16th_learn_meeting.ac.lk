@@ -62,10 +62,17 @@
 <!-- ABOUT (left text cards) + CAROUSEL (right) -->
 <section id="about">
   <div class="container">
-    <h2 class="section-title">About the LEARN Meeting</h2>
+    <!-- NEW: top row with matching headings -->
+    <div class="about-top">
+      <h2 class="section-title">About the LEARN Meeting</h2>
+      <div class="card about-carousel-title">
+        <h3 class="section-title" style="margin:0">15th AGM &amp; LEARN@35 — Highlights</h3>
+        <p class="muted" style="margin:0">Swipe on mobile · Click arrows on desktop</p>
+      </div>
+    </div>
 
     <div class="grid cols-2">
-      <!-- LEFT: two cards (keeps your colors/typography) -->
+      <!-- LEFT: two cards -->
       <div class="grid" style="gap:24px">
         <div class="card">
           <h3>What it is</h3>
@@ -86,55 +93,46 @@
         </div>
       </div>
 
-      <!-- RIGHT: 15th AGM Photo Carousel -->
+      <!-- RIGHT: 15th AGM Photo Carousel (no extra heading here) -->
       <div>
-        <!-- heading above the carousel -->
-        <div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px">
-          <div>
-            <h3 class="section-title" style="margin:0 0 4px">15th AGM &amp; LEARN@35 — Highlights</h3>
-            
-          </div>
-        </div>
         <div class="card" style="padding:0">
           <div class="carousel" data-autoplay="5000" aria-label="15th AGM photo highlights">
             <button class="c-btn prev" aria-label="Previous">‹</button>
             <div class="track">
-              <!-- Use images in assets/15th/1.jpg, 2.jpg, ... -->
               <figure class="slide">
                 <img loading="lazy" src="assets/15th/1.jpg" alt="Opening session — 15th AGM">
-                <figcaption style="color:#fff;background:linear-gradient(180deg,transparent,rgba(0,0,0,.65));padding:10px 12px;position:absolute;left:0;right:0;bottom:0;font-size:14px">Opening session — 15th AGM</figcaption>
+                <figcaption>Opening session — 15th AGM</figcaption>
               </figure>
               <figure class="slide">
                 <img loading="lazy" src="assets/15th/2.jpg" alt="Panel discussion">
-                <figcaption style="color:#fff;background:linear-gradient(180deg,transparent,rgba(0,0,0,.65));padding:10px 12px;position:absolute;left:0;right:0;bottom:0;font-size:14px">Panel discussion</figcaption>
+                <figcaption>Panel discussion</figcaption>
               </figure>
               <figure class="slide">
                 <img loading="lazy" src="assets/15th/3.jpg" alt="Networking break">
-                <figcaption style="color:#fff;background:linear-gradient(180deg,transparent,rgba(0,0,0,.65));padding:10px 12px;position:absolute;left:0;right:0;bottom:0;font-size:14px">Networking break</figcaption>
+                <figcaption>Networking break</figcaption>
               </figure>
               <figure class="slide">
                 <img loading="lazy" src="assets/15th/4.jpg" alt="Keynote">
-                <figcaption style="color:#fff;background:linear-gradient(180deg,transparent,rgba(0,0,0,.65));padding:10px 12px;position:absolute;left:0;right:0;bottom:0;font-size:14px">Keynote</figcaption>
+                <figcaption>Keynote</figcaption>
               </figure>
               <figure class="slide">
                 <img loading="lazy" src="assets/15th/5.jpg" alt="Team photo">
-                <figcaption style="color:#fff;background:linear-gradient(180deg,transparent,rgba(0,0,0,.65));padding:10px 12px;position:absolute;left:0;right:0;bottom:0;font-size:14px">Team photo</figcaption>
+                <figcaption>Team photo</figcaption>
               </figure>
               <figure class="slide">
                 <img loading="lazy" src="assets/15th/6.jpg" alt="Dinner">
-                <figcaption style="color:#fff;background:linear-gradient(180deg,transparent,rgba(0,0,0,.65));padding:10px 12px;position:absolute;left:0;right:0;bottom:0;font-size:14px">Dinner</figcaption>
+                <figcaption>Dinner</figcaption>
               </figure>
             </div>
             <button class="c-btn next" aria-label="Next">›</button>
           </div>
-
-          <!-- dots under the carousel -->
-          <div class="dots" aria-label="Slide indicators" style="display:flex;justify-content:center;gap:8px;padding:10px 0 14px"></div>
+          <div class="dots" aria-label="Slide indicators"></div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
 
 <!-- KEY INFO -->
 <section>
