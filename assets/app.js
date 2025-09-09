@@ -173,9 +173,7 @@ function drawTimeline() {
 
 /* Initial state + redraw hooks */
 window.addEventListener('load', () => {
-  // Ensure Day 1 is active/visible and styled on first paint
   try {
-    // if sections exist, set their display states explicitly
     const d1 = document.getElementById('day1');
     const d2 = document.getElementById('day2');
     if (d1) d1.style.display = '';
@@ -189,7 +187,6 @@ window.addEventListener('load', () => {
   drawTimeline();
 });
 
-/* Redraw timeline on resize/orientation */
 window.addEventListener('resize', () => {
   clearTimeout(window.__tlr);
   window.__tlr = setTimeout(drawTimeline, 120);
@@ -199,13 +196,12 @@ window.addEventListener('orientationchange', () =>
 );
 
 /* ===========================================================
-   Network background (anchored shimmer) — DENSER + WIDER LINKS
+   Network background (anchored shimmer)
    =========================================================== */
 (function () {
   const canvas = document.getElementById('net-bg');
   if (!canvas) return;
 
-  // honor reduced motion
   const prefersReduced =
     window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
   if (prefersReduced) {
@@ -218,7 +214,6 @@ window.addEventListener('orientationchange', () =>
   let W, H, nodes = [], t0 = performance.now();
   const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
 
-  // Tweaks: denser nodes + longer links
   let density = 0.00022;
   let maxDist = 170;
 
@@ -228,7 +223,6 @@ window.addEventListener('orientationchange', () =>
     canvas.style.width = window.innerWidth + 'px';
     canvas.style.height = window.innerHeight + 'px';
 
-    // scale node count with area (guard rails for perf)
     const target = Math.max(
       80,
       Math.min(240, Math.floor((W * H) / (pixelRatio * pixelRatio) * density))
@@ -239,27 +233,25 @@ window.addEventListener('orientationchange', () =>
       const by = Math.random() * H;
       return {
         bx,
-        by,                                // base (anchor)
-        amp: 16 + Math.random() * 28,      // movement radius
-        spd: 0.35 + Math.random() * 0.55,  // angular speed (rad/s)
-        ph: Math.random() * Math.PI * 2,   // phase
-        r: 1.6 + Math.random() * 1.3,      // dot radius
-        hue: Math.random() < 0.5 ? 190 : 160, // sky / mint
+        by,
+        amp: 16 + Math.random() * 28,
+        spd: 0.35 + Math.random() * 0.55,
+        ph: Math.random() * Math.PI * 2,
+        r: 1.6 + Math.random() * 1.3,
+        hue: Math.random() < 0.5 ? 190 : 160,
       };
     });
   }
 
   function draw(now) {
-    const t = (now - t0) / 1000; // seconds
+    const t = (now - t0) / 1000;
     ctx.clearRect(0, 0, W, H);
 
-    // positions (anchored shimmer)
     for (const n of nodes) {
       n.x = n.bx + Math.cos(n.ph + t * n.spd) * n.amp;
       n.y = n.by + Math.sin(n.ph + t * n.spd) * n.amp;
     }
 
-    // dots
     for (const n of nodes) {
       ctx.beginPath();
       ctx.fillStyle = `hsla(${n.hue}, 80%, 60%, 0.9)`;
@@ -267,7 +259,6 @@ window.addEventListener('orientationchange', () =>
       ctx.fill();
     }
 
-    // links
     const linkCutoff = maxDist * pixelRatio;
     for (let i = 0; i < nodes.length; i++) {
       const a = nodes[i];
@@ -276,8 +267,7 @@ window.addEventListener('orientationchange', () =>
         const dx = a.x - b.x, dy = a.y - b.y;
         const d = Math.hypot(dx, dy);
         if (d < linkCutoff) {
-          const alpha = 1 - d / linkCutoff; // closer => stronger
-          // mint/sky blend
+          const alpha = 1 - d / linkCutoff;
           ctx.strokeStyle = `rgba(${alpha < 0.5 ? 52 : 56}, ${
             alpha < 0.5 ? 211 : 189
           }, ${alpha < 0.5 ? 153 : 248}, ${alpha * 0.6})`;
@@ -293,7 +283,6 @@ window.addEventListener('orientationchange', () =>
     requestAnimationFrame(draw);
   }
 
-  // boot
   window.addEventListener('resize', resize, { passive: true });
   window.addEventListener('orientationchange', () => setTimeout(resize, 120));
   resize();
@@ -301,9 +290,7 @@ window.addEventListener('orientationchange', () =>
 })();
 
 /* ===========================================================
-   15th AGM Carousel logic (arrows • dots • autoplay • swipe)
-   Works for any .carousel on the page. Dots container can be
-   a sibling .dots (as in index.html), or it will be created.
+   15th AGM Carousel logic (no page jump)
    =========================================================== */
 (function initCarousels(){
   const carousels = Array.from(document.querySelectorAll('.carousel'));
@@ -317,19 +304,15 @@ window.addEventListener('orientationchange', () =>
     const btnPrev = root.querySelector('.prev');
     const btnNext = root.querySelector('.next');
 
-    // Find or create dots wrapper (prefer the sibling .dots used in your HTML)
+    // Find or create dots wrapper (prefer sibling .dots used in HTML)
     let dotsWrap = root.parentElement && root.parentElement.querySelector(':scope > .dots');
-    if (!dotsWrap) {
-      // broader fallback if :scope unsupported
-      dotsWrap = root.parentElement && root.parentElement.querySelector('.dots');
-    }
+    if (!dotsWrap) dotsWrap = root.parentElement && root.parentElement.querySelector('.dots');
     if (!dotsWrap) {
       dotsWrap = document.createElement('div');
       dotsWrap.className = 'dots';
       root.insertAdjacentElement('afterend', dotsWrap);
     }
 
-    // Build dots
     slides.forEach((_, i) => {
       const b = document.createElement('button');
       b.className = 'dot';
@@ -341,14 +324,23 @@ window.addEventListener('orientationchange', () =>
     let index = 0;
     let timer = null;
     const delay = parseInt(root.dataset.autoplay || '0', 10);
+    let inView = true; // updated by visibility observer
 
     function updateDots(){
       dots.forEach((d,i)=> d.classList.toggle('active', i === index));
     }
 
+    // ---- Horizontal-only scroll (prevents page jumping) ----
     function goTo(i, behavior = 'smooth'){
       index = (i + slides.length) % slides.length;
-      slides[index].scrollIntoView({ behavior, inline:'center', block:'nearest' });
+      const slide = slides[index];
+
+      // center the slide within the track
+      const targetLeft = slide.offsetLeft - (track.clientWidth - slide.clientWidth) / 2;
+      const maxLeft = track.scrollWidth - track.clientWidth;
+      const left = Math.max(0, Math.min(targetLeft, maxLeft));
+
+      track.scrollTo({ left, behavior });
       updateDots();
     }
 
@@ -357,7 +349,7 @@ window.addEventListener('orientationchange', () =>
     btnNext && btnNext.addEventListener('click', () => goTo(index + 1));
     dots.forEach((d,i)=> d.addEventListener('click', () => goTo(i)));
 
-    // Observe which slide is centered to keep index in sync on manual scroll
+    // Keep index in sync on manual scroll
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{
         if (e.isIntersecting){
@@ -368,16 +360,22 @@ window.addEventListener('orientationchange', () =>
     }, { root: track, threshold: 0.6 });
     slides.forEach(s => io.observe(s));
 
-    // Autoplay (pause on hover/focus or when tab hidden)
-    function start(){ if (!delay || timer) return; timer = setInterval(()=>goTo(index+1), delay); }
+    // Pause autoplay when carousel not visible to user
+    const vis = new IntersectionObserver((entries)=>{
+      const entry = entries[0];
+      inView = !!(entry && entry.isIntersecting && entry.intersectionRatio >= 0.3);
+      if (inView) start(); else stop();
+    }, { threshold:[0,0.3,1] });
+    vis.observe(root);
+
+    function start(){ if (!delay || timer || !inView) return; timer = setInterval(()=>goTo(index+1), delay); }
     function stop(){ if (timer){ clearInterval(timer); timer = null; } }
+
     root.addEventListener('pointerenter', stop);
     root.addEventListener('pointerleave', start);
     root.addEventListener('focusin', stop);
     root.addEventListener('focusout', start);
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) stop(); else start();
-    });
+    document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
 
     // Init
     updateDots();
