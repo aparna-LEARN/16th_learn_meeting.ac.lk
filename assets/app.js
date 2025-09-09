@@ -189,6 +189,7 @@ window.addEventListener('load', () => {
   drawTimeline();
 });
 
+/* Redraw timeline on resize/orientation */
 window.addEventListener('resize', () => {
   clearTimeout(window.__tlr);
   window.__tlr = setTimeout(drawTimeline, 120);
@@ -297,4 +298,90 @@ window.addEventListener('orientationchange', () =>
   window.addEventListener('orientationchange', () => setTimeout(resize, 120));
   resize();
   requestAnimationFrame(draw);
+})();
+
+/* ===========================================================
+   15th AGM Carousel logic (arrows • dots • autoplay • swipe)
+   Works for any .carousel on the page. Dots container can be
+   a sibling .dots (as in index.html), or it will be created.
+   =========================================================== */
+(function initCarousels(){
+  const carousels = Array.from(document.querySelectorAll('.carousel'));
+  if (!carousels.length) return;
+
+  carousels.forEach(root => {
+    const track  = root.querySelector('.track');
+    const slides = track ? Array.from(track.querySelectorAll('.slide')) : [];
+    if (!track || !slides.length) return;
+
+    const btnPrev = root.querySelector('.prev');
+    const btnNext = root.querySelector('.next');
+
+    // Find or create dots wrapper (prefer the sibling .dots used in your HTML)
+    let dotsWrap = root.parentElement && root.parentElement.querySelector(':scope > .dots');
+    if (!dotsWrap) {
+      // broader fallback if :scope unsupported
+      dotsWrap = root.parentElement && root.parentElement.querySelector('.dots');
+    }
+    if (!dotsWrap) {
+      dotsWrap = document.createElement('div');
+      dotsWrap.className = 'dots';
+      root.insertAdjacentElement('afterend', dotsWrap);
+    }
+
+    // Build dots
+    slides.forEach((_, i) => {
+      const b = document.createElement('button');
+      b.className = 'dot';
+      b.setAttribute('aria-label', 'Go to slide ' + (i+1));
+      dotsWrap.appendChild(b);
+    });
+    const dots = Array.from(dotsWrap.children);
+
+    let index = 0;
+    let timer = null;
+    const delay = parseInt(root.dataset.autoplay || '0', 10);
+
+    function updateDots(){
+      dots.forEach((d,i)=> d.classList.toggle('active', i === index));
+    }
+
+    function goTo(i, behavior = 'smooth'){
+      index = (i + slides.length) % slides.length;
+      slides[index].scrollIntoView({ behavior, inline:'center', block:'nearest' });
+      updateDots();
+    }
+
+    // Controls
+    btnPrev && btnPrev.addEventListener('click', () => goTo(index - 1));
+    btnNext && btnNext.addEventListener('click', () => goTo(index + 1));
+    dots.forEach((d,i)=> d.addEventListener('click', () => goTo(i)));
+
+    // Observe which slide is centered to keep index in sync on manual scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if (e.isIntersecting){
+          const i = slides.indexOf(e.target);
+          if (i !== -1){ index = i; updateDots(); }
+        }
+      });
+    }, { root: track, threshold: 0.6 });
+    slides.forEach(s => io.observe(s));
+
+    // Autoplay (pause on hover/focus or when tab hidden)
+    function start(){ if (!delay || timer) return; timer = setInterval(()=>goTo(index+1), delay); }
+    function stop(){ if (timer){ clearInterval(timer); timer = null; } }
+    root.addEventListener('pointerenter', stop);
+    root.addEventListener('pointerleave', start);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', start);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stop(); else start();
+    });
+
+    // Init
+    updateDots();
+    goTo(0, 'auto'); // snap to first without animation
+    start();
+  });
 })();
