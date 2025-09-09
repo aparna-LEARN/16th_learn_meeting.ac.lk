@@ -70,20 +70,22 @@
 
     <!-- Right: animated robot -->
   <!-- right column -->
-  <aside class="apg-robot card">
+  <aside class="card apg-robot">
     <model-viewer
       src="assets/apgained/robot.glb"
-      alt="Friendly AI robot"
+      poster="assets/apgained/robot-poster.png"
+      alt="AP-GAINED robot"
       camera-controls
-      auto-rotate
-      shadow-intensity="0.25"
-      camera-orbit="0deg 85deg 1.1m"   <!-- closer = looks bigger -->
-      field-of-view="20deg"            <!-- smaller fov = zooms in -->
-      exposure="0.9"
       interaction-prompt="none"
+      exposure="0.9"
+      field-of-view="45deg"
+      camera-orbit="0deg 75deg 130%"
+      environment-image="neutral"
+      shadow-intensity="0.25"
       style="background-color:transparent; --poster-color:transparent;">
     </model-viewer>
   </aside>
+
 
 
 
