@@ -430,3 +430,38 @@ section.container > *:first-child{ margin-top:0; }
 
 
 
+/* =========================
+   Workshop Grid
+   ========================= */
+
+/* 2×2 photo grid for Workshop section */
+.workshop-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:12px;
+  /* the card already has padding/border/shadow from .card */
+}
+
+.workshop-grid figure{
+  margin:0;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid var(--ring);
+  box-shadow:var(--shadow);
+}
+
+.workshop-grid img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  aspect-ratio:4 / 3;          /* keeps neat, even tiles (change to 16/9 if you prefer) */
+}
+
+/* stack on small screens */
+@media (max-width:680px){
+  .workshop-grid{ grid-template-columns:1fr; }
+}
+
+
+
