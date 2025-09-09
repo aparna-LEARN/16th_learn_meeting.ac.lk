@@ -350,12 +350,24 @@ section.container > *:first-child{ margin-top:0; }
   box-shadow:none;
   padding:0;
 }
-/* Keep the robot centered and sized nicely */
+
+/* If using <model-viewer> (.glb), size it and keep it clean */
+.apg-robot model-viewer{
+  display:block;
+  width:min(420px, 100%);
+  height:clamp(180px, 26vw, 320px);
+  background-color:transparent;
+  border:0;
+  margin-inline:auto;
+}
+
+/* Keep the SVG/line-bot centered and sized nicely */
 .apg-robot .linebot,
 .apg-robot svg{
   height:clamp(140px, 22vw, 240px);
   width:auto;
 }
+
 /* Hide caption under robot if present */
 .apg-robot .robot-text{ display:none; }
 
@@ -381,6 +393,9 @@ section.container > *:first-child{ margin-top:0; }
       "robot"
       "carousel";
   }
+  .apg-robot model-viewer{
+    height:clamp(200px, 40vw, 340px);
+  }
   .apg-robot .linebot{ height:clamp(160px, 36vw, 260px); }
 }
 
@@ -405,7 +420,3 @@ section.container > *:first-child{ margin-top:0; }
 .linebot .dot{ fill:#2dd4bf; animation:pulse 1.8s ease-in-out infinite; }
 .linebot .joint{ fill:#38bdf8; opacity:.9; }
 @keyframes pulse{ 0%,100%{opacity:1; transform:scale(1)} 50%{opacity:.5; transform:scale(.8)} }
-
-
-
-
