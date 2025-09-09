@@ -285,12 +285,13 @@ section.container > *:first-child{ margin-top:0; }
   height:100vh;
   z-index:0;                 /* behind content but above page background */
   pointer-events:none;
-  opacity:.70;               /* stronger so it’s always visible */
-  mix-blend-mode:multiply;   /* reads well under white cards */
+  opacity:.70;
+  mix-blend-mode:multiply;
 }
 
-/* keep all content above background layers */
-.nav, header, section, footer { position:relative; z-index:1; }
+/* ===== Stacking context fix: hero/nav above section ===== */
+.nav, header, .ag-hero{ position:relative; z-index:25; }
+section, footer{ position:relative; z-index:1; }
 
 /* ===========================================================
    Page Ambient Background (soft animated blobs)
@@ -375,6 +376,5 @@ section.container > *:first-child{ margin-top:0; }
   }
   #net-bg{ display:none; }
 }
-
 
 
