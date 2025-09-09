@@ -354,8 +354,8 @@ section.container > *:first-child{ margin-top:0; }
 /* If using <model-viewer> (.glb), size it and keep it clean */
 .apg-robot model-viewer{
   display:block;
-  width:min(420px, 100%);
-  height:clamp(180px, 26vw, 320px);
+  width:min(620px, 100%);
+  height:clamp(320px, 40vw, 520px);
   background-color:transparent;
   border:0;
   margin-inline:auto;
