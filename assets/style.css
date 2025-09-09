@@ -445,3 +445,12 @@ section.container > *:first-child{ margin-top:0; }
   }
 }
 
+
+/* Prevent browser scroll-anchoring from nudging the page when slides change */
+.carousel, .carousel .track, .carousel .slide { overflow-anchor: none; }
+
+/* Keep a stable height so image loads/changes don't affect page layout */
+.carousel .slide{ aspect-ratio: 16 / 9; }           /* adjust ratio if you like */
+.carousel .slide img{ height:100%; object-fit:cover; }  /* fills the frame */
+
+
