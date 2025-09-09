@@ -505,88 +505,126 @@ section.container > *:first-child{ margin-top:0; }
    Full-day agenda grid with custom start/end
    ============================= */
 
-.schedule {
-  background:#0f1a33;
-  border:1px solid #21314c;
+
+.card.schedule{
+  background: linear-gradient(180deg,#0d1628,#0b1220);
+  border:1px solid #1c2b48;
   border-radius:18px;
-  padding:14px;
+  box-shadow: 0 10px 26px rgba(2,6,23,.28);
+  padding:12px;
 }
 
+/* Grid base */
 .schedule-grid{
-  /* minutes -> pixels scale + paddings */
-  --minute-h: 1.0px;                  /* height of 1 minute (taller = more spaced) */
-  --gridpad: 18px;                     /* top/bottom padding inside the grid */
+  /* timing variables are set inline: --day-start / --day-end */
+  --step: 30;              /* minutes per grid row */
+  --row-h: 32px;           /* row height controls density */
+  --time-col: 90px;        /* width of the left time rail */
+  --tracks: 2;             /* overridden by .tracks-3, etc. */
 
-  /* default day window (can be overridden inline) */
-  --day-start: 0;                      /* minutes from 00:00; 480 = 08:00 */
-  --day-end: 1440;                     /* minutes from 00:00; 1440 = 24:00 */
-
-  position:relative;
-  display:grid;
-  grid-template-columns: 110px repeat(var(--tracks, 2), 1fr);
-  gap:12px;
-  padding: var(--gridpad) 0;
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--time-col) repeat(var(--tracks), 1fr);
+  grid-auto-rows: var(--row-h);
+  gap: 0 12px;
   border-radius:14px;
-  background:#0b162a;
-  overflow: hidden;
-  /* total height matches the visible day window */
-  height: calc((var(--day-end) - var(--day-start)) * var(--minute-h) + var(--gridpad) * 2);
+  padding:8px 8px 8px 0;
+  overflow:hidden;
+  background:#0f1b2e;
 }
 
-/* tracks helper: add tracks-2/3/4 on the element */
+/* number of tracks */
 .schedule-grid.tracks-2{ --tracks:2; }
 .schedule-grid.tracks-3{ --tracks:3; }
-.schedule-grid.tracks-4{ --tracks:4; }
 
-/* hour labels line up to minutes; pass minute-of-day via --at */
+/* backdrop grid lines: half-hour (fine) + hour (strong) */
+.schedule-grid::before{
+  content:"";
+  position:absolute; inset:0 0 0 var(--time-col);
+  background-image:
+    /* half-hour ticks */
+    repeating-linear-gradient(to bottom,
+      rgba(255,255,255,.05) 0,
+      rgba(255,255,255,.05) 1px,
+      transparent 1px,
+      transparent var(--row-h)
+    ),
+    /* hour lines (every 2 rows) */
+    repeating-linear-gradient(to bottom,
+      rgba(255,255,255,.08) 0,
+      rgba(255,255,255,.08) 2px,
+      transparent 2px,
+      transparent calc(var(--row-h) * 2)
+    );
+  pointer-events:none;
+}
+
+/* time labels on the left rail */
 .schedule-grid .time{
   grid-column:1;
-  position:absolute;
-  left:14px;
-  top: calc((var(--at) - var(--day-start)) * var(--minute-h) + var(--gridpad));
-  transform: translateY(-0.5em);
+  grid-row: calc((var(--at) - var(--day-start)) / var(--step) + 1);
+  align-self:start;
+  padding-left:12px;
+  color:#a9c6e8;
   font-size:12px;
-  color:#9fb2d3;
-  white-space:nowrap;
+  letter-spacing:.02em;
+  position:relative;
 }
 .schedule-grid .time::after{
   content:"";
-  position:absolute;
-  left:80px; right:14px;
-  top:0.95em;
-  height:1px;
-  background:#1b2b4a;
-  opacity:.6;
+  position:absolute; right:-6px; top:.8em;
+  width:4px; height:1px; background:#32507a; opacity:.8;
 }
 
-/* events: position with --start (from 00:00), duration with --dur, choose column with --col */
+/* event blocks */
 .schedule-grid .event{
-  position:absolute;
-  grid-column: calc(1 + var(--col));
-  left: calc(110px + (var(--col) - 1) * (12px));  /* visual separation; not critical */
-  right:14px;
-  top: calc((var(--start) - var(--day-start)) * var(--minute-h) + var(--gridpad));
-  height: calc(var(--dur) * var(--minute-h));
+  /* columns are 1-based AFTER the time column */
+  grid-column: calc(var(--col) + 1);
+  grid-row: calc((var(--start) - var(--day-start)) / var(--step) + 1)
+            / span calc(var(--dur) / var(--step));
+  align-self:stretch;
+
+  display:flex; flex-direction:column; justify-content:center;
+  margin:4px 0;                                 /* visible gap between stacked items */
   padding:12px 14px;
-  border-radius:12px;
-  border:1px solid #21314c;
-  background:#0f1f3a;
+  border-radius:14px;
+  background: linear-gradient(180deg,#162942,#112237);
+  border:1px solid rgba(120,164,255,.18);
   color:#eaf2ff;
-  box-shadow: 0 4px 14px rgba(2,6,23,.24);
-  overflow:hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,.30);
+  transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+.schedule-grid .event:hover{
+  transform:translateY(-1px);
+  box-shadow:0 12px 30px rgba(0,0,0,.38);
+  filter:saturate(1.05);
 }
 
-/* stretch across all tracks (breaks, ceremonies) */
-.schedule-grid .event.span-all{
-  grid-column: 1 / -1;
-  left:110px; right:14px;
+/* full-width rows (e.g., ceremonies, dinner, breaks that span tracks) */
+.schedule-grid .event.span-all{ grid-column: 2 / -1; }
+
+/* titles & meta */
+.schedule-grid .ev-title{ font-weight:700; line-height:1.2; }
+.schedule-grid .ev-meta{ font-size:12px; opacity:.85; margin-top:4px; }
+
+/* Warm highlight for tea breaks & lunch */
+.schedule-grid .event.break{
+  background: linear-gradient(180deg,#fff1a6,#ffd973);
+  border-color:#f1c64a;
+  color:#2a2200;
+  box-shadow: 0 6px 14px rgba(241,198,74,.35);
 }
+.schedule-grid .event.break .ev-meta{ color:#5c4700; opacity:.95; }
+.schedule-grid .event.lunch{ background: linear-gradient(180deg,#ffe88a,#ffcf5e); }
 
-/* subtle variants */
-.schedule-grid .event.break{ background:#0e2330; border-color:#1f3a46; }
-.schedule-grid .event .ev-title{ font-weight:700; margin:0 0 4px; }
-.schedule-grid .event .ev-meta{ font-size:12px; color:#9fb2d3; }
+/* subtle inner gutter between parallel tracks */
+.schedule-grid > *[style*="--col:2"]{ margin-left:4px; }
 
+/* smaller screens */
+@media (max-width: 820px){
+  .schedule-grid{ --time-col:74px; --row-h:28px; }
+  .schedule-grid .ev-title{ font-size:14px; }
+}
 
 
 
