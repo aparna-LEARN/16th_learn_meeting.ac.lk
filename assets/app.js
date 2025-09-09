@@ -43,28 +43,96 @@ function updateDayDate(which) {
       : 'Thursday, October 23, 2025';
 }
 
+let currentView = localStorage.getItem('agendaView') || 'simple';
+
 window.switchDay = function (which) {
   const d1 = document.getElementById('day1'),
         d2 = document.getElementById('day2');
   const t1 = document.getElementById('tabDay1'),
         t2 = document.getElementById('tabDay2');
+  const g1 = document.getElementById('grid-day1'),
+        g2 = document.getElementById('grid-day2');
 
   if (which === 'day1') {
-    if (d1) d1.style.display = '';
+    if (d1) d1.style.display = (currentView === 'simple') ? '' : 'none';
     if (d2) d2.style.display = 'none';
+    if (g1) g1.style.display = (currentView === 'grid') ? 'block' : 'none';
+    if (g2) g2.style.display = 'none';
     if (t1) t1.classList.add('active');
     if (t2) t2.classList.remove('active');
   } else {
     if (d1) d1.style.display = 'none';
-    if (d2) d2.style.display = '';
+    if (d2) d2.style.display = (currentView === 'simple') ? '' : 'none';
+    if (g1) g1.style.display = 'none';
+    if (g2) g2.style.display = (currentView === 'grid') ? 'block' : 'none';
     if (t2) t2.classList.add('active');
     if (t1) t1.classList.remove('active');
   }
 
   updateDayDate(which);
-  if (typeof drawTimeline === 'function') setTimeout(drawTimeline, 60);
+  if (currentView === 'simple' && typeof drawTimeline === 'function') {
+    setTimeout(drawTimeline, 60);
+  }
 };
 
+/* ----- Build Grid view from existing Day markup (no duplication) ----- */
+function buildGridFromDay(dayEl) {
+  const grid = document.createElement('div');
+  grid.className = 'grid-day';
+  grid.id = 'grid-' + dayEl.id;
+
+  const slots = Array.from(dayEl.querySelectorAll('.slot'));
+  if (!slots.length) return grid;
+
+  slots.forEach((slot) => {
+    const timeText = slot.querySelector('.timecell')?.innerText?.trim() || '';
+    const cardsWrap = slot.querySelector('.cards');
+    const cards = cardsWrap ? Array.from(cardsWrap.children) : [];
+
+    const row = document.createElement('div');
+    row.className = 'g-row';
+
+    const timeCell = document.createElement('div');
+    timeCell.className = 'g-time';
+    timeCell.textContent = timeText.replace(/\s+/g, ' ');
+
+    const cardsCell = document.createElement('div');
+    cardsCell.className = 'g-cards';
+
+    // clone cards so we don't move the originals
+    cards.forEach((c) => cardsCell.appendChild(c.cloneNode(true)));
+
+    row.appendChild(timeCell);
+    row.appendChild(cardsCell);
+    grid.appendChild(row);
+  });
+
+  return grid;
+}
+
+/* ----- View switching ----- */
+function setView(view) {
+  currentView = view;
+  localStorage.setItem('agendaView', view);
+
+  const agenda = document.getElementById('agenda');
+  if (!agenda) return;
+  agenda.classList.toggle('view-grid', view === 'grid');
+
+  // sync menu state
+  const menu = document.getElementById('viewMenu');
+  menu?.querySelectorAll('.view-opt').forEach((opt) => {
+    const is = opt.dataset.view === view;
+    opt.classList.toggle('is-active', is);
+    opt.setAttribute('aria-checked', String(is));
+  });
+
+  // respect current day visibility
+  const showingDay2 = document.getElementById('tabDay2')?.classList.contains('active');
+  switchDay(showingDay2 ? 'day2' : 'day1');
+}
+
+/* ----- Timeline drawing (unchanged) ----- */
 function drawTimeline() {
   const timeline = document.getElementById('timeline');
   if (!timeline) return;
@@ -171,30 +239,72 @@ function drawTimeline() {
   }
 }
 
-/* Initial state + redraw hooks */
+/* ===== Init ===== */
 window.addEventListener('load', () => {
-  // Ensure Day 1 is active/visible and styled on first paint
-  try {
-    // if sections exist, set their display states explicitly
-    const d1 = document.getElementById('day1');
-    const d2 = document.getElementById('day2');
-    if (d1) d1.style.display = '';
-    if (d2) d2.style.display = 'none';
-    const t1 = document.getElementById('tabDay1');
-    const t2 = document.getElementById('tabDay2');
-    if (t1) t1.classList.add('active');
-    if (t2) t2.classList.remove('active');
-  } catch (_) {}
-  updateDayDate('day1');
-  drawTimeline();
+  // make sure Day 1 is active on first paint
+  const d1 = document.getElementById('day1');
+  const d2 = document.getElementById('day2');
+  if (d1) d1.style.display = '';
+  if (d2) d2.style.display = 'none';
+  document.getElementById('tabDay1')?.classList.add('active');
+  document.getElementById('tabDay2')?.classList.remove('active');
+
+  // Build grid views once from existing DOM
+  const timelineHost = document.getElementById('timeline');
+  if (timelineHost) {
+    const g1 = buildGridFromDay(document.getElementById('day1'));
+    g1.id = 'grid-day1';
+    g1.style.display = 'none';
+
+    const g2 = buildGridFromDay(document.getElementById('day2'));
+    g2.id = 'grid-day2';
+    g2.style.display = 'none';
+
+    timelineHost.parentNode.insertBefore(g1, timelineHost.nextSibling);
+    timelineHost.parentNode.insertBefore(g2, g1.nextSibling);
+  }
+
+  // View menu wiring
+  const btn = document.getElementById('viewBtn');
+  const menu = document.getElementById('viewMenu');
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      menu.hidden = expanded;
+    });
+
+    // choose option
+    menu.addEventListener('click', (e) => {
+      const opt = e.target.closest('.view-opt');
+      if (!opt) return;
+      const view = opt.dataset.view;
+      setView(view);
+      menu.hidden = true;
+      btn.setAttribute('aria-expanded', 'false');
+    });
+
+    // click outside to close
+    document.addEventListener('click', (e) => {
+      if (!menu.hidden && !menu.contains(e.target) && e.target !== btn) {
+        menu.hidden = true;
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  // apply saved/default view
+  setView(currentView || 'simple');
 });
 
 window.addEventListener('resize', () => {
   clearTimeout(window.__tlr);
-  window.__tlr = setTimeout(drawTimeline, 120);
+  window.__tlr = setTimeout(() => {
+    if (currentView === 'simple') drawTimeline();
+  }, 120);
 });
 window.addEventListener('orientationchange', () =>
-  setTimeout(drawTimeline, 150)
+  setTimeout(() => { if (currentView === 'simple') drawTimeline(); }, 150)
 );
 
 /* ===========================================================
