@@ -538,7 +538,8 @@ section.container > *:first-child{ margin-top:0; }
 /* ===== AP-GAINED 2×2 layout ===== */
 .apg-grid{
   display:grid;
-  grid-template-columns: 1.25fr 1fr;   /* wider text column */
+  
+  grid-template-columns: 1fr 1fr;          /* equal halves */
   grid-template-areas:
     "text robot"
     "carousel cta";
@@ -551,7 +552,7 @@ section.container > *:first-child{ margin-top:0; }
 .apg-cta{ grid-area:cta; display:flex; flex-direction:column; justify-content:center; gap:10px; }
 
 /* Bigger robot and cleaner caption */
-.apg-robot .linebot{ width:100%; max-width:280px; }
+.apg-robot .linebot{ width:100%; max-width:360px; }
 .apg-robot .robot-text{ font-size:14px; color:var(--muted); margin-top:8px; }
 
 /* Carousel should fill its card neatly and keep a stable height */
