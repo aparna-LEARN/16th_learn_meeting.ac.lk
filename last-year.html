@@ -78,12 +78,21 @@
       camera-controls
       interaction-prompt="none"
       exposure="0.9"
-      field-of-view="45deg"
-      camera-orbit="0deg 75deg 130%"
+    
+      /* a touch farther + slightly wider FOV so it feels smaller */
+      field-of-view="50deg"
+      camera-orbit="0deg 75deg 155%"
+    
+      /* auto-rotate */
+      auto-rotate
+      auto-rotate-delay="0"
+      rotation-per-second="12deg"
+    
       environment-image="neutral"
       shadow-intensity="0.25"
       style="background-color:transparent; --poster-color:transparent;">
     </model-viewer>
+
   </aside>
 
 
