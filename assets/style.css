@@ -322,32 +322,47 @@ section.container > *:first-child{ margin-top:0; }
   .about-top .about-carousel-title{ justify-self:stretch; text-align:left; width:auto; }
 }
 
-/* ===========================================================
-   AP-GAINED layout: row1 = text|robot, row2 = full-width carousel
-   =========================================================== */
 
+
+/* =========================
+   AP-GAINED layout (compact)
+   ========================= */
 .apg-grid{
   display:grid;
-  grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   grid-template-areas:
     "text robot"
-    "carousel carousel";   /* <-- full width carousel row */
+    "carousel carousel";       /* full-width carousel row */
   gap:18px;
-  align-items:stretch;
+
+  /* Keep row heights content-sized; we'll cap robot size below */
+  align-items:start;
+  grid-auto-rows:auto;
 }
 
-/* Let grid children shrink properly (prevents right side squeeze) */
+/* Let grid children shrink properly (prevents right-side squeeze) */
 .apg-grid > *{ min-width:0; }
 
-.apg-text{ grid-area:text; }
-.apg-robot{ grid-area:robot; display:grid; place-items:center; text-align:center; }
+.apg-text   { grid-area:text; }
+.apg-robot  { grid-area:robot; display:grid; place-items:center; text-align:center; }
 .apg-carousel{ grid-area:carousel; }
 
-/* AP-GAINED carousel is independent and full-width */
+/* Keep the robot visually compact so it doesn't stretch the row */
+.apg-robot .linebot{
+  height:clamp(140px, 22vw, 240px);  /* responsive but capped */
+  width:auto;
+}
+
+/* Optional: slightly tighter vertical padding on the two top cards */
+.apg-text.card,
+.apg-robot.card{ padding-block:14px; }
+
+/* Independent, full-width carousel (second row) */
 .apg-carousel .carousel .slide{ flex-basis:100%; aspect-ratio:16/9; }
 .apg-carousel .carousel .slide img{ height:100%; object-fit:cover; }
-.apg-carousel .carousel, .apg-carousel .track, .apg-carousel .slide{ overflow-anchor:none; }
-
+.apg-carousel .carousel,
+.apg-carousel .track,
+.apg-carousel .slide{ overflow-anchor:none; }
 
 @media (max-width:980px){
   .apg-grid{
@@ -357,8 +372,10 @@ section.container > *:first-child{ margin-top:0; }
       "robot"
       "carousel";
   }
-  .apg-robot .linebot{ max-width:320px; }
+  /* allow a bit more height on small screens */
+  .apg-robot .linebot{ height:clamp(160px, 36vw, 260px); }
 }
+
 
 
 /* ===========================================================
