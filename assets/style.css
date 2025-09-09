@@ -330,3 +330,83 @@ section.container > *:first-child{ margin-top:0; }
   }
   #net-bg{ display:none; }
 }
+
+/* ===========================================================
+   Carousel (scroll-snap + arrows + dots)
+   =========================================================== */
+.carousel{ position:relative; }
+.carousel .track{
+  display:flex; gap:16px;
+  overflow-x:auto; scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch; scroll-behavior:smooth;
+  padding:6px 6px 10px;
+}
+.carousel .slide{
+  flex:0 0 80%;
+  scroll-snap-align:center;
+  position:relative; overflow:hidden;
+  border-radius:var(--radius);
+  border:1px solid var(--ring);
+  box-shadow:var(--shadow);
+  background:#000; /* prevents white flash during load */
+}
+@media (max-width:980px){ .carousel .slide{ flex-basis:88%; } }
+@media (max-width:560px){ .carousel .slide{ flex-basis:92%; } }
+
+.carousel .slide img{ width:100%; height:auto; display:block; }
+.carousel .slide figcaption{
+  position:absolute; left:0; right:0; bottom:0;
+  padding:10px 12px; color:#fff; font-size:14px;
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,.65));
+}
+
+.c-btn{
+  position:absolute; top:50%; transform:translateY(-50%);
+  border:0; cursor:pointer; z-index:2;
+  padding:10px 12px; border-radius:12px;
+  background:#fff; color:var(--teal); font-weight:700;
+  box-shadow:var(--shadow);
+}
+.c-btn.prev{ left:6px; } .c-btn.next{ right:6px; }
+.c-btn:active{ transform:translateY(-50%) translateY(1px); }
+
+.dots{ display:flex; justify-content:center; gap:8px; margin-top:10px; }
+.dots .dot{
+  width:8px; height:8px; border-radius:999px;
+  background:var(--ring); border:0; cursor:pointer;
+}
+.dots .dot.active{ background:var(--brand); }
+
+/* ===========================================================
+   About + Carousel split layout (and fallback for current markup)
+   =========================================================== */
+
+/* If you wrap the section with .about-split and use .split-grid: */
+.about-split .split-grid{
+  display:grid;
+  grid-template-columns: 1.25fr 1fr; /* left bigger than right */
+  gap:24px;
+  align-items:start;
+}
+@media (max-width: 980px){
+  .about-split .split-grid{ grid-template-columns: 1fr; }
+}
+/* Make the right-column carousel fill the card neatly */
+.about-split .carousel .slide{ flex-basis:100%; }  /* override 80/88/92% */
+.about-split .c-btn.prev{ left:8px; }
+.about-split .c-btn.next{ right:8px; }
+.about-split .dots{ padding:10px 0 14px; }
+
+/* Fallback that matches your current #about markup */
+#about > .container > .grid.cols-2{
+  grid-template-columns: 1.25fr 1fr;  /* left wider */
+  gap:24px;
+  align-items:start;
+}
+@media (max-width:980px){
+  #about > .container > .grid.cols-2{ grid-template-columns:1fr; }
+}
+#about .carousel .slide{ flex-basis:100%; }
+#about .c-btn.prev{ left:8px; } 
+#about .c-btn.next{ right:8px; }
+#about .dots{ padding:10px 0 14px; }
