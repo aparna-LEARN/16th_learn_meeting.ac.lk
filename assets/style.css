@@ -354,8 +354,8 @@ section.container > *:first-child{ margin-top:0; }
 /* If using <model-viewer> (.glb), size it and keep it clean */
 .apg-robot model-viewer{
   display:block;
-  width:min(620px, 100%);
-  height:clamp(320px, 40vw, 520px);
+  width:min(500px, 100%);
+  height:clamp(220px, 30vw, 420px);
   background-color:transparent;
   border:0;
   margin-inline:auto;
@@ -364,7 +364,7 @@ section.container > *:first-child{ margin-top:0; }
 /* Keep the SVG/line-bot centered and sized nicely */
 .apg-robot .linebot,
 .apg-robot svg{
-  height:clamp(140px, 22vw, 240px);
+  height:clamp(80px, 14vw, 140px);
   width:auto;
 }
 
