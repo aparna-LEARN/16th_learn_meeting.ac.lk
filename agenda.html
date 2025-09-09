@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,8 +12,9 @@
   <!-- NAV -->
   <nav class="nav">
     <div class="container nav-inner">
-      <a class="brand" href="./" aria-label="LEARN"><img src="assets/Learn_Log.png" alt="LEARN"></a>
-
+      <a class="brand" href="./" aria-label="LEARN">
+        <img src="assets/Learn_Log.png" alt="LEARN">
+      </a>
       <div class="menu">
         <a href="./">Home</a>
         <a href="agenda.html">Agenda</a>
@@ -24,219 +24,180 @@
   </nav>
 
   <!-- PAGE HERO -->
-<header class="ag-hero">
-  <div class="container">
-    <h1 style="background:linear-gradient(90deg,#38bdf8,#2dd4bf);-webkit-background-clip:text;background-clip:text;color:transparent">Event Agenda</h1>
-    <p class="muted" style="color:#9fb2d3">Two days packed with WGs, sessions, and networking.</p>
+  <header class="ag-hero">
+    <div class="container">
+      <h1 style="background:linear-gradient(90deg,#38bdf8,#2dd4bf);-webkit-background-clip:text;background-clip:text;color:transparent">
+        Event Agenda
+      </h1>
+      <p class="muted" style="color:#9fb2d3">Two days packed with WGs, sessions, and networking.</p>
 
-    <div class="tabs">
-      <button id="tabDay1" class="tab active" onclick="switchDay('day1')">Day 1</button>
-      <button id="tabDay2" class="tab" onclick="switchDay('day2')">Day 2</button>
+      <div class="tabs">
+        <button id="tabDay1" class="tab active" onclick="switchDay('day1')">Day 1</button>
+        <button id="tabDay2" class="tab" onclick="switchDay('day2')">Day 2</button>
+      </div>
+
+      <div id="dayDate" style="color:#9fb2d3">Thursday, October 23, 2025</div>
     </div>
+  </header>
 
-    <div id="dayDate" style="color:#9fb2d3">Thursday, October 23, 2025</div>
-  </div>
-</header>
-
-
-
-  <!-- TIMELINE -->
+  <!-- TIMELINE (full-day grid) -->
   <section>
     <div class="container">
-      <div id="timeline" class="timeline">
-        <!-- Day 1 -->
-        <div id="day1">
-          <!-- 09:00 parallel -->
-          <div class="slot">
-            <div class="timecell"><strong>09:00</strong></div>
-            <div class="cards">
-              <div class="ag-card">
-                <h3>WG 1 (AgriTech): Initiation, ToR &amp; Keynote</h3>
-                <p>Initiation, Terms of Reference &amp; Keynote</p>
-              </div>
-              <div class="ag-card">
-                <h3>WG 2 (GenAI): Initiation, ToR &amp; Keynote</h3>
-                <p>Initiation, Terms of Reference &amp; Keynote</p>
-              </div>
-            </div>
-          </div>
 
-          <div class="slot">
-            <div class="timecell"><strong>10:30</strong></div>
-            <div class="cards">
-              <div class="ag-card">
-                <span class="pill">10:30–11:00</span>
-                <h3>Tea Break</h3>
-              </div>
-            </div>
-          </div>
+      <!-- DAY 1 -->
+      <div id="day1">
+        <div class="card schedule scroll">
+          <h3 style="margin:0 0 8px">Day 1</h3>
 
-          <div class="slot">
-            <div class="timecell"><strong>11:00</strong></div>
-            <div class="cards">
-              <div class="ag-card">
-                <span class="pill">11:00–12:30</span>
-                <h3>WG 1: Use Cases &amp; Landscape</h3>
-              </div>
-              <div class="ag-card">
-                <span class="pill">11:00–12:30</span>
-                <h3>WG 2: Use Cases &amp; Opportunities</h3>
-              </div>
-            </div>
-          </div>
+          <!-- tracks-2 = 2 parallel tracks; rows = 30 minutes; 00:00–24:00 -->
+          <div id="gridDay1"
+               class="schedule-grid tracks-2"
+               data-start="0" data-end="1440" data-step="30" data-label-step="60"
+               style="--start-min:0; --end-min:1440; --step:30; --row-h:32px;">
 
-          <div class="slot">
-            <div class="timecell"><strong>12:30</strong></div>
-            <div class="cards">
-              <div class="ag-card">
-                <span class="pill">12:30–13:30</span>
-                <h3>Lunch</h3>
-              </div>
+            <!-- 09:00–10:30 | two parallel WGs -->
+            <div class="event" style="--start:540; --dur:90; --col:1;">
+              <div class="ev-title">WG 1 (AgriTech): Initiation, ToR &amp; Keynote</div>
+              <div class="ev-meta">09:00 – 10:30</div>
             </div>
-          </div>
+            <div class="event" style="--start:540; --dur:90; --col:2;">
+              <div class="ev-title">WG 2 (GenAI): Initiation, ToR &amp; Keynote</div>
+              <div class="ev-meta">09:00 – 10:30</div>
+            </div>
 
-          <div class="slot">
-            <div class="timecell"><strong>13:30</strong></div>
-            <div class="cards">
-              <div class="ag-card">
-                <span class="pill">13:30–15:00</span>
-                <h3>Strategic Focus Areas</h3>
-                <p>Parallel tracks define 2025–26 priorities &amp; milestones.</p>
-              </div>
+            <!-- 10:30–11:00 | break -->
+            <div class="event break span-all" style="--start:630; --dur:30;">
+              <div class="ev-title">Tea Break</div>
+              <div class="ev-meta">10:30 – 11:00</div>
             </div>
-          </div>
 
-          <div class="slot">
-            <div class="timecell"><strong>15:00</strong></div>
-            <div class="cards">
-              <div class="ag-card">
-                <span class="pill">15:00–15:30</span>
-                <h3>Tea Break</h3>
-              </div>
+            <!-- 11:00–12:30 | two parallel WGs -->
+            <div class="event" style="--start:660; --dur:90; --col:1;">
+              <div class="ev-title">WG 1: Use Cases &amp; Landscape</div>
+              <div class="ev-meta">11:00 – 12:30</div>
             </div>
-          </div>
+            <div class="event" style="--start:660; --dur:90; --col:2;">
+              <div class="ev-title">WG 2: Use Cases &amp; Opportunities</div>
+              <div class="ev-meta">11:00 – 12:30</div>
+            </div>
 
-          <div class="slot">
-            <div class="timecell"><strong>15:30</strong></div>
-            <div class="cards">
-              <div class="ag-card">
-                <span class="pill">15:30–17:00</span>
-                <h3>Opening Ceremony of LEARN Meetings</h3>
-                <p style="color:#bff9ef">Welcome • Remarks • Keynote</p>
-              </div>
+            <!-- 12:30–13:30 | lunch -->
+            <div class="event break span-all" style="--start:750; --dur:60;">
+              <div class="ev-title">Lunch</div>
+              <div class="ev-meta">12:30 – 01:30</div>
             </div>
-          </div>
 
-          <div class="slot">
-            <div class="timecell"><strong>17:00</strong></div>
-            <div class="cards">
-              <div class="ag-card">
-                <span class="pill">17:00–19:00</span>
-                <h3>LEARN Board Meeting</h3>
-                <p>Board members only.</p>
-              </div>
+            <!-- 13:30–15:00 | plenary -->
+            <div class="event span-all" style="--start:810; --dur:90;">
+              <div class="ev-title">Strategic Focus Areas</div>
+              <div class="ev-meta">01:30 – 03:00</div>
+              <p class="muted" style="margin:6px 0 0">Parallel tracks define 2025–26 priorities &amp; milestones.</p>
             </div>
-          </div>
 
-          <div class="slot">
-            <div class="timecell"><strong>19:00</strong></div>
-            <div class="cards">
-              <div class="ag-card">
-                <span class="pill">19:00 onwards</span>
-                <h3>LEARN Social Dinner</h3>
-                <p>Meet, connect, and celebrate the kickoff.</p>
-              </div>
+            <!-- 15:00–15:30 | break -->
+            <div class="event break span-all" style="--start:900; --dur:30;">
+              <div class="ev-title">Tea Break</div>
+              <div class="ev-meta">03:00 – 03:30</div>
             </div>
+
+            <!-- 15:30–17:00 | plenary -->
+            <div class="event span-all" style="--start:930; --dur:90;">
+              <div class="ev-title">Opening Ceremony of LEARN Meetings</div>
+              <div class="ev-meta">03:30 – 05:00</div>
+              <p class="muted" style="margin:6px 0 0">Welcome • Remarks • Keynote</p>
+            </div>
+
+            <!-- 17:00–19:00 | Board -->
+            <div class="event span-all" style="--start:1020; --dur:120;">
+              <div class="ev-title">LEARN Board Meeting</div>
+              <div class="ev-meta">05:00 – 07:00</div>
+              <p class="muted" style="margin:6px 0 0">Board members only.</p>
+            </div>
+
+            <!-- 19:00–23:00 | Social Dinner (into the night) -->
+            <div class="event span-all" style="--start:1140; --dur:240;">
+              <div class="ev-title">LEARN Social Dinner</div>
+              <div class="ev-meta">07:00 – 11:00 PM</div>
+              <p class="muted" style="margin:6px 0 0">Meet, connect, and celebrate the kickoff.</p>
+            </div>
+
           </div>
         </div>
+      </div>
 
-        <!-- Day 2 -->
-        <div id="day2" style="display:none">
-          <div class="slot">
-            <div class="timecell"><strong>09:00</strong></div>
-            <div class="cards">
-              <div class="ag-card">
-                <span class="pill">09:00–10:30</span>
-                <h3>WG 1: Draft Roadmap Development</h3>
-              </div>
-              <div class="ag-card">
-                <span class="pill">09:00–10:30</span>
-                <h3>WG 2: Draft Roadmap Development</h3>
-              </div>
-            </div>
-          </div>
+      <!-- DAY 2 -->
+      <div id="day2" style="display:none">
+        <div class="card schedule scroll">
+          <h3 style="margin:0 0 8px">Day 2</h3>
 
-          <div class="slot">
-            <div class="timecell"><strong>10:30</strong></div>
-            <div class="cards">
-              <div class="ag-card">
-                <span class="pill">10:30–11:00</span>
-                <h3>Tea Break</h3>
-              </div>
-            </div>
-          </div>
+          <!-- tracks-3 = 3 parallel tracks -->
+          <div id="gridDay2"
+               class="schedule-grid tracks-3"
+               data-start="0" data-end="1440" data-step="30" data-label-step="60"
+               style="--start-min:0; --end-min:1440; --step:30; --row-h:32px;">
 
-          <div class="slot">
-            <div class="timecell"><strong>11:00</strong></div>
-            <div class="cards">
-              <div class="ag-card">
-                <span class="pill">11:00–12:30</span>
-                <h3>WG1:Finalize Roadmaps</h3>
-              </div>
-              <div class="ag-card">
-                <span class="pill">11:00–12:30</span>
-                <h3>WG2:Finalize Roadmaps</h3>
-              </div>
-              <div class="ag-card">
-                <span class="pill">11:00–12:30</span>
-                <h3>16th Annual General Meeting (AGM)</h3>
-              </div>
+            <!-- 09:00–10:30 | two parallel WGs -->
+            <div class="event" style="--start:540; --dur:90; --col:1;">
+              <div class="ev-title">WG 1: Draft Roadmap Development</div>
+              <div class="ev-meta">09:00 – 10:30</div>
             </div>
-          </div>
+            <div class="event" style="--start:540; --dur:90; --col:2;">
+              <div class="ev-title">WG 2: Draft Roadmap Development</div>
+              <div class="ev-meta">09:00 – 10:30</div>
+            </div>
 
-          <div class="slot">
-            <div class="timecell"><strong>12:30</strong></div>
-            <div class="cards">
-              <div class="ag-card">
-                <span class="pill">12:30–13:30</span>
-                <h3>Lunch</h3>
-              </div>
+            <!-- 10:30–11:00 | break -->
+            <div class="event break span-all" style="--start:630; --dur:30;">
+              <div class="ev-title">Tea Break</div>
+              <div class="ev-meta">10:30 – 11:00</div>
             </div>
-          </div>
 
-          <div class="slot">
-            <div class="timecell"><strong>13:30</strong></div>
-            <div class="cards">
-              <div class="ag-card">
-                <span class="pill">13:30–15:00</span>
-                <h3>LEARN Services Awareness Session</h3>
-                <p>Identity (eduID, eduGAIN) • Mobility (eduroam, eduVPN) • Security (CSIRT, TAC) • Collaboration &amp; Cloud.</p>
-              </div>
+            <!-- 11:00–12:30 | three parallel sessions -->
+            <div class="event" style="--start:660; --dur:90; --col:1;">
+              <div class="ev-title">WG 1: Finalize Roadmaps</div>
+              <div class="ev-meta">11:00 – 12:30</div>
             </div>
-          </div>
+            <div class="event" style="--start:660; --dur:90; --col:2;">
+              <div class="ev-title">WG 2: Finalize Roadmaps</div>
+              <div class="ev-meta">11:00 – 12:30</div>
+            </div>
+            <div class="event" style="--start:660; --dur:90; --col:3;">
+              <div class="ev-title">16th Annual General Meeting (AGM)</div>
+              <div class="ev-meta">11:00 – 12:30</div>
+            </div>
 
-          <div class="slot">
-            <div class="timecell"><strong>15:00</strong></div>
-            <div class="cards">
-              <div class="ag-card">
-                <span class="pill">15:00–15:30</span>
-                <h3>Tea Break</h3>
-              </div>
+            <!-- 12:30–13:30 | lunch -->
+            <div class="event break span-all" style="--start:750; --dur:60;">
+              <div class="ev-title">Lunch</div>
+              <div class="ev-meta">12:30 – 01:30</div>
             </div>
-          </div>
 
-          <div class="slot">
-            <div class="timecell"><strong>15:30</strong></div>
-            <div class="cards">
-              <div class="ag-card">
-                <span class="pill">15:30–17:00</span>
-                <h3>Closing Ceremony</h3>
-                <p style="color:#bff9ef">WG Reports &amp; Closing Remarks.</p>
-              </div>
+            <!-- 13:30–15:00 | plenary -->
+            <div class="event span-all" style="--start:810; --dur:90;">
+              <div class="ev-title">LEARN Services Awareness Session</div>
+              <div class="ev-meta">01:30 – 03:00</div>
+              <p class="muted" style="margin:6px 0 0">
+                Identity (eduID, eduGAIN) • Mobility (eduroam, eduVPN) • Security (CSIRT, TAC) • Collaboration &amp; Cloud.
+              </p>
             </div>
+
+            <!-- 15:00–15:30 | break -->
+            <div class="event break span-all" style="--start:900; --dur:30;">
+              <div class="ev-title">Tea Break</div>
+              <div class="ev-meta">03:00 – 03:30</div>
+            </div>
+
+            <!-- 15:30–17:00 | closing -->
+            <div class="event span-all" style="--start:930; --dur:90;">
+              <div class="ev-title">Closing Ceremony</div>
+              <div class="ev-meta">03:30 – 05:00</div>
+              <p class="muted" style="margin:6px 0 0">WG Reports &amp; Closing Remarks</p>
+            </div>
+
           </div>
         </div>
-      </div> <!-- /timeline -->
+      </div>
+
     </div>
   </section>
 
@@ -246,7 +207,49 @@
     </div>
   </footer>
 
+  <!-- Your site script (optional) -->
   <script src="assets/app.js"></script>
-  <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+
+  <!-- Generate hourly time labels for each schedule grid -->
+  <script>
+  (function(){
+    document.querySelectorAll('.schedule-grid').forEach(grid => {
+      const start = +grid.dataset.start || 0;       // minutes since midnight
+      const end   = +grid.dataset.end   || 1440;
+      const step  = +grid.dataset.labelStep || 60;  // label every 60 min
+
+      for (let t = start; t <= end; t += step){
+        const div = document.createElement('div');
+        div.className = 'time';
+        div.style.setProperty('--at', t);
+        div.textContent = toLabel(t);
+        grid.appendChild(div);
+      }
+    });
+
+    function toLabel(min){
+      const m = ((min % 1440) + 1440) % 1440;
+      const h24 = Math.floor(m/60), mm = String(m%60).padStart(2,'0');
+      const h12 = h24 % 12 === 0 ? 12 : h24 % 12;
+      const ampm = h24 < 12 ? 'AM' : 'PM';
+      return `${h12}:${mm} ${ampm}`;
+    }
+  })();
+  </script>
+
+  <!-- Tabs fallback (if not already in assets/app.js) -->
+  <script>
+  window.switchDay = window.switchDay || function(which){
+    document.getElementById('day1').style.display = (which==='day1') ? '' : 'none';
+    document.getElementById('day2').style.display = (which==='day2') ? '' : 'none';
+    document.getElementById('tabDay1').classList.toggle('active', which==='day1');
+    document.getElementById('tabDay2').classList.toggle('active', which==='day2');
+    document.getElementById('dayDate').textContent =
+      (which==='day1') ? 'Thursday, October 23, 2025' : 'Friday, October 24, 2025';
+  };
+  </script>
+
+  <!-- Footer year -->
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>
