@@ -46,14 +46,14 @@
 
       <!-- DAY 1 -->
       <div id="day1">
-        <div class="card schedule scroll">
+        <div class="card schedule">
           <h3 style="margin:0 0 8px">Day 1</h3>
 
-          <!-- tracks-2 = 2 parallel tracks; rows = 30 minutes; 00:00–24:00 -->
+          <!-- tracks-2 = 2 parallel tracks | start 08:00 (480) end 24:00 (1440) -->
           <div id="gridDay1"
                class="schedule-grid tracks-2"
-               data-start="0" data-end="1440" data-step="30" data-label-step="60"
-               style="--start-min:0; --end-min:1440; --step:30; --row-h:32px;">
+               data-start="480" data-end="1440" data-label-step="60"
+               style="--day-start:480; --day-end:1440;">
 
             <!-- 09:00–10:30 | two parallel WGs -->
             <div class="event" style="--start:540; --dur:90; --col:1;">
@@ -127,14 +127,14 @@
 
       <!-- DAY 2 -->
       <div id="day2" style="display:none">
-        <div class="card schedule scroll">
+        <div class="card schedule">
           <h3 style="margin:0 0 8px">Day 2</h3>
 
-          <!-- tracks-3 = 3 parallel tracks -->
+          <!-- tracks-3 = 3 parallel tracks | start 08:00 -->
           <div id="gridDay2"
                class="schedule-grid tracks-3"
-               data-start="0" data-end="1440" data-step="30" data-label-step="60"
-               style="--start-min:0; --end-min:1440; --step:30; --row-h:32px;">
+               data-start="480" data-end="1440" data-label-step="60"
+               style="--day-start:480; --day-end:1440;">
 
             <!-- 09:00–10:30 | two parallel WGs -->
             <div class="event" style="--start:540; --dur:90; --col:1;">
@@ -210,12 +210,12 @@
   <!-- Your site script (optional) -->
   <script src="assets/app.js"></script>
 
-  <!-- Generate hourly time labels for each schedule grid -->
+  <!-- Generate hourly time labels for each schedule grid (uses data-start/data-end) -->
   <script>
   (function(){
     document.querySelectorAll('.schedule-grid').forEach(grid => {
-      const start = +grid.dataset.start || 0;       // minutes since midnight
-      const end   = +grid.dataset.end   || 1440;
+      const start = +grid.dataset.start || 480;     // default 08:00
+      const end   = +grid.dataset.end   || 1440;    // default 24:00
       const step  = +grid.dataset.labelStep || 60;  // label every 60 min
 
       for (let t = start; t <= end; t += step){
