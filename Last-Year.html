@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Last Year Highlights — LEARN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Highlights from LEARN’s 2024–25 activities, including AP-GAINED, campus Wi-Fi & eduroam, network security, and AIDE.">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- NETWORK LINES BACKGROUND (same as home) -->
+<canvas id="net-bg"></canvas>
+
+<!-- Ambient blobs (same as home) -->
+<div class="page-ambient" aria-hidden="true">
+  <span class="orb o1"></span>
+  <span class="orb o2"></span>
+  <span class="orb o3"></span>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="https://www.ac.lk/" target="_blank" rel="noopener" aria-label="LEARN">
+      <img src="assets/Learn_Logo.png" alt="LEARN">
+    </a>
+    <div class="menu">
+      <a href="./">Home</a>
+      <a href="agenda.html">Agenda</a>
+      <a href="last-year.html">Last Year</a>
+      <a class="btn btn-primary" href="#register">Register</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container inner">
+    <h1>Last Year Highlights</h1>
+    <p class="lead">A look back at 2024–25: projects, workshops, and new capabilities across the community.</p>
+  </div>
+</header>
+
+<!-- AP-GAINED -->
+<section class="container">
+  <div class="about-top" style="grid-template-columns:1fr 1.1fr">
+    <h2 class="section-title" style="margin-left:0">AP-GAINED (Ongoing)</h2>
+    <div class="about-carousel-title card" style="text-align:center">
+      <strong>Photo highlights</strong> · Swipe or use arrows
+    </div>
+  </div>
+
+  <div class="grid cols-2" style="align-items:start">
+    <article class="card">
+      <h3 style="margin-top:0">Asia Pacific — Generative AI for NREN Empowerment & Development</h3>
+      <p class="muted">
+        In the last financial year, LEARN joined the international <strong>AP-GAINED</strong> initiative to build skills and
+        practical know-how in Generative AI for education and research across the Asia–Pacific region, with a focus on
+        less-resourced countries. :contentReference[oaicite:1]{index=1}
+      </p>
+
+      <div class="robot-card">
+        <!-- Minimal, brand-styled animated robot -->
+        <svg class="robot" viewBox="0 0 220 220" aria-hidden="true">
+          <!-- Head -->
+          <rect x="60" y="40" width="100" height="80" rx="16" class="r-head"/>
+          <!-- Visor -->
+          <rect x="76" y="70" width="68" height="22" rx="11" class="r-visor"/>
+          <rect x="76" y="70" width="68" height="22" rx="11" class="r-scan"/>
+          <!-- Body -->
+          <rect x="52" y="120" width="116" height="70" rx="14" class="r-body"/>
+          <!-- Antenna -->
+          <line x1="110" y1="28" x2="110" y2="40" class="r-ant"/>
+          <circle cx="110" cy="24" r="4" class="r-dot"/>
+        </svg>
+        <div class="robot-text">
+          <strong>AP-GAINED</strong><br>
+          Gen-AI capacity building for teaching, research, and NREN operations.
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+        <a class="btn btn-outline" href="#" onclick="alert('Link this to your detailed AP-GAINED page or PDF');return false;">More details</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <!-- Carousel reusing your component + our autoplay that doesn’t jump the page -->
+      <div class="carousel" data-autoplay="5000">
+        <button class="c-btn prev" aria-label="Previous slide">‹</button>
+        <div class="track">
+          <figure class="slide"><img src="assets/lastyear/apgained/1.jpg" alt=""><figcaption>AP-GAINED</figcaption></figure>
+          <figure class="slide"><img src="assets/lastyear/apgained/2.jpg" alt=""><figcaption>AP-GAINED</figcaption></figure>
+          <figure class="slide"><img src="assets/lastyear/apgained/3.jpg" alt=""><figcaption>AP-GAINED</figcaption></figure>
+          <figure class="slide"><img src="assets/lastyear/apgained/4.jpg" alt=""><figcaption>AP-GAINED</figcaption></figure>
+          <figure class="slide"><img src="assets/lastyear/apgained/5.jpg" alt=""><figcaption>AP-GAINED</figcaption></figure>
+          <figure class="slide"><img src="assets/lastyear/apgained/6.jpg" alt=""><figcaption>AP-GAINED</figcaption></figure>
+        </div>
+        <button class="c-btn next" aria-label="Next slide">›</button>
+      </div>
+      <div class="dots"></div>
+    </article>
+  </div>
+</section>
+
+<!-- Campus Wi-Fi & eduroam -->
+<section class="container">
+  <h2 class="section-title">Workshop on Campus Wi-Fi & eduroam (July 2024)</h2>
+  <div class="grid cols-2">
+    <article class="card">
+      <p class="muted">
+        The workshop equipped campus teams to deploy <strong>eduroam-enabled Wi-Fi</strong> with confidence. It covered the
+        foundations of <em>education roaming</em>, campus identity management (LDAP & GUI), controller/AP configuration,
+        wireless security, eduroam tools, governance, and monitoring. The content was tailored to local campus networks so
+        participants could apply practices directly, while enabling technologies such as eduID and federated identity
+        management for end users. :contentReference[oaicite:2]{index=2}
+      </p>
+    </article>
+    <article class="card">
+      <div class="gallery g-4">
+        <img src="assets/lastyear/wifi/1.jpg" alt="" data-full="assets/lastyear/wifi/1.jpg">
+        <img src="assets/lastyear/wifi/2.jpg" alt="" data-full="assets/lastyear/wifi/2.jpg">
+        <img src="assets/lastyear/wifi/3.jpg" alt="" data-full="assets/lastyear/wifi/3.jpg">
+        <img src="assets/lastyear/wifi/4.jpg" alt="" data-full="assets/lastyear/wifi/4.jpg">
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- Asi@Connect – Network Security -->
+<section class="container">
+  <h2 class="section-title">Asi@Connect — Network Security Workshop (May 2024)</h2>
+  <div class="grid cols-2">
+    <article class="card">
+      <p class="muted">
+        This workshop explored essential concepts, protocols, policies, and methods for safeguarding data and assets,
+        strengthening networks, and detecting/handling incidents. :contentReference[oaicite:3]{index=3}
+      </p>
+    </article>
+    <article class="card">
+      <div class="gallery g-4">
+        <img src="assets/lastyear/security/1.jpg" alt="" data-full="assets/lastyear/security/1.jpg">
+        <img src="assets/lastyear/security/2.jpg" alt="" data-full="assets/lastyear/security/2.jpg">
+        <img src="assets/lastyear/security/3.jpg" alt="" data-full="assets/lastyear/security/3.jpg">
+        <img src="assets/lastyear/security/4.jpg" alt="" data-full="assets/lastyear/security/4.jpg">
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- AIDE -->
+<section class="container">
+  <h2 class="section-title">AIDE — AI for Innovative Design & Education (March 2024)</h2>
+  <div class="grid cols-2">
+    <article class="card">
+      <p class="muted">
+        Conducted under the UNESCO Chair at APU (Malaysia), the four-day <strong>AIDE</strong> series helped educators
+        integrate Generative-AI tools to elevate pedagogy and research. Each day focused on a dedicated module. :contentReference[oaicite:4]{index=4}
+      </p>
+    </article>
+    <article class="card">
+      <!-- Replace VIDEO_ID or use a local MP4 -->
+      <div class="video-frame">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="AIDE highlight video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- Lightbox dialog (shared by all galleries) -->
+<dialog id="lb">
+  <img alt="">
+  <button id="lbClose" class="btn btn-outline" style="position:absolute;top:12px;right:12px">Close</button>
+</dialog>
+
+<footer class="footer">
+  <div class="container">
+    <small>&copy; <span id="y"></span> LEARN — Lanka Education And Research Network</small>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>
