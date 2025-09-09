@@ -380,3 +380,26 @@ window.addEventListener('orientationchange', () =>
     start();
   });
 })();
+
+
+
+/* =========================
+   Simple lightbox for .gallery images
+   ========================= */
+(function initLightbox(){
+  const dlg = document.getElementById('lb');
+  if (!dlg) return;
+  const big = dlg.querySelector('img');
+  const closer = document.getElementById('lbClose');
+
+  document.addEventListener('click', (e)=>{
+    const t = e.target.closest('.gallery img');
+    if (!t) return;
+    const src = t.getAttribute('data-full') || t.src;
+    big.src = src;
+    dlg.showModal();
+  });
+  closer?.addEventListener('click', ()=> dlg.close());
+  dlg.addEventListener('click', (e)=>{ if (e.target === dlg) dlg.close(); });
+})();
+
