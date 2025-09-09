@@ -326,24 +326,27 @@ section.container > *:first-child{ margin-top:0; }
 /* =========================
    AP-GAINED layout (compact)
    ========================= */
+/* =========================
+   AP-GAINED (section styles)
+   ========================= */
 .apg-grid{
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   grid-template-areas:
     "text robot"
-    "carousel carousel";                 /* full-width carousel row */
+    "carousel carousel";       /* full-width carousel row */
   gap:18px;
   align-items:start;
   grid-auto-rows:auto;
 }
-/* Let grid children shrink properly */
+/* allow children to shrink without overflow */
 .apg-grid > *{ min-width:0; }
 
-.apg-text   { grid-area:text; }
-.apg-robot  { grid-area:robot; display:grid; place-items:center; text-align:center; }
+.apg-text{ grid-area:text; }
+.apg-robot{ grid-area:robot; display:grid; place-items:center; text-align:center; }
 .apg-carousel{ grid-area:carousel; }
 
-/* Make ONLY the robot card transparent/frameless */
+/* make ONLY the robot card frameless */
 .apg-robot.card{
   background:transparent;
   border:0;
@@ -351,40 +354,41 @@ section.container > *:first-child{ margin-top:0; }
   padding:0;
 }
 
-/* If using <model-viewer> (.glb), size it and keep it clean */
+/* 3D robot (<model-viewer>) — SMALLER sizing */
 .apg-robot model-viewer{
   display:block;
-  width:min(500px, 100%);
-  height:clamp(220px, 30vw, 420px);
+  width:min(420px, 100%);          /* smaller width */
+  height:clamp(200px, 26vw, 340px);/* smaller height */
   background-color:transparent;
-  border:0;
+  --poster-color:transparent;
   margin-inline:auto;
 }
 
-/* Keep the SVG/line-bot centered and sized nicely */
+/* line/SVG robot fallback */
 .apg-robot .linebot,
 .apg-robot svg{
   height:clamp(80px, 14vw, 140px);
   width:auto;
 }
 
-/* Hide caption under robot if present */
+/* hide caption under robot if present */
 .apg-robot .robot-text{ display:none; }
 
 /* Inline CTA (Want more?) */
 .apg-cta-inline{
   display:flex; align-items:center; gap:12px; flex-wrap:wrap;
 }
-/* Gap between description paragraph and CTA row */
 .apg-text p + .apg-cta-inline{ margin-top:16px; }
 .apg-cta-inline .muted{ margin:0; line-height:1.3; }
 
 /* Independent, full-width carousel (second row) */
 .apg-carousel .carousel .slide{ flex-basis:100%; aspect-ratio:16/9; }
 .apg-carousel .carousel .slide img{ height:100%; object-fit:cover; }
-.apg-carousel .carousel, .apg-carousel .track, .apg-carousel .slide{ overflow-anchor:none; }
+.apg-carousel .carousel,
+.apg-carousel .track,
+.apg-carousel .slide{ overflow-anchor:none; }
 
-/* Stack on narrow screens */
+/* Stack on narrow screens + smaller robot there too */
 @media (max-width:980px){
   .apg-grid{
     grid-template-columns:1fr;
@@ -394,10 +398,31 @@ section.container > *:first-child{ margin-top:0; }
       "carousel";
   }
   .apg-robot model-viewer{
-    height:clamp(200px, 40vw, 340px);
+    width:100%;
+    height:clamp(180px, 42vw, 300px); /* smaller mobile/tablet */
   }
-  .apg-robot .linebot{ height:clamp(160px, 36vw, 260px); }
 }
+
+/* =============== (optional) line-animated robot bits =============== */
+.linebot{height:auto;display:block}
+.linebot .stroke{
+  fill:none; stroke:url(#wire); stroke-width:3; stroke-linecap:round; stroke-linejoin:round;
+  stroke-dasharray:1; stroke-dashoffset:1; animation:bot-draw 1.4s ease forwards; filter:saturate(110%);
+}
+.linebot .body .stroke{ animation-delay:.3s; }
+.linebot .antenna .stroke{ animation-delay:.6s; }
+@keyframes bot-draw{ to{ stroke-dashoffset:0 } }
+.linebot .bot{ animation:bot-float 6s ease-in-out infinite; }
+@keyframes bot-float{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+.linebot .visor{ fill:url(#visor); animation:visor-scan 4s ease-in-out infinite; }
+@keyframes visor-scan{ 0%{transform:translateX(-6px)} 50%{transform:translateX(6px)} 100%{transform:translateX(-6px)} }
+.linebot .blink{ fill:#fff; opacity:.9; animation:blink 4.2s infinite; }
+.linebot .blink:nth-of-type(2){ animation-delay:.2s; }
+@keyframes blink{ 0%,45%,55%,100%{opacity:.9; height:2px; y:98} 48%,52%{opacity:.2; height:1px; y:100} }
+.linebot .dot{ fill:#2dd4bf; animation:pulse 1.8s ease-in-out infinite; }
+.linebot .joint{ fill:#38bdf8; opacity:.9; }
+@keyframes pulse{ 0%,100%{opacity:1; transform:scale(1)} 50%{opacity:.5; transform:scale(.8)} }
+
 
 /* ===========================================================
    Line-animated robot
