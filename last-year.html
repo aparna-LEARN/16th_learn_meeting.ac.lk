@@ -42,100 +42,93 @@
   </div>
 </header>
 
-<!-- AP-GAINED -->
-<section class="container">
-  <div class="about-top" style="grid-template-columns:1fr 1.1fr">
-    <h2 class="section-title" style="margin-left:0">AP-GAINED (Ongoing)</h2>
-    <div class="about-carousel-title card" style="text-align:center">
-      <strong>Photo highlights</strong> · Swipe or use arrows
-    </div>
-  </div>
+<!-- =================== AP-GAINED (AI) — 2×2 layout =================== -->
+<section class="container" id="ap-gained">
+  <h2 class="section-title">AP-GAINED (Ongoing)</h2>
 
-  <div class="grid cols-2" style="align-items:start">
-    <article class="card">
-      <h3 style="margin-top:0">Asia Pacific — Generative AI for NREN Empowerment & Development</h3>
+  <div class="apg-grid">
+    <!-- Top-left: TEXT -->
+    <article class="card apg-text">
+      <h3 style="margin-top:0">Asia Pacific — Generative AI for NREN Empowerment &amp; Development</h3>
       <p class="muted">
-        In the last financial year, LEARN joined the international <strong>AP-GAINED</strong> initiative to build skills and
-        practical know-how in Generative AI for education and research across the Asia–Pacific region, with a focus on
-        less-resourced countries. :contentReference[oaicite:1]{index=1}
+        In the last financial year, LEARN joined the international <strong>AP-GAINED</strong> initiative to build skills
+        and practical know-how in Generative AI for education and research across the Asia–Pacific region, with a focus
+        on less-resourced countries.
       </p>
-
-  <div class="card ai-robot">
-    <svg class="linebot" viewBox="0 0 220 260" role="img" aria-label="Animated line robot">
-      <defs>
-        <linearGradient id="wire" x1="0" y1="0" x2="1" y2="1">
-          <stop stop-color="#38bdf8"/>
-          <stop offset="1" stop-color="#2dd4bf"/>
-        </linearGradient>
-        <linearGradient id="visor" x1="0" y1="0" x2="1" y2="0">
-          <stop id="v1" offset="0%" stop-color="#38bdf8"/>
-          <stop id="v2" offset="100%" stop-color="#2dd4bf"/>
-        </linearGradient>
-        <filter id="softGlow">
-          <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#38bdf8" flood-opacity=".5"/>
-        </filter>
-      </defs>
-  
-      <g class="bot" filter="url(#softGlow)">
-        <!-- HEAD -->
-        <g class="head">
-          <!-- shell -->
-          <path class="stroke" pathLength="1"
-                d="M60 78a50 42 0 0 1 100 0v16a12 12 0 0 1-12 12H72a12 12 0 0 1-12-12z"/>
-          <!-- visor -->
-          <rect class="visor" x="78" y="94" rx="10" width="64" height="18"/>
-          <!-- tiny eye glints (blink) -->
-          <rect class="blink" x="96" y="98" width="12" height="2" rx="1"/>
-          <rect class="blink" x="132" y="98" width="12" height="2" rx="1"/>
-        </g>
-  
-        <!-- BODY -->
-        <g class="body">
-          <path class="stroke" pathLength="1"
-                d="M58 140c0-6 6-10 12-10h80c6 0 12 4 12 10v56c0 8-6 14-14 14H72c-8 0-14-6-14-14z"/>
-          <path class="stroke" pathLength="1" d="M86 176h48"/>
-          <circle class="joint" cx="82" cy="166" r="3"/>
-          <circle class="joint" cx="138" cy="166" r="3"/>
-        </g>
-  
-        <!-- ANTENNA -->
-        <g class="antenna">
-          <line class="stroke" pathLength="1" x1="110" y1="70" x2="110" y2="58"/>
-          <circle class="dot" cx="110" cy="54" r="4"/>
-        </g>
-      </g>
-    </svg>
-
-    <div class="robot-text">
-      <strong>AP-GAINED</strong><br>
-      Gen-AI capacity building for teaching, research, and NREN operations.
-    </div>
-  </div>
-
-
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
-        <a class="btn btn-outline" href="#" onclick="alert('Link this to your detailed AP-GAINED page or PDF');return false;">More details</a>
-      </div>
     </article>
 
-    <article class="card">
-      <!-- Carousel reusing your component + our autoplay that doesn’t jump the page -->
+    <!-- Top-right: ROBOT (line-animated) -->
+    <aside class="card apg-robot">
+      <svg class="linebot" viewBox="0 0 220 260" role="img" aria-label="Animated line robot">
+        <defs>
+          <linearGradient id="wire" x1="0" y1="0" x2="1" y2="1">
+            <stop stop-color="#38bdf8"/><stop offset="1" stop-color="#2dd4bf"/>
+          </linearGradient>
+          <linearGradient id="visor" x1="0" y1="0" x2="1" y2="0">
+            <stop id="v1" offset="0%"  stop-color="#38bdf8"/>
+            <stop id="v2" offset="100%" stop-color="#2dd4bf"/>
+          </linearGradient>
+          <filter id="softGlow">
+            <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#38bdf8" flood-opacity=".5"/>
+          </filter>
+        </defs>
+
+        <g class="bot" filter="url(#softGlow)">
+          <!-- HEAD -->
+          <g class="head">
+            <path class="stroke" pathLength="1"
+                  d="M60 78a50 42 0 0 1 100 0v16a12 12 0 0 1-12 12H72a12 12 0 0 1-12-12z"/>
+            <rect class="visor" x="78" y="94" rx="10" width="64" height="18"/>
+            <rect class="blink" x="96" y="98" width="12" height="2" rx="1"/>
+            <rect class="blink" x="132" y="98" width="12" height="2" rx="1"/>
+          </g>
+          <!-- BODY -->
+          <g class="body">
+            <path class="stroke" pathLength="1"
+                  d="M58 140c0-6 6-10 12-10h80c6 0 12 4 12 10v56c0 8-6 14-14 14H72c-8 0-14-6-14-14z"/>
+            <path class="stroke" pathLength="1" d="M86 176h48"/>
+            <circle class="joint" cx="82" cy="166" r="3"/>
+            <circle class="joint" cx="138" cy="166" r="3"/>
+          </g>
+          <!-- ANTENNA -->
+          <g class="antenna">
+            <line class="stroke" pathLength="1" x1="110" y1="70" x2="110" y2="58"/>
+            <circle class="dot" cx="110" cy="54" r="4"/>
+          </g>
+        </g>
+      </svg>
+      <div class="robot-text"><strong>AP-GAINED</strong> · Gen-AI capacity building for teaching, research, and NREN operations.</div>
+    </aside>
+
+    <!-- Bottom-left: CAROUSEL -->
+    <div class="card apg-carousel">
       <div class="carousel" data-autoplay="5000">
         <button class="c-btn prev" aria-label="Previous slide">‹</button>
         <div class="track">
-          <figure class="slide"><img src="assets/lastyear/apgained/1.jpg" alt=""><figcaption>AP-GAINED</figcaption></figure>
-          <figure class="slide"><img src="assets/lastyear/apgained/2.jpg" alt=""><figcaption>AP-GAINED</figcaption></figure>
-          <figure class="slide"><img src="assets/lastyear/apgained/3.jpg" alt=""><figcaption>AP-GAINED</figcaption></figure>
-          <figure class="slide"><img src="assets/lastyear/apgained/4.jpg" alt=""><figcaption>AP-GAINED</figcaption></figure>
-          <figure class="slide"><img src="assets/lastyear/apgained/5.jpg" alt=""><figcaption>AP-GAINED</figcaption></figure>
-          <figure class="slide"><img src="assets/lastyear/apgained/6.jpg" alt=""><figcaption>AP-GAINED</figcaption></figure>
+          <!-- Use your real images; paths shown as example -->
+          <figure class="slide"><img src="assets/lastyear/apgained/1.jpg" alt="AP-GAINED"><figcaption>AP-GAINED</figcaption></figure>
+          <figure class="slide"><img src="assets/lastyear/apgained/2.jpg" alt="AP-GAINED"></figure>
+          <figure class="slide"><img src="assets/lastyear/apgained/3.jpg" alt="AP-GAINED"></figure>
+          <figure class="slide"><img src="assets/lastyear/apgained/4.jpg" alt="AP-GAINED"></figure>
+          <figure class="slide"><img src="assets/lastyear/apgained/5.jpg" alt="AP-GAINED"></figure>
+          <figure class="slide"><img src="assets/lastyear/apgained/6.jpg" alt="AP-GAINED"></figure>
         </div>
         <button class="c-btn next" aria-label="Next slide">›</button>
       </div>
       <div class="dots"></div>
-    </article>
+    </div>
+
+    <!-- Bottom-right: CTA -->
+    <aside class="card apg-cta">
+      <h3 style="margin:0 0 6px">Want more?</h3>
+      <p class="muted" style="margin-top:0">Read the full AP-GAINED brief and the pilot list.</p>
+      <p style="margin:0">
+        <a class="btn btn-primary" href="assets/ap-gained-brief.pdf" target="_blank" rel="noopener">More details</a>
+      </p>
+    </aside>
   </div>
 </section>
+
 
 <!-- Campus Wi-Fi & eduroam -->
 <section class="container">
