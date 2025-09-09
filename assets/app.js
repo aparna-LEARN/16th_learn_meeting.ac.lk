@@ -45,9 +45,9 @@ function updateDayDate(which) {
 
 window.switchDay = function (which) {
   const d1 = document.getElementById('day1'),
-    d2 = document.getElementById('day2');
+        d2 = document.getElementById('day2');
   const t1 = document.getElementById('tabDay1'),
-    t2 = document.getElementById('tabDay2');
+        t2 = document.getElementById('tabDay2');
 
   if (which === 'day1') {
     if (d1) d1.style.display = '';
@@ -62,11 +62,7 @@ window.switchDay = function (which) {
   }
 
   updateDayDate(which);
-  drawTimeline(); // redraw after switch
-  // If in grid view, rebuild grid for visible day:
-  if (document.getElementById('agenda')?.classList.contains('view-grid')) {
-    buildGridForVisibleDay();
-  }
+  if (typeof drawTimeline === 'function') setTimeout(drawTimeline, 60);
 };
 
 function drawTimeline() {
@@ -175,116 +171,40 @@ function drawTimeline() {
   }
 }
 
-/* ===========================================================
-   View switch (Simple / Grid)
-   =========================================================== */
-function setupViewSwitch() {
-  const agenda = document.getElementById('agenda');
-  const viewBtn = document.getElementById('viewBtn');
-  const viewMenu = document.getElementById('viewMenu');
-  if (!agenda || !viewBtn || !viewMenu) return;
+/* Initial state + redraw hooks */
+window.addEventListener('load', () => {
+  // Ensure Day 1 is active/visible and styled on first paint
+  try {
+    // if sections exist, set their display states explicitly
+    const d1 = document.getElementById('day1');
+    const d2 = document.getElementById('day2');
+    if (d1) d1.style.display = '';
+    if (d2) d2.style.display = 'none';
+    const t1 = document.getElementById('tabDay1');
+    const t2 = document.getElementById('tabDay2');
+    if (t1) t1.classList.add('active');
+    if (t2) t2.classList.remove('active');
+  } catch (_) {}
+  updateDayDate('day1');
+  drawTimeline();
+});
 
-  // restore persisted choice
-  const saved = localStorage.getItem('agendaView') || 'simple';
-  applyView(saved);
-
-  // toggle dropdown
-  viewBtn.addEventListener('click', () => {
-    const open = viewBtn.getAttribute('aria-expanded') === 'true';
-    viewBtn.setAttribute('aria-expanded', String(!open));
-    viewMenu.hidden = open;
-  });
-
-  // click outside to close
-  document.addEventListener('click', (e) => {
-    if (!viewMenu.hidden &&
-        !viewMenu.contains(e.target) &&
-        !viewBtn.contains(e.target)) {
-      viewBtn.setAttribute('aria-expanded','false');
-      viewMenu.hidden = true;
-    }
-  });
-
-  // choose option
-  viewMenu.addEventListener('click', (e) => {
-    const opt = e.target.closest('.view-opt');
-    if (!opt) return;
-    const mode = opt.dataset.view;
-    applyView(mode);
-
-    // close menu
-    viewBtn.setAttribute('aria-expanded','false');
-    viewMenu.hidden = true;
-
-    // update active styling
-    viewMenu.querySelectorAll('.view-opt').forEach(b=>{
-      b.classList.toggle('is-active', b === opt);
-      b.setAttribute('aria-checked', b === opt ? 'true' : 'false');
-    });
-  });
-
-  function applyView(mode) {
-    if (mode === 'grid') {
-      agenda.classList.add('view-grid');
-      buildGridForVisibleDay();
-    } else {
-      agenda.classList.remove('view-grid');
-    }
-    localStorage.setItem('agendaView', mode);
-  }
-}
-
-// Build grid rows for whichever day is visible
-function buildGridForVisibleDay() {
-  const agenda = document.getElementById('agenda');
-  const container = agenda.querySelector('.container');
-  if (!container) return;
-
-  // remove any existing grid-day wrappers
-  container.querySelectorAll('.grid-day').forEach(n => n.remove());
-
-  const activeDay = (document.getElementById('day1')?.style.display === 'none')
-    ? document.getElementById('day2')
-    : document.getElementById('day1');
-  if (!activeDay) return;
-
-  // create grid wrapper
-  const wrapper = document.createElement('div');
-  wrapper.className = 'grid-day';
-
-  // for each time slot, copy to grid row
-  activeDay.querySelectorAll('.slot').forEach(slot => {
-    const time = slot.querySelector('.timecell')?.textContent?.trim() || '';
-    const row = document.createElement('div');
-    row.className = 'g-row';
-
-    const t = document.createElement('div');
-    t.className = 'g-time';
-    t.innerHTML = `<strong>${time}</strong>`;
-
-    const cards = document.createElement('div');
-    cards.className = 'g-cards';
-    // clone card content
-    slot.querySelectorAll('.ag-card').forEach(c => {
-      const clone = c.cloneNode(true);
-      cards.appendChild(clone);
-    });
-
-    row.appendChild(t);
-    row.appendChild(cards);
-    wrapper.appendChild(row);
-  });
-
-  container.appendChild(wrapper);
-}
+window.addEventListener('resize', () => {
+  clearTimeout(window.__tlr);
+  window.__tlr = setTimeout(drawTimeline, 120);
+});
+window.addEventListener('orientationchange', () =>
+  setTimeout(drawTimeline, 150)
+);
 
 /* ===========================================================
-   Network background (anchored shimmer)
+   Network background (anchored shimmer) — DENSER + WIDER LINKS
    =========================================================== */
 (function () {
   const canvas = document.getElementById('net-bg');
   if (!canvas) return;
 
+  // honor reduced motion
   const prefersReduced =
     window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
   if (prefersReduced) {
@@ -297,6 +217,7 @@ function buildGridForVisibleDay() {
   let W, H, nodes = [], t0 = performance.now();
   const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
 
+  // Tweaks: denser nodes + longer links
   let density = 0.00022;
   let maxDist = 170;
 
@@ -306,6 +227,7 @@ function buildGridForVisibleDay() {
     canvas.style.width = window.innerWidth + 'px';
     canvas.style.height = window.innerHeight + 'px';
 
+    // scale node count with area (guard rails for perf)
     const target = Math.max(
       80,
       Math.min(240, Math.floor((W * H) / (pixelRatio * pixelRatio) * density))
@@ -315,25 +237,28 @@ function buildGridForVisibleDay() {
       const bx = Math.random() * W;
       const by = Math.random() * H;
       return {
-        bx, by,
-        amp: 16 + Math.random() * 28,
-        spd: 0.35 + Math.random() * 0.55,
-        ph: Math.random() * Math.PI * 2,
-        r: 1.6 + Math.random() * 1.3,
-        hue: Math.random() < 0.5 ? 190 : 160,
+        bx,
+        by,                                // base (anchor)
+        amp: 16 + Math.random() * 28,      // movement radius
+        spd: 0.35 + Math.random() * 0.55,  // angular speed (rad/s)
+        ph: Math.random() * Math.PI * 2,   // phase
+        r: 1.6 + Math.random() * 1.3,      // dot radius
+        hue: Math.random() < 0.5 ? 190 : 160, // sky / mint
       };
     });
   }
 
   function draw(now) {
-    const t = (now - t0) / 1000;
+    const t = (now - t0) / 1000; // seconds
     ctx.clearRect(0, 0, W, H);
 
+    // positions (anchored shimmer)
     for (const n of nodes) {
       n.x = n.bx + Math.cos(n.ph + t * n.spd) * n.amp;
       n.y = n.by + Math.sin(n.ph + t * n.spd) * n.amp;
     }
 
+    // dots
     for (const n of nodes) {
       ctx.beginPath();
       ctx.fillStyle = `hsla(${n.hue}, 80%, 60%, 0.9)`;
@@ -341,6 +266,7 @@ function buildGridForVisibleDay() {
       ctx.fill();
     }
 
+    // links
     const linkCutoff = maxDist * pixelRatio;
     for (let i = 0; i < nodes.length; i++) {
       const a = nodes[i];
@@ -349,8 +275,11 @@ function buildGridForVisibleDay() {
         const dx = a.x - b.x, dy = a.y - b.y;
         const d = Math.hypot(dx, dy);
         if (d < linkCutoff) {
-          const alpha = 1 - d / linkCutoff;
-          ctx.strokeStyle = `rgba(${alpha < 0.5 ? 52 : 56}, ${alpha < 0.5 ? 211 : 189}, ${alpha < 0.5 ? 153 : 248}, ${alpha * 0.6})`;
+          const alpha = 1 - d / linkCutoff; // closer => stronger
+          // mint/sky blend
+          ctx.strokeStyle = `rgba(${alpha < 0.5 ? 52 : 56}, ${
+            alpha < 0.5 ? 211 : 189
+          }, ${alpha < 0.5 ? 153 : 248}, ${alpha * 0.6})`;
           ctx.lineWidth = Math.max(0.6, pixelRatio * alpha);
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
@@ -363,22 +292,9 @@ function buildGridForVisibleDay() {
     requestAnimationFrame(draw);
   }
 
+  // boot
   window.addEventListener('resize', resize, { passive: true });
   window.addEventListener('orientationchange', () => setTimeout(resize, 120));
   resize();
   requestAnimationFrame(draw);
 })();
-
-/* ===== boot ===== */
-window.addEventListener('load', () => {
-  setupViewSwitch();          // ensure View switch is active
-  updateDayDate('day1');
-  drawTimeline();
-});
-window.addEventListener('resize', () => {
-  clearTimeout(window.__tlr);
-  window.__tlr = setTimeout(drawTimeline, 120);
-});
-window.addEventListener('orientationchange', () =>
-  setTimeout(drawTimeline, 150)
-);
