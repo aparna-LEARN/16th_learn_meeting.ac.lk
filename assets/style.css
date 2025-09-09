@@ -584,7 +584,13 @@ section.container > *:first-child{ margin-top:0; }
             / span calc(var(--dur) / var(--step));
   align-self:stretch;
 
-  display:flex; flex-direction:column; justify-content:center;
+  /* Center content in ALL slots */
+  display:flex; 
+  flex-direction:column; 
+  justify-content:center; 
+  align-items:center; 
+  text-align:center;
+
   margin:4px 0;                                 /* visible gap between stacked items */
   padding:12px 14px;
   border-radius:14px;
@@ -604,8 +610,15 @@ section.container > *:first-child{ margin-top:0; }
 .schedule-grid .event.span-all{ grid-column: 2 / -1; }
 
 /* titles & meta */
-.schedule-grid .ev-title{ font-weight:700; line-height:1.2; }
-.schedule-grid .ev-meta{ font-size:12px; opacity:.85; margin-top:4px; }
+.schedule-grid .ev-title{ 
+  font-weight:700; 
+  line-height:1.2; 
+}
+.schedule-grid .ev-meta{ 
+  font-size:12px; 
+  opacity:.85; 
+  margin-top:4px; 
+}
 
 /* Warm highlight for tea breaks & lunch */
 .schedule-grid .event.break{
@@ -617,6 +630,29 @@ section.container > *:first-child{ margin-top:0; }
 .schedule-grid .event.break .ev-meta{ color:#5c4700; opacity:.95; }
 .schedule-grid .event.lunch{ background: linear-gradient(180deg,#ffe88a,#ffcf5e); }
 
+/* Make ONLY Tea Break inline: time ▸ label (lunch stays stacked) */
+.schedule-grid .event.break:not(.lunch){
+  flex-direction:row;
+  gap:10px;
+}
+.schedule-grid .event.break:not(.lunch) .ev-meta,
+.schedule-grid .event.break:not(.lunch) .ev-title{
+  margin:0;
+  line-height:1.15;
+  display:inline-block;
+}
+.schedule-grid .event.break:not(.lunch) .ev-meta{
+  order:0;                 /* time first */
+  font-weight:700;
+  letter-spacing:.02em;
+  color:#5c4700;
+}
+.schedule-grid .event.break:not(.lunch) .ev-title{
+  order:1;                 /* label after time */
+  font-weight:800;
+  color:#2a2200;
+}
+
 /* subtle inner gutter between parallel tracks */
 .schedule-grid > *[style*="--col:2"]{ margin-left:4px; }
 
@@ -625,7 +661,6 @@ section.container > *:first-child{ margin-top:0; }
   .schedule-grid{ --time-col:74px; --row-h:28px; }
   .schedule-grid .ev-title{ font-size:14px; }
 }
-
 
 
 
