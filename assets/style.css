@@ -327,6 +327,12 @@ section.container > *:first-child{ margin-top:0; }
    AP-GAINED layout (compact)
    ========================= */
 
+/* Space between hero banner and AP-GAINED section */
+#ap-gained{
+  margin-top: clamp(24px, 4vw, 56px);  /* adjust as you like */
+  scroll-margin-top: 96px;             /* keeps section visible when linked */
+}
+
 .apg-grid{
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(0,1fr);
@@ -400,6 +406,7 @@ section.container > *:first-child{ margin-top:0; }
     height:clamp(170px, 38vw, 280px); /* smaller mobile/tablet */
   }
 }
+
 
 /* =============== (optional) line-animated robot bits =============== */
 .linebot{height:auto;display:block}
