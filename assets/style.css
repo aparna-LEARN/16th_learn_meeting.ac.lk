@@ -182,7 +182,7 @@ section.container > *:first-child{ margin-top:0; }
 .wg-list{margin:8px 0 0 18px}
 .wg-list li{margin:6px 0}
 .wg-foot{margin-top:10px}
-.join{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--brand)}
+.join{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:#0a2e63}
 .join .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(90deg,var(--mint),var(--sky))}
 
 /* ===========================================================
@@ -327,7 +327,6 @@ section.container > *:first-child{ margin-top:0; }
    AP-GAINED layout (compact)
    ========================= */
 
-
 /* Space between hero banner and AP-GAINED section */
 #ap-gained{
   margin-top: clamp(24px, 4vw, 56px);
@@ -361,12 +360,12 @@ section.container > *:first-child{ margin-top:0; }
 
 /* ------- Robot viewer frame (clips overflow) ------- */
 .apg-robot-frame{
-  width: min(500px, 100%);     /* adjust if you want a larger/smaller box */
-  aspect-ratio: 1 / 1.12;      /* portrait-ish window for the bot */
+  width: min(500px, 100%);
+  aspect-ratio: 1 / 1.12;
   border-radius: var(--radius);
-  overflow: hidden;            /* <-- ensures no model edges escape */
+  overflow: hidden;            /* ensures no model edges escape */
   margin-inline: auto;
-  contain: paint;              /* keeps the viewer rendering inside */
+  contain: paint;
 }
 /* Viewer fills the frame */
 .apg-robot-frame model-viewer{
@@ -437,8 +436,6 @@ section.container > *:first-child{ margin-top:0; }
 .linebot .joint{ fill:#38bdf8; opacity:.9; }
 @keyframes pulse{ 0%,100%{opacity:1; transform:scale(1)} 50%{opacity:.5; transform:scale(.8)} }
 
-
-
 /* =========================
    Workshop Grid
    ========================= */
@@ -448,9 +445,7 @@ section.container > *:first-child{ margin-top:0; }
   display:grid;
   grid-template-columns:repeat(2, 1fr);
   gap:12px;
-  /* the card already has padding/border/shadow from .card */
 }
-
 .workshop-grid figure{
   margin:0;
   border-radius:14px;
@@ -458,27 +453,23 @@ section.container > *:first-child{ margin-top:0; }
   border:1px solid var(--ring);
   box-shadow:var(--shadow);
 }
-
 .workshop-grid img{
   width:100%;
   height:100%;
   display:block;
   object-fit:cover;
-  aspect-ratio:4 / 3;          /* keeps neat, even tiles (change to 16/9 if you prefer) */
+  aspect-ratio:4 / 3;
 }
-
 /* stack on small screens */
 @media (max-width:680px){
   .workshop-grid{ grid-template-columns:1fr; }
 }
 
-
-
 /* Responsive 16:9 video wrapper */
 .video-frame{
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;            /* modern browsers */
+  aspect-ratio: 16 / 9;
   background:#000;
   border-radius: var(--radius);
   overflow:hidden;
@@ -494,24 +485,98 @@ section.container > *:first-child{ margin-top:0; }
   display:block;
 }
 
-
 /* Make the right column (video) a bit wider than the text column */
 #aide .grid.cols-2{
-  grid-template-columns: 1.05fr 1.35fr;   /* was 1fr 1fr */
+  grid-template-columns: 1.05fr 1.35fr;
   gap: 24px;
   align-items: start;
 }
-
 /* Let the video fill the card, and reduce inner padding a little */
-#aide .video-card{ padding: 12px; }       /* default was 18px */
+#aide .video-card{ padding: 12px; }
 #aide .video-card .video-frame{ width: 100%; aspect-ratio: 16 / 9; }
 #aide .video-card .video-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
-
 /* Stack normally on mobile */
 @media (max-width: 980px){
   #aide .grid.cols-2{ grid-template-columns: 1fr; }
-  #aide .video-card{ padding: 14px; }     /* a touch more padding on small screens */
+  #aide .video-card{ padding: 14px; }
 }
+
+/* =============================
+   Full-day Agenda Grid (00–24h)
+   ============================= */
+.page-dark .card.schedule{
+  background:#0f1a33;
+  border:1px solid #21314c;
+  color:#eaf2ff;
+  border-radius:18px;
+  padding:18px;
+}
+.schedule.scroll{ overflow:auto; }
+
+/* Grid: first col = time ruler, rest = tracks */
+.schedule-grid{
+  --start-min:0;      /* 0..1440 */
+  --end-min:1440;
+  --step:30;          /* minutes per row */
+  --row-h:32px;       /* height per step row */
+  --cols:2;
+
+  display:grid;
+  grid-template-columns: 80px repeat(var(--cols), 1fr);
+  grid-auto-rows: var(--row-h);
+  gap: 0 12px;
+  position: relative;
+}
+
+/* set how many parallel tracks */
+.schedule-grid.tracks-2{ --cols:2; }
+.schedule-grid.tracks-3{ --cols:3; }
+.schedule-grid.tracks-4{ --cols:4; }
+
+/* Hour labels & faint guide lines */
+.schedule-grid .time{
+  grid-column:1;
+  align-self:start;
+  padding-right:10px;
+  font-size:12px;
+  color:#9fb2d3;
+  position:relative;
+  grid-row: calc((var(--at) - var(--start-min)) / var(--step) + 1);
+}
+/* horizontal guide line */
+.schedule-grid .time::after{
+  content:"";
+  position:absolute; left:64px; right:0; top:calc(50% - .5px);
+  height:1px; background:#1b2a46; opacity:.55;
+}
+
+/* Events */
+.schedule-grid .event{
+  grid-column: calc(var(--col,1) + 1);
+  grid-row:
+    calc((var(--start) - var(--start-min)) / var(--step) + 1)
+    / span calc(var(--dur) / var(--step));
+  background:#0c1a31;
+  border:1px solid #264063;
+  border-radius:12px;
+  padding:10px 12px;
+  box-shadow:0 6px 14px rgba(2,6,23,.25);
+}
+.schedule-grid .event .ev-title{ font-weight:700; }
+.schedule-grid .event .ev-meta{ font-size:12px; color:#9fb2d3; }
+/* breaks/plenary variants */
+.schedule-grid .event.break{
+  background:#0e243f; border-style:dashed; border-color:#31527c;
+}
+.schedule-grid .event.span-all{ grid-column: 2 / -1; }
+
+/* Smaller screens: allow horizontal scroll if many tracks */
+@media (max-width: 680px){
+  .schedule-grid{ grid-template-columns: 64px repeat(var(--cols), minmax(240px,1fr)); overflow:auto; }
+}
+
+
+
 
 
 
