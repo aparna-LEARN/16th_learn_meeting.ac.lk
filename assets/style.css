@@ -137,7 +137,7 @@ section.container > *:first-child{ margin-top:0; }
 .ag-hero h1{font-size:clamp(32px,6vw,56px);margin:0}
 
 /* ----- Tabs (Day 1 / Day 2) ----- */
-.tabs{display:flex;gap:12px;justify-content:center;margin:14px 0 6px;flex-wrap:wrap}
+.tabs{display:flex;gap:12px;justify-content:center;margin:14px 0 6px}
 .tab{
   padding:10px 16px;
   border-radius:14px;
@@ -163,56 +163,13 @@ section.container > *:first-child{ margin-top:0; }
   outline-offset:2px;
 }
 
-/* ===== View switch (Simple / Grid) ===== */
-.view-switch{ position:relative; }
-.view-btn{
-  background:#111827; color:#e5e7eb; border:2px solid #d2d9e7;
-  border-radius:14px; padding:10px 14px; cursor:pointer;
-  display:inline-flex; align-items:center; gap:8px;
-  transition:filter .18s, transform .18s, border-color .18s, background .18s, color .18s;
-}
-.view-btn:hover{ transform:translateY(-2px); filter:brightness(1.05); }
-.view-btn[aria-expanded="true"]{ background:#ffffff; color:#0b2d2d; border-color:#eef3fb; }
-
-.view-menu{
-  position:absolute; top:44px; left:0; min-width:140px;
-  background:#0c1324; color:#eaf2ff; border:1px solid #21314c; border-radius:12px;
-  box-shadow:0 12px 26px rgba(2,6,23,.25); padding:6px; z-index:30;
-}
-.view-opt{
-  display:block; width:100%; text-align:left; padding:10px 12px; border-radius:10px; cursor:pointer;
-  background:transparent; color:#eaf2ff; border:none; font:inherit;
-}
-.view-opt:hover{ background:#0f1a33; }
-.view-opt.is-active{ background:#0b2d2d; border:1px solid #2dd4bf; }
-
-/* timeline (Simple view) */
+/* timeline */
 .timeline{position:relative;margin-top:8px}
 .slot{display:grid;gap:16px;grid-template-columns:110px 1fr;padding:16px 0}
 .timecell{color:#7dd3fc;text-align:right;line-height:1;padding-right:34px;position:relative}
 .cards{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
 .ag-card{background:#0f1a33;border:1px solid #21314c;color:#eaf2ff;border-radius:18px;padding:18px}
 .ag-card h3{margin:0 0 6px}
-
-/* ===== Grid view containers ===== */
-.grid-day{ margin-top:8px; display:none; }
-.g-row{
-  display:grid; gap:16px;
-  grid-template-columns:110px 1fr;
-  padding:16px 0;
-}
-.g-time{
-  color:#7dd3fc; text-align:right; line-height:1; padding-right:34px;
-  font-size:20px; font-weight:700;
-}
-.g-cards{
-  display:grid; gap:14px;
-  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
-}
-
-/* Toggle Simple vs Grid */
-#agenda.view-grid #timeline{ display:none; }
-#agenda.view-grid .grid-day{ display:block; }
 
 /* responsive */
 @media (max-width: 920px){
@@ -223,8 +180,6 @@ section.container > *:first-child{ margin-top:0; }
   .grid.cols-3{grid-template-columns:1fr}
   .slot{grid-template-columns:84px 1fr}
   .timecell{padding-right:22px}
-  .g-row{grid-template-columns:84px 1fr}
-  .g-time{padding-right:22px;font-size:18px}
 }
 
 /* micro */
@@ -266,7 +221,7 @@ section.container > *:first-child{ margin-top:0; }
 
 .wg-acc{margin-top:10px;border:1px dashed var(--ring);border-radius:12px;padding:10px 12px;background:#fff}
 .wg-acc > summary{cursor:pointer;list-style:none;font-weight:600;color:var(--brand);display:flex;align-items:center;gap:8px}
-.wg-acc > summary::before{content:'▸';color:var(--brand-2);transition:transform .2s ease}
+.wg-acc > summary::before{content:'â–¸';color:var(--brand-2);transition:transform .2s ease}
 .wg-acc[open] > summary::before{transform:rotate(90deg)}
 .wg-list{margin:8px 0 0 18px}
 .wg-list li{margin:6px 0}
@@ -285,13 +240,12 @@ section.container > *:first-child{ margin-top:0; }
   height:100vh;
   z-index:0;                 /* behind content but above page background */
   pointer-events:none;
-  opacity:.70;
-  mix-blend-mode:multiply;
+  opacity:.70;               /* stronger so itâ€™s always visible */
+  mix-blend-mode:multiply;   /* reads well under white cards */
 }
 
-/* ===== Stacking context fix: hero/nav above section ===== */
-.nav, header, .ag-hero{ position:relative; z-index:25; }
-section, footer{ position:relative; z-index:1; }
+/* keep all content above background layers */
+.nav, header, section, footer { position:relative; z-index:1; }
 
 /* ===========================================================
    Page Ambient Background (soft animated blobs)
@@ -376,5 +330,3 @@ section, footer{ position:relative; z-index:1; }
   }
   #net-bg{ display:none; }
 }
-
-
