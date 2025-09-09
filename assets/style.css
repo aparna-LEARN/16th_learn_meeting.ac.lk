@@ -356,7 +356,25 @@ section.container > *:first-child{ margin-top:0; }
 
 /* Slightly tighter vertical padding on the two top cards */
 .apg-text.card,
-.apg-robot.card{ padding-block:14px; }
+/* Make the robot area look plain even if it still has `card` */
+.apg-robot.card{
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;           /* optional: remove inner card padding */
+}
+
+/* Hide the small caption under the robot, if present */
+.apg-robot .robot-text{ display: none; }
+
+/* Keep the robot centered and sized nicely */
+.apg-robot{ display: grid; place-items: center; }
+.apg-robot .linebot,
+.apg-robot svg{
+  height: clamp(140px, 22vw, 240px);
+  width: auto;
+}
+
 
 /* ===== Inline CTA (Want more?) ===== */
 .apg-cta-inline{
