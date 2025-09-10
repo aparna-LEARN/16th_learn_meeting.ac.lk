@@ -7,19 +7,29 @@
   <meta name="description" content="Sri Lanka’s national research & education community—together for collaboration, planning, and action.">
   <link rel="stylesheet" href="assets/style.css">
 
-  <!-- Minimal CSS for the Working Groups ribbon (kept here for convenience) -->
+  <!-- Minimal CSS just for the Working Groups ribbon (kept here for convenience) -->
   <style>
-    
-/* ===== WG ribbon — taller so cards sit fully inside ===== */
+    /* ===== WG ribbon — taller so cards sit fully inside; full-bleed section ===== */
+    :root{ --wg-h: clamp(560px, 72vh, 920px); }
+
+    .wg-section{
+      position:relative;
+      /* make the ribbon span edge-to-edge while the cards still use .container */
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      margin-bottom: 28px;
+    }
+
     .wg-ribbon{
-      --wg-h: clamp(420px, 50vh, 620px);   /* adjust this to taste */
       position:absolute; inset:0;
       height: var(--wg-h);
+      overflow:hidden;
+      z-index:0;
     }
     .wg-ribbon::before{
       content:""; position:absolute; inset:0;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.65), rgba(0,0,0,.45)),
+        linear-gradient(180deg, rgba(0,0,0,.62), rgba(0,0,0,.40)),
         radial-gradient(150% 70% at 50% 0%, rgba(0,0,0,.35), transparent 70%);
       pointer-events:none;
     }
@@ -28,7 +38,7 @@
       height: var(--wg-h);
       display:flex; gap:0;
       will-change:transform;
-      animation:wg-scroll 60s linear infinite;
+      transform: translate3d(0,0,0);
     }
     .wg-ribbon img{
       height: 100%;
@@ -38,25 +48,33 @@
       object-fit: cover;
       filter:saturate(.95) contrast(1.05);
       opacity:.9;
-    }
-    
-    /* Ensure the overlaying content area is at least as tall as the ribbon */
-    .wg-content{
-      position:relative; z-index:1;
-      padding:48px 16px 32px;
-      min-height: var(--wg-h);
-    }
-    
-    /* Two white cards layout (unchanged, here for context) */
-    .wg-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px; }
-    .wg-card{ background:#fff; color:#0b1220; }
-    
-    @media (max-width:980px){
-      .wg-ribbon{ --wg-h: clamp(320px, 48vh, 480px); }
-      .wg-content{ padding-top:36px; }
-      .wg-grid{ grid-template-columns:1fr; }
+      transform: translateZ(0);
     }
 
+    /* Foreground (white cards) sits on top and at least as tall as ribbon */
+    .wg-content{
+      position:relative; z-index:1;
+      min-height: var(--wg-h);
+      padding:56px 0 34px;
+    }
+
+    /* Two white cards layout (your cards stay as-is) */
+    .wg-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px; }
+    .wg-card{ background:#fff; color:#0b1220; }
+
+    /* Slightly wider container for this section only (optional) */
+    #wgs .container{ max-width:1280px; }
+
+    @media (max-width:980px){
+      :root{ --wg-h: clamp(360px, 52vh, 560px); }
+      .wg-grid{ grid-template-columns:1fr; }
+      .wg-content{ padding-top:36px; }
+    }
+
+    /* Respect Reduced Motion */
+    @media (prefers-reduced-motion: reduce){
+      .wg-ribbon-track{ transform:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -247,20 +265,18 @@
       <img src="assets/wg-ribbon/7.jpg" alt="">
       <img src="assets/wg-ribbon/8.jpg" alt="">
       <img src="assets/wg-ribbon/9.jpg" alt="">
-      
-      <!-- duplicate set for endless loop -->
+      <!-- duplicated set for seamless loop -->
       <img src="assets/wg-ribbon/6.jpg" alt="">
       <img src="assets/wg-ribbon/7.jpg" alt="">
       <img src="assets/wg-ribbon/8.jpg" alt="">
       <img src="assets/wg-ribbon/9.jpg" alt="">
-      
     </div>
   </div>
 
   <div class="container wg-content">
     <header class="wg-head">
-      <h2 class="section-title">Working Groups</h2>
-      <p class="muted">Hands-on communities driving projects, training, and real outcomes for 2025–26.</p>
+      <h2 class="section-title" style="color:#e7f1ff">Working Groups</h2>
+      <p class="muted" style="color:#cfe1ff">Hands-on communities driving projects, training, and real outcomes for 2025–26.</p>
     </header>
 
     <div class="wg-grid">
@@ -419,7 +435,58 @@
 <div id="toast" style="background:#0a79a7;border-radius:12px;bottom:18px;box-shadow:0 10px 26px rgba(2,6,23,.25);color:#fff;left:50%;opacity:0;padding:10px 14px;pointer-events:none;position:fixed;transform:translateX(-50%) translateY(20px);transition:all .35s ease">Copied!</div>
 
 <script src="assets/app.js"></script>
+
+<!-- Slow, seamless WG ribbon scroller -->
+<script>
+(function(){
+  const track = document.querySelector('.wg-ribbon-track');
+  if(!track) return;
+
+  // Use half the total width (we included two sets of images in HTML)
+  let totalWidth = 0;
+  let halfWidth = 0;
+
+  function measure(){
+    // Force layout, then measure total width
+    totalWidth = Array.from(track.children)
+      .reduce((sum, el) => sum + el.getBoundingClientRect().width, 0);
+    halfWidth = totalWidth / 2;
+  }
+
+  // Re-measure after images load and on resize
+  let imgs = Array.from(track.querySelectorAll('img'));
+  let loaded = 0;
+  imgs.forEach(img => {
+    if (img.complete) { loaded++; if (loaded === imgs.length) measure(); }
+    else img.addEventListener('load', () => { loaded++; if (loaded === imgs.length) measure(); }, {once:true});
+  });
+  window.addEventListener('resize', () => { measure(); });
+
+  let x = 0;
+  const SPEED = 12; // px/sec (smaller = slower)
+  let last = performance.now();
+
+  function step(now){
+    const dt = (now - last) / 1000; last = now;
+    x -= SPEED * dt;
+
+    // Reset when we’ve scrolled one set width
+    if (halfWidth > 0 && -x >= halfWidth){
+      x += halfWidth;
+    }
+
+    track.style.transform = `translate3d(${x}px,0,0)`;
+    requestAnimationFrame(step);
+  }
+
+  if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    requestAnimationFrame(step);
+  }
+})();
+</script>
+
 <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
 </body>
 </html>
+
 
