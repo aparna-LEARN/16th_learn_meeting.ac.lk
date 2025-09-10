@@ -579,26 +579,60 @@ section.container > *:first-child{ margin-top:0; }
 /* ===========================================================
    Conduct + Contact split (Lottie animation on the left)
    =========================================================== */
+/* ===== Code of Conduct / Contact split with Lottie ===== */
 .conduct-split{
   display:grid;
-  grid-template-columns: 1fr 1.35fr;
+  grid-template-columns: minmax(0,1fr) minmax(0,1.35fr);
   gap:24px;
   align-items:center;
   margin-top:8px;
 }
-.conduct-split .anim-col{ display:grid; place-items:center; padding:8px; }
-.anim-box{ width:min(520px, 100%); aspect-ratio: 1 / 1; }
-.anim-box dotlottie-wc{
-  width:100%; height:100%; display:block;
-  filter: drop-shadow(0 18px 40px rgba(2,6,23,.18));
+.conduct-split > *{ min-width:0; }       /* avoid overflow from long text */
+
+.conduct-split .anim-col{
+  display:grid;
+  place-items:center;
+  padding:8px;
 }
+
+/* Lottie frame */
+.anim-box{
+  position:relative;
+  width:min(560px, 100%);
+  aspect-ratio: 1 / 1.05;                 /* a touch taller feels nicer */
+  border-radius: var(--radius);
+  overflow:hidden;                         /* clip any stray bg layer from the file */
+  background: transparent !important;      /* force no white box */
+  contain: paint;
+}
+
+/* Lottie player itself */
+.anim-box dotlottie-wc{
+  width:100%;
+  height:100%;
+  display:block;
+  background: transparent !important;      /* belt & suspenders */
+  transform: translateZ(0);
+  filter: drop-shadow(0 18px 40px rgba(2,6,23,.16));
+}
+
+/* simple utility stacks */
 .stack{ display:grid; }
 .gap-18{ row-gap:18px; }
-@media (max-width:980px){
-  .conduct-split{ grid-template-columns:1fr; }
-  .conduct-split .anim-col{ order:-1; }
-  .anim-box{ width:min(420px,100%); }
+
+/* responsive tweaks */
+@media (max-width:1100px){
+  .anim-box{ width:min(480px,100%); }
 }
+@media (max-width:980px){
+  .conduct-split{ grid-template-columns:1fr; align-items:start; }
+  .conduct-split .anim-col{ order:-1; }    /* animation above text on mobile */
+  .anim-box{ width:min(420px,100%); aspect-ratio: 1 / 1.1; }
+}
+@media (max-width:560px){
+  .anim-box{ width:100%; aspect-ratio: 1 / 1.1; }
+}
+
 
 
 
