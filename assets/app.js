@@ -381,7 +381,56 @@ window.addEventListener('orientationchange', () =>
   });
 })();
 
+/* ===========================================================
+   Working-Groups ribbon scroller (slow, seamless)
+   =========================================================== */
+(function initRibbon(){
+  const track = document.querySelector('.wg-ribbon-track');
+  if (!track) return;
 
+  // Respect reduced motion
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  let totalWidth = 0;
+  let halfWidth = 0;
+
+  function measure(){
+    totalWidth = Array.from(track.children)
+      .reduce((sum, el) => sum + el.getBoundingClientRect().width, 0);
+    halfWidth = totalWidth / 2;
+  }
+
+  // Re-measure after images load and on resize
+  const imgs = Array.from(track.querySelectorAll('img'));
+  let loaded = 0;
+  function maybeMeasure(){ loaded++; if (loaded >= imgs.length) measure(); }
+  imgs.forEach(img => {
+    if (img.complete) maybeMeasure();
+    else img.addEventListener('load', maybeMeasure, { once:true });
+  });
+  window.addEventListener('resize', () => { measure(); });
+  window.addEventListener('orientationchange', () => setTimeout(measure, 120));
+  // Fallback measure after load in case some images were cached
+  window.addEventListener('load', () => { if (!halfWidth) measure(); });
+
+  let x = 0;
+  const SPEED = 12; // px/sec — tweak for slower/faster
+  let last = performance.now();
+
+  function step(now){
+    const dt = (now - last) / 1000; last = now;
+    x -= SPEED * dt;
+
+    if (halfWidth > 0 && -x >= halfWidth){
+      x += halfWidth; // seamless wrap
+    }
+
+    track.style.transform = `translate3d(${x}px,0,0)`;
+    requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+})();
 
 /* =========================
    Simple lightbox for .gallery images
@@ -402,4 +451,5 @@ window.addEventListener('orientationchange', () =>
   closer?.addEventListener('click', ()=> dlg.close());
   dlg.addEventListener('click', (e)=>{ if (e.target === dlg) dlg.close(); });
 })();
+
 
