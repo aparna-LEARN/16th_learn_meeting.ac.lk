@@ -326,97 +326,37 @@ section.container > *:first-child{ margin-top:0; }
 /* =========================
    AP-GAINED layout (compact)
    ========================= */
-
-/* Space between hero banner and AP-GAINED section */
-#ap-gained{
-  margin-top: clamp(24px, 4vw, 56px);
-  scroll-margin-top: 96px;
-}
-
+#ap-gained{ margin-top: clamp(24px, 4vw, 56px); scroll-margin-top: 96px; }
 .apg-grid{
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   grid-template-areas:
     "text robot"
-    "carousel carousel";      /* full-width carousel row */
-  gap:18px;
-  align-items:start;
-  grid-auto-rows:auto;
+    "carousel carousel";
+  gap:18px; align-items:start; grid-auto-rows:auto;
 }
-/* allow children to shrink without overflow */
 .apg-grid > *{ min-width:0; }
-
 .apg-text{ grid-area:text; }
 .apg-robot{ grid-area:robot; display:grid; place-items:center; text-align:center; }
 .apg-carousel{ grid-area:carousel; }
-
-/* make ONLY the robot card frameless */
-.apg-robot.card{
-  background:transparent;
-  border:0;
-  box-shadow:none;
-  padding:0;
-}
-
-/* ------- Robot viewer frame (clips overflow) ------- */
-.apg-robot-frame{
-  width: min(500px, 100%);
-  aspect-ratio: 1 / 1.12;
-  border-radius: var(--radius);
-  overflow: hidden;            /* ensures no model edges escape */
-  margin-inline: auto;
-  contain: paint;
-}
-/* Viewer fills the frame */
-.apg-robot-frame model-viewer{
-  width: 100%;
-  height: 100%;
-  display: block;
-  background: transparent;
-}
-/* If older rules existed sizing model-viewer directly, neutralize them */
+.apg-robot.card{ background:transparent; border:0; box-shadow:none; padding:0; }
+.apg-robot-frame{ width:min(500px,100%); aspect-ratio:1/1.12; border-radius:var(--radius); overflow:hidden; margin-inline:auto; contain:paint; }
+.apg-robot-frame model-viewer{ width:100%; height:100%; display:block; background:transparent; }
 .apg-robot model-viewer{ width:100%; height:100%; }
-
-/* line/SVG robot fallback */
-.apg-robot .linebot,
-.apg-robot svg{
-  height:clamp(80px, 14vw, 140px);
-  width:auto;
-}
-
-/* hide caption under robot if present */
+.apg-robot .linebot, .apg-robot svg{ height:clamp(80px,14vw,140px); width:auto; }
 .apg-robot .robot-text{ display:none; }
-
-/* Inline CTA (Want more?) */
-.apg-cta-inline{
-  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
-}
+.apg-cta-inline{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
 .apg-text p + .apg-cta-inline{ margin-top:16px; }
 .apg-cta-inline .muted{ margin:0; line-height:1.3; }
-
-/* Independent, full-width carousel (second row) */
 .apg-carousel .carousel .slide{ flex-basis:100%; aspect-ratio:16/9; }
 .apg-carousel .carousel .slide img{ height:100%; object-fit:cover; }
-.apg-carousel .carousel,
-.apg-carousel .track,
-.apg-carousel .slide{ overflow-anchor:none; }
-
-/* Stack on narrow screens + frame resize */
+.apg-carousel .carousel, .apg-carousel .track, .apg-carousel .slide{ overflow-anchor:none; }
 @media (max-width:980px){
-  .apg-grid{
-    grid-template-columns:1fr;
-    grid-template-areas:
-      "text"
-      "robot"
-      "carousel";
-  }
-  .apg-robot-frame{
-    width: min(360px, 100%);
-    aspect-ratio: 1 / 1.2;
-  }
+  .apg-grid{ grid-template-columns:1fr; grid-template-areas:"text" "robot" "carousel"; }
+  .apg-robot-frame{ width:min(360px,100%); aspect-ratio:1/1.2; }
 }
 
-/* =============== (optional) line-animated robot bits =============== */
+/* line-animated robot bits */
 .linebot{height:auto;display:block}
 .linebot .stroke{
   fill:none; stroke:url(#wire); stroke-width:3; stroke-linecap:round; stroke-linejoin:round;
@@ -439,73 +379,32 @@ section.container > *:first-child{ margin-top:0; }
 /* =========================
    Workshop Grid
    ========================= */
-
-/* 2×2 photo grid for Workshop section */
 .workshop-grid{
-  display:grid;
-  grid-template-columns:repeat(2, 1fr);
-  gap:12px;
+  display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;
 }
 .workshop-grid figure{
-  margin:0;
-  border-radius:14px;
-  overflow:hidden;
-  border:1px solid var(--ring);
-  box-shadow:var(--shadow);
+  margin:0; border-radius:14px; overflow:hidden; border:1px solid var(--ring); box-shadow:var(--shadow);
 }
 .workshop-grid img{
-  width:100%;
-  height:100%;
-  display:block;
-  object-fit:cover;
-  aspect-ratio:4 / 3;
+  width:100%; height:100%; display:block; object-fit:cover; aspect-ratio:4 / 3;
 }
-/* stack on small screens */
-@media (max-width:680px){
-  .workshop-grid{ grid-template-columns:1fr; }
-}
+@media (max-width:680px){ .workshop-grid{ grid-template-columns:1fr; } }
 
-/* Responsive 16:9 video wrapper */
-.video-frame{
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background:#000;
-  border-radius: var(--radius);
-  overflow:hidden;
-  box-shadow: var(--shadow);
-}
-.video-frame iframe,
-.video-frame video{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  border:0;
-  display:block;
-}
-
-/* Make the right column (video) a bit wider than the text column */
-#aide .grid.cols-2{
-  grid-template-columns: 1.05fr 1.35fr;
-  gap: 24px;
-  align-items: start;
-}
-/* Let the video fill the card, and reduce inner padding a little */
-#aide .video-card{ padding: 12px; }
-#aide .video-card .video-frame{ width: 100%; aspect-ratio: 16 / 9; }
+/* Responsive 16:9 video */
+.video-frame{ position:relative; width:100%; aspect-ratio:16/9; background:#000; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); }
+.video-frame iframe, .video-frame video{ position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
+#aide .grid.cols-2{ grid-template-columns: 1.05fr 1.35fr; gap:24px; align-items:start; }
+#aide .video-card{ padding:12px; }
+#aide .video-card .video-frame{ width:100%; aspect-ratio:16/9; }
 #aide .video-card .video-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
-/* Stack normally on mobile */
-@media (max-width: 980px){
-  #aide .grid.cols-2{ grid-template-columns: 1fr; }
-  #aide .video-card{ padding: 14px; }
+@media (max-width:980px){
+  #aide .grid.cols-2{ grid-template-columns:1fr; }
+  #aide .video-card{ padding:14px; }
 }
 
 /* =============================
    Full-day agenda grid with custom start/end
    ============================= */
-
-
 .card.schedule{
   background: linear-gradient(180deg,#0d1628,#0b1220);
   border:1px solid #1c2b48;
@@ -516,11 +415,10 @@ section.container > *:first-child{ margin-top:0; }
 
 /* Grid base */
 .schedule-grid{
-  /* timing variables are set inline: --day-start / --day-end */
-  --step: 30;              /* minutes per grid row */
-  --row-h: 32px;           /* row height controls density */
-  --time-col: 90px;        /* width of the left time rail */
-  --tracks: 2;             /* overridden by .tracks-3, etc. */
+  --step: 30;
+  --row-h: 32px;
+  --time-col: 90px;
+  --tracks: 2;
 
   position: relative;
   display: grid;
@@ -532,34 +430,19 @@ section.container > *:first-child{ margin-top:0; }
   overflow:hidden;
   background:#0f1b2e;
 }
-
-/* number of tracks */
 .schedule-grid.tracks-2{ --tracks:2; }
 .schedule-grid.tracks-3{ --tracks:3; }
 
-/* backdrop grid lines: half-hour (fine) + hour (strong) */
 .schedule-grid::before{
   content:"";
   position:absolute; inset:0 0 0 var(--time-col);
   background-image:
-    /* half-hour ticks */
-    repeating-linear-gradient(to bottom,
-      rgba(255,255,255,.05) 0,
-      rgba(255,255,255,.05) 1px,
-      transparent 1px,
-      transparent var(--row-h)
-    ),
-    /* hour lines (every 2 rows) */
-    repeating-linear-gradient(to bottom,
-      rgba(255,255,255,.08) 0,
-      rgba(255,255,255,.08) 2px,
-      transparent 2px,
-      transparent calc(var(--row-h) * 2)
-    );
+    repeating-linear-gradient(to bottom, rgba(255,255,255,.05) 0, rgba(255,255,255,.05) 1px, transparent 1px, transparent var(--row-h)),
+    repeating-linear-gradient(to bottom, rgba(255,255,255,.08) 0, rgba(255,255,255,.08) 2px, transparent 2px, transparent calc(var(--row-h) * 2));
   pointer-events:none;
 }
 
-/* time labels on the left rail */
+/* time labels */
 .schedule-grid .time{
   grid-column:1;
   grid-row: calc((var(--at) - var(--day-start)) / var(--step) + 1);
@@ -576,22 +459,17 @@ section.container > *:first-child{ margin-top:0; }
   width:4px; height:1px; background:#32507a; opacity:.8;
 }
 
-/* event blocks */
+/* events */
 .schedule-grid .event{
-  /* columns are 1-based AFTER the time column */
   grid-column: calc(var(--col) + 1);
   grid-row: calc((var(--start) - var(--day-start)) / var(--step) + 1)
             / span calc(var(--dur) / var(--step));
   align-self:stretch;
 
-  /* Center content in ALL slots */
-  display:flex; 
-  flex-direction:column; 
-  justify-content:center; 
-  align-items:center; 
-  text-align:center;
+  /* center all */
+  display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;
 
-  margin:4px 0;                                 /* visible gap between stacked items */
+  margin:4px 0;
   padding:12px 14px;
   border-radius:14px;
   background: linear-gradient(180deg,#162942,#112237);
@@ -605,22 +483,12 @@ section.container > *:first-child{ margin-top:0; }
   box-shadow:0 12px 30px rgba(0,0,0,.38);
   filter:saturate(1.05);
 }
-
-/* full-width rows (e.g., ceremonies, dinner, breaks that span tracks) */
 .schedule-grid .event.span-all{ grid-column: 2 / -1; }
 
-/* titles & meta */
-.schedule-grid .ev-title{ 
-  font-weight:700; 
-  line-height:1.2; 
-}
-.schedule-grid .ev-meta{ 
-  font-size:12px; 
-  opacity:.85; 
-  margin-top:4px; 
-}
+.schedule-grid .ev-title{ font-weight:700; line-height:1.2; }
+.schedule-grid .ev-meta{ font-size:12px; opacity:.85; margin-top:4px; }
 
-/* Warm highlight for tea breaks & lunch */
+/* Tea breaks & lunch (warm) */
 .schedule-grid .event.break{
   background: linear-gradient(180deg,#fff1a6,#ffd973);
   border-color:#f1c64a;
@@ -630,33 +498,25 @@ section.container > *:first-child{ margin-top:0; }
 .schedule-grid .event.break .ev-meta{ color:#5c4700; opacity:.95; }
 .schedule-grid .event.lunch{ background: linear-gradient(180deg,#ffe88a,#ffcf5e); }
 
-/* Make ONLY Tea Break inline: time ▸ label (lunch stays stacked) */
+/* Tea Break only: time on the left of label */
 .schedule-grid .event.break:not(.lunch){
   flex-direction:row;
   gap:10px;
 }
 .schedule-grid .event.break:not(.lunch) .ev-meta,
 .schedule-grid .event.break:not(.lunch) .ev-title{
-  margin:0;
-  line-height:1.15;
-  display:inline-block;
+  margin:0; line-height:1.15; display:inline-block;
 }
 .schedule-grid .event.break:not(.lunch) .ev-meta{
-  order:0;                 /* time first */
-  font-weight:700;
-  letter-spacing:.02em;
-  color:#5c4700;
+  order:0; font-weight:700; letter-spacing:.02em; color:#5c4700;
 }
 .schedule-grid .event.break:not(.lunch) .ev-title{
-  order:1;                 /* label after time */
-  font-weight:800;
-  color:#2a2200;
+  order:1; font-weight:800; color:#2a2200;
 }
 
-/* subtle inner gutter between parallel tracks */
+/* gutter between parallel tracks */
 .schedule-grid > *[style*="--col:2"]{ margin-left:4px; }
 
-/* smaller screens */
 @media (max-width: 820px){
   .schedule-grid{ --time-col:74px; --row-h:28px; }
   .schedule-grid .ev-title{ font-size:14px; }
@@ -665,50 +525,29 @@ section.container > *:first-child{ margin-top:0; }
 /* =============================
    Working Groups ribbon (full-bleed, slow-moving images)
    ============================= */
+:root{ --wg-h: clamp(560px, 72vh, 920px); }
 
-
-/* Tweak overall ribbon height here (taller = larger photos) */
-:root{
-  --wg-h: clamp(560px, 72vh, 920px);
-}
-
-/* Title bar ABOVE the ribbon (like “Key Information”) */
-.wg-titlebar{
-  margin: 8px auto 6px;
-}
+.wg-titlebar{ margin: 8px auto 6px; }
 .wg-titlebar .section-title{ margin-bottom: 6px; }
 .wg-titlebar .wg-sub{ color:#0a2f73; margin:0; }
 
-/* Section wrapper: make the ribbon span the full viewport width (edge-to-edge) */
 .wg-section{
   position: relative;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
   margin-bottom: 28px;
-  /* control speed with a CSS var (smaller = faster; 80s is nice and slow) */
   --wg-speed: 80s;
 }
-
-/* The ribbon sits behind, full-bleed */
 .wg-ribbon{
-  position: absolute;
-  inset: 0;
-  height: var(--wg-h);
-  overflow: hidden;
-  z-index: 0;
+  position: absolute; inset: 0; height: var(--wg-h); overflow: hidden; z-index: 0;
 }
-
-/* Darken for legibility over photos */
 .wg-ribbon::before{
-  content:"";
-  position:absolute; inset:0;
+  content:""; position:absolute; inset:0;
   background:
     linear-gradient(180deg, rgba(0,0,0,.62), rgba(0,0,0,.40)),
     radial-gradient(150% 70% at 50% 0%, rgba(0,0,0,.35), transparent 70%);
   pointer-events:none;
 }
-
-/* The moving image strip (two identical sets for seamless scroll) */
 .wg-ribbon-track{
   position:absolute; left:0; top:0;
   height: var(--wg-h);
@@ -717,59 +556,49 @@ section.container > *:first-child{ margin-top:0; }
   transform: translate3d(0,0,0);
   animation: wg-scroll var(--wg-speed) linear infinite;
 }
-
-/* Each image fills the ribbon height and keeps aspect */
 .wg-ribbon-track img{
-  height: 100%;
-  width: auto;
-  flex: 0 0 auto;
-  display:block;
-  object-fit: cover;
-  filter:saturate(.95) contrast(1.05);
-  opacity:.9;
-  /* slight guard to avoid micro gaps on some GPUs */
-  transform: translateZ(0);
+  height: 100%; width: auto; flex: 0 0 auto; display:block; object-fit: cover;
+  filter:saturate(.95) contrast(1.05); opacity:.9; transform: translateZ(0);
 }
-
-/* Foreground (white cards) sits on top and is at least as tall as the ribbon */
 .wg-content{
-  position: relative;
-  z-index: 1;
-  min-height: var(--wg-h);
-  padding: 56px 0 34px;
+  position: relative; z-index: 1; min-height: var(--wg-h); padding: 56px 0 34px;
 }
-
-/* Two white cards */
-.wg-grid{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  margin-top:14px;
-}
+.wg-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top:14px; }
 .wg-card{ background:#fff; color:#0b1220; }
-
-/* Make the container a bit wider specifically for this section */
 #wgs .container{ max-width: 1280px; }
-
-/* Seamless loop.
-   Because the track contains two identical image sequences,
-   shifting by -50% of its width lands at the start of the second set. */
-@keyframes wg-scroll{
-  to { transform: translateX(-50%); }
-}
-
-/* Responsive */
+@keyframes wg-scroll{ to { transform: translateX(-50%); } }
 @media (max-width: 980px){
   :root{ --wg-h: clamp(360px, 52vh, 560px); }
   .wg-grid{ grid-template-columns: 1fr; }
   .wg-content{ padding-top: 36px; }
 }
-
-/* Respect Reduced Motion */
 @media (prefers-reduced-motion: reduce){
   .wg-ribbon-track{ animation: none !important; transform: none !important; }
 }
 
+/* ===========================================================
+   Conduct + Contact split (Lottie animation on the left)
+   =========================================================== */
+.conduct-split{
+  display:grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap:24px;
+  align-items:center;
+  margin-top:8px;
+}
+.conduct-split .anim-col{ display:grid; place-items:center; padding:8px; }
+.anim-box{ width:min(520px, 100%); aspect-ratio: 1 / 1; }
+.anim-box dotlottie-wc{
+  width:100%; height:100%; display:block;
+  filter: drop-shadow(0 18px 40px rgba(2,6,23,.18));
+}
+.stack{ display:grid; }
+.gap-18{ row-gap:18px; }
+@media (max-width:980px){
+  .conduct-split{ grid-template-columns:1fr; }
+  .conduct-split .anim-col{ order:-1; }
+  .anim-box{ width:min(420px,100%); }
+}
 
 
 
