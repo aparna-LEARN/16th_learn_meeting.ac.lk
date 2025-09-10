@@ -667,19 +667,26 @@ section.container > *:first-child{ margin-top:0; }
    ============================= */
 
 
+/* Tweak overall ribbon height here (taller = larger photos) */
 :root{
-  /* Tweak overall ribbon height here (taller = larger photos) */
   --wg-h: clamp(560px, 72vh, 920px);
 }
 
-/* Section wrapper */
+/* Title bar ABOVE the ribbon (like “Key Information”) */
+.wg-titlebar{
+  margin: 8px auto 6px;
+}
+.wg-titlebar .section-title{ margin-bottom: 6px; }
+.wg-titlebar .wg-sub{ color:#0a2f73; margin:0; }
+
+/* Section wrapper: make the ribbon span the full viewport width (edge-to-edge) */
 .wg-section{
   position: relative;
-  /* Make the ribbon span the whole viewport width (edge-to-edge) */
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  /* keep some space below the section */
   margin-bottom: 28px;
+  /* control speed with a CSS var (smaller = faster; 80s is nice and slow) */
+  --wg-speed: 80s;
 }
 
 /* The ribbon sits behind, full-bleed */
@@ -701,13 +708,14 @@ section.container > *:first-child{ margin-top:0; }
   pointer-events:none;
 }
 
-/* The moving image strip */
+/* The moving image strip (two identical sets for seamless scroll) */
 .wg-ribbon-track{
   position:absolute; left:0; top:0;
   height: var(--wg-h);
   display:flex; gap:0;
   will-change: transform;
   transform: translate3d(0,0,0);
+  animation: wg-scroll var(--wg-speed) linear infinite;
 }
 
 /* Each image fills the ribbon height and keeps aspect */
@@ -719,11 +727,11 @@ section.container > *:first-child{ margin-top:0; }
   object-fit: cover;
   filter:saturate(.95) contrast(1.05);
   opacity:.9;
-  /* slight left/right guard to avoid micro gaps on some GPUs */
+  /* slight guard to avoid micro gaps on some GPUs */
   transform: translateZ(0);
 }
 
-/* Foreground (white cards) sits on top and at least as tall as ribbon */
+/* Foreground (white cards) sits on top and is at least as tall as the ribbon */
 .wg-content{
   position: relative;
   z-index: 1;
@@ -740,8 +748,15 @@ section.container > *:first-child{ margin-top:0; }
 }
 .wg-card{ background:#fff; color:#0b1220; }
 
-/* Make the "container" a bit wider specifically for this section (optional) */
+/* Make the container a bit wider specifically for this section */
 #wgs .container{ max-width: 1280px; }
+
+/* Seamless loop.
+   Because the track contains two identical image sequences,
+   shifting by -50% of its width lands at the start of the second set. */
+@keyframes wg-scroll{
+  to { transform: translateX(-50%); }
+}
 
 /* Responsive */
 @media (max-width: 980px){
@@ -752,8 +767,10 @@ section.container > *:first-child{ margin-top:0; }
 
 /* Respect Reduced Motion */
 @media (prefers-reduced-motion: reduce){
-  .wg-ribbon-track{ transform: none !important; }
+  .wg-ribbon-track{ animation: none !important; transform: none !important; }
 }
+
+
 
 
 
