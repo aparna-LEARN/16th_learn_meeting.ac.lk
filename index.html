@@ -7,7 +7,7 @@
   <meta name="description" content="Sri Lanka’s national research & education community—together for collaboration, planning, and action." />
   <link rel="stylesheet" href="assets/style.css" />
 
-  <!-- Minimal CSS kept inline for the Working Groups ribbon + Conduct/Contact split -->
+  <!-- Minimal CSS kept inline for the WG ribbon + Conduct/Contact split -->
   <style>
     /* ===== WG ribbon — taller so cards sit fully inside; full-bleed section ===== */
     :root{ --wg-h: clamp(560px, 72vh, 920px); }
@@ -92,6 +92,7 @@
       width:100%; height:100%; display:block;
       filter: drop-shadow(0 18px 40px rgba(2,6,23,.18));
     }
+    .right-col{ display:grid; }
     .stack{ display:grid; }
     .gap-18{ row-gap:18px; }
 
@@ -400,20 +401,19 @@
   <section id="conduct-contact" class="container conduct-split">
     <!-- LEFT: transparent animation -->
     <div class="anim-col">
-      <div class="anim-col">
-        <div class="anim-box">
-          <dotlottie-wc
-            src="YOUR_URL.lottie"
-            background="transparent"
-            autoplay
-            loop
-            speed="1"
-          ></dotlottie-wc>
+      <div class="anim-box">
+        <dotlottie-wc
+          src="https://lottie.host/1291f68b-7ac9-4f8f-bad5-dbde6414ee92/1U4pT76QEi.lottie"
+          background="transparent"
+          autoplay
+          loop
+          speed="1"
+        ></dotlottie-wc>
       </div>
     </div>
 
     <!-- RIGHT: cards -->
-    <div class="right-col">
+    <div class="right-col stack gap-18">
       <div class="card">
         <h2 class="section-title">Code of Conduct</h2>
         <p>
@@ -423,18 +423,16 @@
         </p>
       </div>
 
-      <div class="stack gap-18">
-        <h2 class="section-title" style="margin:6px 0 0">Contact</h2>
-        <div class="grid cols-2">
-          <div class="card">
-            <h3>Email</h3>
-            <p><a id="emailLink2" href="mailto:consultant@ops.learn.ac.lk">consultant@ops.learn.ac.lk</a></p>
-            <button class="btn btn-outline" onclick="copyEmail('emailLink2')">Copy</button>
-          </div>
-          <div class="card">
-            <h3>Website</h3>
-            <p><a href="https://www.ac.lk" target="_blank" rel="noopener noreferrer">https://www.ac.lk</a></p>
-          </div>
+      <h2 class="section-title" style="margin:6px 0 0">Contact</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Email</h3>
+          <p><a id="emailLink2" href="mailto:consultant@ops.learn.ac.lk">consultant@ops.learn.ac.lk</a></p>
+          <button class="btn btn-outline" onclick="copyEmail('emailLink2')">Copy</button>
+        </div>
+        <div class="card">
+          <h3>Website</h3>
+          <p><a href="https://www.ac.lk" target="_blank" rel="noopener noreferrer">https://www.ac.lk</a></p>
         </div>
       </div>
     </div>
@@ -516,3 +514,4 @@
   <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
 </body>
 </html>
+
