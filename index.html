@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>16th LEARN Meeting — October 23–24, 2025</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Sri Lanka’s national research & education community—together for collaboration, planning, and action.">
-  <link rel="stylesheet" href="assets/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Sri Lanka’s national research & education community—together for collaboration, planning, and action." />
+  <link rel="stylesheet" href="assets/style.css" />
 
-  <!-- Minimal CSS just for the Working Groups ribbon (kept here for convenience) -->
+  <!-- Minimal CSS kept inline for the Working Groups ribbon + Conduct/Contact split -->
   <style>
     /* ===== WG ribbon — taller so cards sit fully inside; full-bleed section ===== */
     :root{ --wg-h: clamp(560px, 72vh, 920px); }
@@ -19,7 +19,6 @@
       margin-right: calc(50% - 50vw);
       margin-bottom: 28px;
     }
-
     .wg-ribbon{
       position:absolute; inset:0;
       height: var(--wg-h);
@@ -75,422 +74,444 @@
     @media (prefers-reduced-motion: reduce){
       .wg-ribbon-track{ transform:none !important; }
     }
+
+    /* ===== Conduct + Contact split with animated Lottie (business woman) ===== */
+    .conduct-split{
+      display:grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap:24px;
+      align-items:center;
+      margin-top: 8px;
+    }
+    .conduct-split .anim-col{ display:grid; place-items:center; padding:8px; }
+    .anim-box{
+      width:min(520px, 100%);
+      aspect-ratio: 1 / 1;
+    }
+    .anim-box dotlottie-wc{
+      width:100%; height:100%; display:block;
+      filter: drop-shadow(0 18px 40px rgba(2,6,23,.18));
+    }
+    .stack{ display:grid; }
+    .gap-18{ row-gap:18px; }
+
+    @media (max-width:980px){
+      .conduct-split{ grid-template-columns:1fr; }
+      .conduct-split .anim-col{ order:-1; }
+      .anim-box{ width:min(420px,100%); }
+    }
   </style>
 </head>
 <body>
 
-<!-- NETWORK LINES BACKGROUND (only behind white sections) -->
-<canvas id="net-bg"></canvas>
+  <!-- NETWORK LINES BACKGROUND (only behind white sections) -->
+  <canvas id="net-bg"></canvas>
 
-<!-- Ambient page background (behind all content) -->
-<div class="page-ambient" aria-hidden="true">
-  <span class="orb o1"></span>
-  <span class="orb o2"></span>
-  <span class="orb o3"></span>
-</div>
-
-<!-- NAV -->
-<nav class="nav">
-  <div class="container nav-inner">
-    <a class="brand" href="https://www.ac.lk/" target="_blank" rel="noopener" aria-label="LEARN">
-      <img src="assets/Learn_Logo.png" alt="LEARN">
-    </a>
-
-    <div class="menu">
-      <a href="./">Home</a>
-      <a href="agenda.html">Agenda</a>
-      <a href="last-year.html">Last Year</a>
-      <a class="btn btn-primary" href="#register">Register</a>
-    </div>
+  <!-- Ambient page background (behind all content) -->
+  <div class="page-ambient" aria-hidden="true">
+    <span class="orb o1"></span>
+    <span class="orb o2"></span>
+    <span class="orb o3"></span>
   </div>
-</nav>
 
-<!-- HERO -->
-<header class="hero" id="top">
-  <div class="container inner">
-    <h1>16th LEARN Meeting</h1>
-    <p class="lead"><strong>October 23–24, 2025 · <span style="color:#ffb353;">Stay tuned for the venue announcement</span></strong></p>
-    <p class="lead">Sri Lanka’s national research &amp; education community—together for collaboration, planning, and action.</p>
-    <div class="badges">
-      <span class="pill">AGM</span>
-      <span class="pill">GenAI Empowerment WG</span>
-      <span class="pill">AgriTech WG</span>
-      <span class="pill">Services Awareness</span>
-    </div>
-    <div class="hero-card floaty">
-      <div class="grid">
-        <div>Opening ceremony &amp; keynote • Social dinner &amp; networking</div>
-        <div class="muted">Roadmaps, coordinators, and next-step actions for 2025–26.</div>
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="https://www.ac.lk/" target="_blank" rel="noopener" aria-label="LEARN">
+        <img src="assets/Learn_Logo.png" alt="LEARN" />
+      </a>
+
+      <div class="menu">
+        <a href="./">Home</a>
+        <a href="agenda.html">Agenda</a>
+        <a href="last-year.html">Last Year</a>
+        <a class="btn btn-primary" href="#register">Register</a>
       </div>
     </div>
-    <p style="margin-top:14px">
-      <a class="btn btn-primary" href="#register"><strong>Register</strong></a>
-      <a class="btn btn-primary" href="agenda.html">View Agenda</a>
-    </p>
-  </div>
-</header>
+  </nav>
 
-<!-- ABOUT (left text cards) + CAROUSEL (right) -->
-<section id="about">
-  <div class="container">
-    <!-- NEW: top row with matching headings -->
-    <div class="about-top">
-      <h2 class="section-title">About the LEARN Meeting</h2>
-      <div class="card about-carousel-title">
-        <h3 class="section-title" style="margin:0">15th AGM &amp; LEARN@35 — Highlights</h3>
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="container inner">
+      <h1>16th LEARN Meeting</h1>
+      <p class="lead"><strong>October 23–24, 2025 · <span style="color:#ffb353;">Stay tuned for the venue announcement</span></strong></p>
+      <p class="lead">Sri Lanka’s national research &amp; education community—together for collaboration, planning, and action.</p>
+      <div class="badges">
+        <span class="pill">AGM</span>
+        <span class="pill">GenAI Empowerment WG</span>
+        <span class="pill">AgriTech WG</span>
+        <span class="pill">Services Awareness</span>
       </div>
-    </div>
-
-    <div class="grid cols-2">
-      <!-- LEFT: two cards -->
-      <div class="grid" style="gap:24px">
-        <div class="card">
-          <h3>What it is</h3>
-          <p>
-            The annual gathering of Sri Lanka’s research &amp; education community.
-            In 2025 we launch two new Working Groups—<strong>GenAI Empowerment</strong>
-            and <strong>AgriTech</strong>—and run a LEARN Services Awareness session.
-          </p>
+      <div class="hero-card floaty">
+        <div class="grid">
+          <div>Opening ceremony &amp; keynote • Social dinner &amp; networking</div>
+          <div class="muted">Roadmaps, coordinators, and next-step actions for 2025–26.</div>
         </div>
+      </div>
+      <p style="margin-top:14px">
+        <a class="btn btn-primary" href="#register"><strong>Register</strong></a>
+        <a class="btn btn-primary" href="agenda.html">View Agenda</a>
+      </p>
+    </div>
+  </header>
 
-        <div class="card">
-          <h3>Who should attend</h3>
-          <ul>
-            <li>Official delegates of member institutions (AGM)</li>
-            <li>Academics, researchers, IT leaders, administrators (WGs)</li>
-            <li>Campus IT, library, e-learning teams (Services)</li>
-          </ul>
+  <!-- ABOUT (left text cards) + CAROUSEL (right) -->
+  <section id="about">
+    <div class="container">
+      <div class="about-top">
+        <h2 class="section-title">About the LEARN Meeting</h2>
+        <div class="card about-carousel-title">
+          <h3 class="section-title" style="margin:0">15th AGM &amp; LEARN@35 — Highlights</h3>
         </div>
       </div>
 
-      <!-- RIGHT: 15th AGM Photo Carousel -->
-      <div>
-        <div class="card" style="padding:0">
-          <div class="carousel" data-autoplay="5000" aria-label="15th AGM photo highlights">
-            <button class="c-btn prev" aria-label="Previous">‹</button>
-            <div class="track">
-              <figure class="slide">
-                <img loading="lazy" src="assets/15th/2.jpg" alt="Opening session — 15th AGM">
-                <figcaption>Opening session — 15th AGM</figcaption>
-              </figure>
-              <figure class="slide">
-                <img loading="lazy" src="assets/15th/1.jpg" alt="Panel discussion">
-                <figcaption>Panel discussion</figcaption>
-              </figure>
-              <figure class="slide">
-                <img loading="lazy" src="assets/15th/3.jpg" alt="Networking break">
-                <figcaption>Networking break</figcaption>
-              </figure>
-              <figure class="slide">
-                <img loading="lazy" src="assets/15th/4.jpg" alt="Keynote">
-                <figcaption>Keynote</figcaption>
-              </figure>
-              <figure class="slide">
-                <img loading="lazy" src="assets/15th/5.jpg" alt="Team photo">
-                <figcaption>Team photo</figcaption>
-              </figure>
-              <figure class="slide">
-                <img loading="lazy" src="assets/15th/6.jpg" alt="Dinner">
-                <figcaption>Dinner</figcaption>
-              </figure>
+      <div class="grid cols-2">
+        <!-- LEFT: two cards -->
+        <div class="grid" style="gap:24px">
+          <div class="card">
+            <h3>What it is</h3>
+            <p>
+              The annual gathering of Sri Lanka’s research &amp; education community.
+              In 2025 we launch two new Working Groups—<strong>GenAI Empowerment</strong>
+              and <strong>AgriTech</strong>—and run a LEARN Services Awareness session.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Who should attend</h3>
+            <ul>
+              <li>Official delegates of member institutions (AGM)</li>
+              <li>Academics, researchers, IT leaders, administrators (WGs)</li>
+              <li>Campus IT, library, e-learning teams (Services)</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- RIGHT: 15th AGM Photo Carousel -->
+        <div>
+          <div class="card" style="padding:0">
+            <div class="carousel" data-autoplay="5000" aria-label="15th AGM photo highlights">
+              <button class="c-btn prev" aria-label="Previous">‹</button>
+              <div class="track">
+                <figure class="slide">
+                  <img loading="lazy" src="assets/15th/2.jpg" alt="Opening session — 15th AGM" />
+                  <figcaption>Opening session — 15th AGM</figcaption>
+                </figure>
+                <figure class="slide">
+                  <img loading="lazy" src="assets/15th/1.jpg" alt="Panel discussion" />
+                  <figcaption>Panel discussion</figcaption>
+                </figure>
+                <figure class="slide">
+                  <img loading="lazy" src="assets/15th/3.jpg" alt="Networking break" />
+                  <figcaption>Networking break</figcaption>
+                </figure>
+                <figure class="slide">
+                  <img loading="lazy" src="assets/15th/4.jpg" alt="Keynote" />
+                  <figcaption>Keynote</figcaption>
+                </figure>
+                <figure class="slide">
+                  <img loading="lazy" src="assets/15th/5.jpg" alt="Team photo" />
+                  <figcaption>Team photo</figcaption>
+                </figure>
+                <figure class="slide">
+                  <img loading="lazy" src="assets/15th/6.jpg" alt="Dinner" />
+                  <figcaption>Dinner</figcaption>
+                </figure>
+              </div>
+              <button class="c-btn next" aria-label="Next">›</button>
             </div>
-            <button class="c-btn next" aria-label="Next">›</button>
+            <div class="dots" aria-label="Slide indicators"></div>
           </div>
-          <div class="dots" aria-label="Slide indicators"></div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- KEY INFO -->
-<section>
-  <div class="container">
-    <h2 class="section-title">Key Information</h2>
-    <div class="card">
-      <div class="grid cols-3">
-        <div class="kv">
-          <div class="ico">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <rect x="3" y="5" width="18" height="16" rx="3" stroke="#0a79a7" stroke-width="1.6"/>
-              <path d="M3 9h18M8 3v4M16 3v4" stroke="#0a79a7" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
+  <!-- KEY INFO -->
+  <section>
+    <div class="container">
+      <h2 class="section-title">Key Information</h2>
+      <div class="card">
+        <div class="grid cols-3">
+          <div class="kv">
+            <div class="ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="16" rx="3" stroke="#0a79a7" stroke-width="1.6" />
+                <path d="M3 9h18M8 3v4M16 3v4" stroke="#0a79a7" stroke-width="1.6" stroke-linecap="round" />
+              </svg>
+            </div>
+            <div><div><strong>Dates</strong></div>Thursday–Friday, Oct 23–24, 2025</div>
           </div>
-          <div><div><strong>Dates</strong></div>Thursday–Friday, Oct 23–24, 2025</div>
+          <div class="kv">
+            <div class="ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z" stroke="#0a79a7" stroke-width="1.6" />
+                <circle cx="12" cy="10" r="2.5" stroke="#0a79a7" stroke-width="1.6" />
+              </svg>
+            </div>
+            <div><div><strong>Venue</strong></div>To be announced</div>
+          </div>
+          <div class="kv">
+            <div class="ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M20 6L9 17l-5-5" stroke="#0a79a7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div><div><strong>Dress Code</strong></div>Smart casual</div>
+          </div>
+          <div class="kv" style="grid-column:1/-1">
+            <div class="ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2.5" stroke="#0a79a7" stroke-width="1.6"></rect>
+                <path d="M4 7l8 6 8-6" stroke="#0a79a7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+              <div>
+                <div><strong>Contact</strong></div>
+                <a id="emailLink" href="mailto:consultant@ops.learn.ac.lk">consultant@ops.learn.ac.lk</a>
+              </div>
+              <button class="btn btn-outline" onclick="copyEmail()">Copy</button>
+            </div>
+          </div>
         </div>
-        <div class="kv">
-          <div class="ico">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z" stroke="#0a79a7" stroke-width="1.6"/>
-              <circle cx="12" cy="10" r="2.5" stroke="#0a79a7" stroke-width="1.6"/>
-            </svg>
-          </div>
-          <div><div><strong>Venue</strong></div>To be announced</div>
-        </div>
-        <div class="kv">
-          <div class="ico">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M20 6L9 17l-5-5" stroke="#0a79a7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div><div><strong>Dress Code</strong></div>Smart casual</div>
-        </div>
-        <div class="kv" style="grid-column:1/-1">
-          <div class="ico">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <rect x="3" y="5" width="18" height="14" rx="2.5" stroke="#0a79a7" stroke-width="1.6"></rect>
-              <path d="M4 7l8 6 8-6" stroke="#0a79a7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WORKING GROUPS — title bar OUTSIDE the ribbon ===================== -->
+  <section class="container wg-titlebar">
+    <h2 class="section-title">Working Groups</h2>
+    <p class="wg-sub">Hands-on communities driving projects, training, and real outcomes for 2025–26.</p>
+  </section>
+
+  <!-- ===================== WORKING GROUPS with photo ribbon (cards only over images) ===================== -->
+  <section id="wgs" class="wg-section">
+    <!-- Full-width slow ribbon behind (images duplicated for seamless loop) -->
+    <div class="wg-ribbon" aria-hidden="true">
+      <div class="wg-ribbon-track">
+        <img src="assets/wg-ribbon/6.jpg" alt="" />
+        <img src="assets/wg-ribbon/7.jpg" alt="" />
+        <img src="assets/wg-ribbon/8.jpg" alt="" />
+        <img src="assets/wg-ribbon/9.jpg" alt="" />
+        <!-- duplicate set for seamless loop -->
+        <img src="assets/wg-ribbon/6.jpg" alt="" />
+        <img src="assets/wg-ribbon/7.jpg" alt="" />
+        <img src="assets/wg-ribbon/8.jpg" alt="" />
+        <img src="assets/wg-ribbon/9.jpg" alt="" />
+      </div>
+    </div>
+
+    <!-- Only the cards overlay the ribbon (no section heading here) -->
+    <div class="container wg-content">
+      <div class="wg-grid">
+        <!-- WG 1: AgriTech -->
+        <article class="card wg-card">
+          <header class="wg-top">
+            <div class="wg-icon" aria-hidden="true">🌱</div>
             <div>
-              <div><strong>Contact</strong></div>
-              <a id="emailLink" href="mailto:consultant@ops.learn.ac.lk">consultant@ops.learn.ac.lk</a>
+              <h3 class="wg-title">WG 1: AgriTech</h3>
+              <div class="wg-tags">
+                <span class="chip">IoT</span><span class="chip">Remote Sensing</span><span class="chip">AI</span><span class="chip">Data Platforms</span>
+              </div>
             </div>
-            <button class="btn btn-outline" onclick="copyEmail()">Copy</button>
+          </header>
+
+          <p class="muted"><strong>Purpose:</strong> Connect agriculture faculties, research centres, and IT teams to apply digital technologies across education, research, and extension.</p>
+
+          <details class="wg-acc" open>
+            <summary><span>Expected Outcomes (2025–26)</span></summary>
+            <ul class="wg-list">
+              <li><strong>2–3 collaborative pilots</strong> (e.g., smart farm sensor network; shared agri-data repository)</li>
+              <li><strong>Quarterly knowledge-sharing</strong> sessions and a community portal</li>
+              <li><strong>Published roadmap</strong> with roles, milestones, and metrics</li>
+            </ul>
+          </details>
+
+          <footer class="wg-foot">
+            <div class="join"><span class="dot"></span> Who should join:</div>
+            <p class="muted">Academics &amp; researchers in agriculture; IT/IoT specialists; administrators supporting agri projects.</p>
+          </footer>
+        </article>
+
+        <!-- WG 2: GenAI Empowerment -->
+        <article class="card wg-card">
+          <header class="wg-top">
+            <div class="wg-icon" aria-hidden="true">🤖</div>
+            <div>
+              <h3 class="wg-title">WG 2: GenAI Empowerment</h3>
+              <div class="wg-tags">
+                <span class="chip">Teaching</span><span class="chip">Research</span><span class="chip">Student Services</span><span class="chip">Ops</span>
+              </div>
+            </div>
+          </header>
+
+          <p class="muted"><strong>Purpose:</strong> Build national capacity to use Generative AI responsibly in teaching, research, student services, and NREN operations.</p>
+
+          <details class="wg-acc" open>
+            <summary><span>Expected Outcomes (2025–26)</span></summary>
+            <ul class="wg-list">
+              <li><strong>2–3 pilot projects</strong> (e.g., student services chatbot; AI-assisted teaching toolkit)</li>
+              <li><strong>2–3 training programs</strong> for faculty, researchers, and IT teams</li>
+              <li><strong>Practical guidelines</strong> for safe, ethical GenAI use in higher education</li>
+            </ul>
+          </details>
+
+          <footer class="wg-foot">
+            <div class="join"><span class="dot"></span> Who should join:</div>
+            <p class="muted">CS/IT academics, learning technologists, librarians, student services leaders, and campus IT managers.</p>
+          </footer>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MAIN SESSIONS ===================== -->
+  <section class="container">
+    <h2 class="section-title">Main Sessions</h2>
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>16th Annual General Meeting (AGM)</h3>
+        <p><strong>Participants:</strong> Official delegates of LEARN member organizations (VCs or nominees).</p>
+      </div>
+      <div class="card">
+        <h3>LEARN Board Meeting</h3>
+        <p><strong>Participants:</strong> LEARN Board members (Closed meeting).</p>
+      </div>
+      <div class="card">
+        <h3>LEARN Services Awareness Session</h3>
+        <p>A session for the broader LEARN community and prospective members. Topics include:</p>
+        <ul>
+          <li><strong>Identity & Access:</strong> eduID, identity federation, eduGAIN</li>
+          <li><strong>Connectivity & Mobility:</strong> eduroam, eduVPN</li>
+          <li><strong>Cybersecurity & Support:</strong> LEARN-CSIRT, TAC</li>
+          <li><strong>Collaboration & Cloud:</strong> conferencing, e-learning, storage</li>
+        </ul>
+        <p><em>Bring your questions! We’ll share deployment guides, contacts, and success stories.</em></p>
+      </div>
+      <div class="card">
+        <h3>Opening Ceremony & Social Dinner</h3>
+        <p>The Opening Ceremony welcomes the community, introduces the WGs, and features a keynote address. The Social Dinner (Day 1 evening) brings everyone together to build relationships and kickstart collaborations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Conduct + Contact (with animated illustration) ===================== -->
+  <section id="conduct-contact" class="container conduct-split">
+    <!-- LEFT: transparent animation -->
+    <div class="anim-col">
+      <div class="anim-box">
+        <dotlottie-wc
+          src="https://lottie.host/1291f68b-7ac9-4f8f-bad5-dbde6414ee92/1U4pT76QEi.lottie"
+          speed="1"
+          autoplay
+          loop
+          aria-label="Animated business woman">
+        </dotlottie-wc>
+      </div>
+    </div>
+
+    <!-- RIGHT: cards -->
+    <div class="right-col">
+      <div class="card">
+        <h2 class="section-title">Code of Conduct</h2>
+        <p>
+          We are committed to a safe, inclusive, and respectful meeting. Be considerate, avoid harassment,
+          and follow all local and institutional policies. Report concerns to the organizing team at the
+          registration desk or <a href="mailto:consultant@ops.learn.ac.lk">consultant@ops.learn.ac.lk</a>.
+        </p>
+      </div>
+
+      <div class="stack gap-18">
+        <h2 class="section-title" style="margin:6px 0 0">Contact</h2>
+        <div class="grid cols-2">
+          <div class="card">
+            <h3>Email</h3>
+            <p><a id="emailLink2" href="mailto:consultant@ops.learn.ac.lk">consultant@ops.learn.ac.lk</a></p>
+            <button class="btn btn-outline" onclick="copyEmail('emailLink2')">Copy</button>
+          </div>
+          <div class="card">
+            <h3>Website</h3>
+            <p><a href="https://www.ac.lk" target="_blank" rel="noopener noreferrer">https://www.ac.lk</a></p>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-
-<!-- ===================== WORKING GROUPS — title bar OUTSIDE the ribbon ===================== -->
-<section class="container wg-titlebar">
-  <h2 class="section-title">Working Groups</h2>
-  <p class="wg-sub">Hands-on communities driving projects, training, and real outcomes for 2025–26.</p>
-</section>
-
-<!-- ===================== WORKING GROUPS with photo ribbon (cards only over images) ===================== -->
-<section id="wgs" class="wg-section">
-  <!-- Full-width slow ribbon behind (images duplicated for seamless loop) -->
-  <div class="wg-ribbon" aria-hidden="true">
-    <div class="wg-ribbon-track">
-      <!-- Place your photos in assets/wg-ribbon/ and list them here -->
-      <img src="assets/wg-ribbon/6.jpg" alt="">
-      <img src="assets/wg-ribbon/7.jpg" alt="">
-      <img src="assets/wg-ribbon/8.jpg" alt="">
-      <img src="assets/wg-ribbon/9.jpg" alt="">
-      <!-- duplicate set for seamless loop -->
-      <img src="assets/wg-ribbon/6.jpg" alt="">
-      <img src="assets/wg-ribbon/7.jpg" alt="">
-      <img src="assets/wg-ribbon/8.jpg" alt="">
-      <img src="assets/wg-ribbon/9.jpg" alt="">
-    </div>
-  </div>
-
-  <!-- Only the cards overlay the ribbon (no section heading here) -->
-  <div class="container wg-content">
-    <div class="wg-grid">
-      <!-- WG 1: AgriTech -->
-      <article class="card wg-card">
-        <header class="wg-top">
-          <div class="wg-icon" aria-hidden="true">🌱</div>
-          <div>
-            <h3 class="wg-title">WG 1: AgriTech</h3>
-            <div class="wg-tags">
-              <span class="chip">IoT</span><span class="chip">Remote Sensing</span><span class="chip">AI</span><span class="chip">Data Platforms</span>
-            </div>
-          </div>
-        </header>
-
-        <p class="muted"><strong>Purpose:</strong> Connect agriculture faculties, research centres, and IT teams to apply digital technologies across education, research, and extension.</p>
-
-        <details class="wg-acc" open>
-          <summary><span>Expected Outcomes (2025–26)</span></summary>
-          <ul class="wg-list">
-            <li><strong>2–3 collaborative pilots</strong> (e.g., smart farm sensor network; shared agri-data repository)</li>
-            <li><strong>Quarterly knowledge-sharing</strong> sessions and a community portal</li>
-            <li><strong>Published roadmap</strong> with roles, milestones, and metrics</li>
-          </ul>
-        </details>
-
-        <footer class="wg-foot">
-          <div class="join"><span class="dot"></span> Who should join:</div>
-          <p class="muted">Academics &amp; researchers in agriculture; IT/IoT specialists; administrators supporting agri projects.</p>
-        </footer>
-      </article>
-
-      <!-- WG 2: GenAI Empowerment -->
-      <article class="card wg-card">
-        <header class="wg-top">
-          <div class="wg-icon" aria-hidden="true">🤖</div>
-          <div>
-            <h3 class="wg-title">WG 2: GenAI Empowerment</h3>
-            <div class="wg-tags">
-              <span class="chip">Teaching</span><span class="chip">Research</span><span class="chip">Student Services</span><span class="chip">Ops</span>
-            </div>
-          </div>
-        </header>
-
-        <p class="muted"><strong>Purpose:</strong> Build national capacity to use Generative AI responsibly in teaching, research, student services, and NREN operations.</p>
-
-        <details class="wg-acc" open>
-          <summary><span>Expected Outcomes (2025–26)</span></summary>
-          <ul class="wg-list">
-            <li><strong>2–3 pilot projects</strong> (e.g., student services chatbot; AI-assisted teaching toolkit)</li>
-            <li><strong>2–3 training programs</strong> for faculty, researchers, and IT teams</li>
-            <li><strong>Practical guidelines</strong> for safe, ethical GenAI use in higher education</li>
-          </ul>
-        </details>
-
-        <footer class="wg-foot">
-          <div class="join"><span class="dot"></span> Who should join:</div>
-          <p class="muted">CS/IT academics, learning technologists, librarians, student services leaders, and campus IT managers.</p>
-        </footer>
-      </article>
-    </div>
-  </div>
-</section>
-
-
-<!-- ===================== MAIN SESSIONS ===================== -->
-<section class="container">
-  <h2 class="section-title">Main Sessions</h2>
-  <div class="grid cols-2">
-    <div class="card">
-      <h3>16th Annual General Meeting (AGM)</h3>
-      <p><strong>Participants:</strong> Official delegates of LEARN member organizations (VCs or nominees).</p>
-    </div>
-    <div class="card">
-      <h3>LEARN Board Meeting</h3>
-      <p><strong>Participants:</strong> LEARN Board members (Closed meeting).</p>
-    </div>
-    <div class="card">
-      <h3>LEARN Services Awareness Session</h3>
-      <p>A session for the broader LEARN community and prospective members. Topics include:</p>
-      <ul>
-        <li><strong>Identity & Access:</strong> eduID, identity federation, eduGAIN</li>
-        <li><strong>Connectivity & Mobility:</strong> eduroam, eduVPN</li>
-        <li><strong>Cybersecurity & Support:</strong> LEARN-CSIRT, TAC</li>
-        <li><strong>Collaboration & Cloud:</strong> conferencing, e-learning, storage</li>
-      </ul>
-      <p><em>Bring your questions! We’ll share deployment guides, contacts, and success stories.</em></p>
-    </div>
-    <div class="card">
-      <h3>Opening Ceremony & Social Dinner</h3>
-      <p>The Opening Ceremony welcomes the community, introduces the WGs, and features a keynote address. The Social Dinner (Day 1 evening) brings everyone together to build relationships and kickstart collaborations.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== TRAVEL & STAY ===================== -->
-<section class="container">
-  <h2 class="section-title">Travel & Stay</h2>
-  <div class="grid cols-3">
-    <div class="card">
-      <h3>Venue</h3>
-      <p>To be announced</p>
-    </div>
-    <div class="card">
-      <h3>Accommodation</h3>
-      <p>We will publish recommended hotels nearby with event rates (if available).</p>
-    </div>
-    <div class="card">
-      <h3>Transport & Parking</h3>
-      <p>Details will be shared with the venue announcement.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== CODE OF CONDUCT ===================== -->
-<section class="container">
-  <h2 class="section-title">Code of Conduct</h2>
-  <div class="card">
-    <p>We are committed to a safe, inclusive, and respectful meeting. Be considerate, avoid harassment, and follow all local and institutional policies. Report concerns to the organizing team at the registration desk or <a href="mailto:consultant@ops.learn.ac.lk">consultant@ops.learn.ac.lk</a>.</p>
-  </div>
-</section>
-
-<!-- ===================== CONTACT ===================== -->
-<section class="container">
-  <h2 class="section-title">Contact</h2>
-  <div class="grid cols-2">
-    <div class="card">
-      <h3>Email</h3>
-      <p><a href="mailto:consultant@ops.learn.ac.lk">consultant@ops.learn.ac.lk</a></p>
-    </div>
-    <div class="card">
-      <h3>Website</h3>
-      <p><a href="https://www.ac.lk" target="_blank" rel="noopener noreferrer">https://www.ac.lk</a></p>
-    </div>
-  </div>
-</section>
-
-<!-- REGISTER -->
-<section id="register">
-  <div class="container">
-    <div class="card" style="display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap">
-      <div>
-        <h2 class="section-title" style="margin:0 0 6px">Registration</h2>
-        <p class="muted" style="margin:0">Required for all attendees. AGM voting rights apply only to official delegates of member institutions.</p>
+  <!-- REGISTER -->
+  <section id="register">
+    <div class="container">
+      <div class="card" style="display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap">
+        <div>
+          <h2 class="section-title" style="margin:0 0 6px">Registration</h2>
+          <p class="muted" style="margin:0">Required for all attendees. AGM voting rights apply only to official delegates of member institutions.</p>
+        </div>
+        <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSeCOr47E04_z5sH7BR5apVUZSqI8aOQnDoMcghYb5bdHpL2bw/viewform?usp=header" onclick="alert('Register to the Event')"><strong>Go to Registration</strong></a>
       </div>
-      <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSeCOr47E04_z5sH7BR5apVUZSqI8aOQnDoMcghYb5bdHpL2bw/viewform?usp=header" onclick="alert('Register to the Event')"><strong>Go to Registration</strong></a>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer class="footer">
-  <div class="container">
-    <small>&copy; <span id="y"></span> LEARN — Lanka Education And Research Network</small>
-  </div>
-</footer>
+  <footer class="footer">
+    <div class="container">
+      <small>&copy; <span id="y"></span> LEARN — Lanka Education And Research Network</small>
+    </div>
+  </footer>
 
-<div id="toast" style="background:#0a79a7;border-radius:12px;bottom:18px;box-shadow:0 10px 26px rgba(2,6,23,.25);color:#fff;left:50%;opacity:0;padding:10px 14px;pointer-events:none;position:fixed;transform:translateX(-50%) translateY(20px);transition:all .35s ease">Copied!</div>
+  <div id="toast" style="background:#0a79a7;border-radius:12px;bottom:18px;box-shadow:0 10px 26px rgba(2,6,23,.25);color:#fff;left:50%;opacity:0;padding:10px 14px;pointer-events:none;position:fixed;transform:translateX(-50%) translateY(20px);transition:all .35s ease">Copied!</div>
 
-<script src="assets/app.js"></script>
+  <!-- Lottie web component loader -->
+  <script type="module" src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js"></script>
+  <!-- Pause autoplay if user prefers reduced motion -->
+  <script>
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('dotlottie-wc[autoplay]').forEach(el => el.removeAttribute('autoplay'));
+    }
+  </script>
 
-<!-- Slow, seamless WG ribbon scroller -->
-<script>
-(function(){
-  const track = document.querySelector('.wg-ribbon-track');
-  if(!track) return;
+  <script src="assets/app.js"></script>
 
-  // Use half the total width (we included two sets of images in HTML)
-  let totalWidth = 0;
-  let halfWidth = 0;
+  <!-- Slow, seamless WG ribbon scroller -->
+  <script>
+  (function(){
+    const track = document.querySelector('.wg-ribbon-track');
+    if(!track) return;
 
-  function measure(){
-    // Force layout, then measure total width
-    totalWidth = Array.from(track.children)
-      .reduce((sum, el) => sum + el.getBoundingClientRect().width, 0);
-    halfWidth = totalWidth / 2;
-  }
+    let totalWidth = 0;
+    let halfWidth = 0;
 
-  // Re-measure after images load and on resize
-  let imgs = Array.from(track.querySelectorAll('img'));
-  let loaded = 0;
-  imgs.forEach(img => {
-    if (img.complete) { loaded++; if (loaded === imgs.length) measure(); }
-    else img.addEventListener('load', () => { loaded++; if (loaded === imgs.length) measure(); }, {once:true});
-  });
-  window.addEventListener('resize', () => { measure(); });
-
-  let x = 0;
-  const SPEED = 12; // px/sec (smaller = slower)
-  let last = performance.now();
-
-  function step(now){
-    const dt = (now - last) / 1000; last = now;
-    x -= SPEED * dt;
-
-    // Reset when we’ve scrolled one set width
-    if (halfWidth > 0 && -x >= halfWidth){
-      x += halfWidth;
+    function measure(){
+      totalWidth = Array.from(track.children)
+        .reduce((sum, el) => sum + el.getBoundingClientRect().width, 0);
+      halfWidth = totalWidth / 2;
     }
 
-    track.style.transform = `translate3d(${x}px,0,0)`;
-    requestAnimationFrame(step);
-  }
+    const imgs = Array.from(track.querySelectorAll('img'));
+    let loaded = 0;
+    imgs.forEach(img => {
+      if (img.complete) { loaded++; if (loaded === imgs.length) measure(); }
+      else img.addEventListener('load', () => { loaded++; if (loaded === imgs.length) measure(); }, {once:true});
+    });
+    window.addEventListener('resize', measure);
 
-  if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    requestAnimationFrame(step);
-  }
-})();
-</script>
+    let x = 0;
+    const SPEED = 12; // px/sec (smaller = slower)
+    let last = performance.now();
 
-<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+    function step(now){
+      const dt = (now - last) / 1000; last = now;
+      x -= SPEED * dt;
+      if (halfWidth > 0 && -x >= halfWidth){ x += halfWidth; }
+      track.style.transform = `translate3d(${x}px,0,0)`;
+      requestAnimationFrame(step);
+    }
+
+    if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      requestAnimationFrame(step);
+    }
+  })();
+  </script>
+
+  <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
 </body>
 </html>
-
-
