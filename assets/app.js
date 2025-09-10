@@ -452,4 +452,42 @@ window.addEventListener('orientationchange', () =>
   dlg.addEventListener('click', (e)=>{ if (e.target === dlg) dlg.close(); });
 })();
 
+/* ===== Trim agenda height to last event (per day) =====
+   containerSel:  CSS selector for the day wrapper (e.g. '#day2')
+   pad:           extra minutes to keep after the last event (optional)
+*/
+function trimAgendaDay(containerSel, pad = 0){
+  const day = document.querySelector(containerSel);
+  if (!day) return;
+  const grid = day.querySelector('.schedule-grid');
+  if (!grid) return;
+
+  // Find the last event's end time (in minutes)
+  let maxEnd = 0;
+  grid.querySelectorAll('.event').forEach(ev => {
+    const start = parseFloat(ev.style.getPropertyValue('--start')) || 0;
+    const dur   = parseFloat(ev.style.getPropertyValue('--dur'))   || 0;
+    maxEnd = Math.max(maxEnd, start + dur);
+  });
+  if (!maxEnd) return;
+
+  // Optional small padding after the last event
+  maxEnd += pad;
+
+  // Apply end bound to the grid and hide hour labels beyond it
+  grid.style.setProperty('--day-end', maxEnd);
+
+  grid.querySelectorAll('.time').forEach(t => {
+    const at = parseFloat(t.style.getPropertyValue('--at')) || 0;
+    if (at > maxEnd) t.style.display = 'none';
+  });
+}
+
+// Run once when the page loads (you can also run after switching tabs)
+window.addEventListener('load', () => {
+  // Trim Day 2; add 0–30 min padding if you like: trimAgendaDay('#day2', 30)
+  trimAgendaDay('#day2', 0);
+});
+
+
 
