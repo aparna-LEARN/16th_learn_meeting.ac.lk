@@ -1,82 +1,3 @@
-/* ===========================================================
-   Minimal Boot Loader (overlay + progress bar)
-   - Injects a small overlay and removes itself on window.load
-   - No changes to your HTML are required
-   =========================================================== */
-(function bootLoader(){
-  // Build overlay
-  const wrap = document.createElement('div');
-  wrap.id = 'boot-overlay';
-  wrap.setAttribute('aria-live', 'polite');
-  wrap.innerHTML = `
-    <div class="boot-card">
-      <div class="boot-logo" aria-hidden="true"></div>
-      <div class="boot-title">Loading…</div>
-      <div class="boot-progress"><span class="boot-bar"></span></div>
-    </div>
-  `;
-
-  // Styles (scoped to #boot-overlay)
-  const st = document.createElement('style');
-  st.id = 'boot-style';
-  st.textContent = `
-    #boot-overlay{
-      position:fixed; inset:0; z-index:9999; background:linear-gradient(180deg,#0a2e63 0%,#0b1831 100%);
-      display:grid; place-items:center; transition:opacity .35s ease;
-    }
-    #boot-overlay .boot-card{
-      width:min(360px, 86vw); border-radius:16px; padding:18px 16px 16px;
-      background:#0e2244; border:1px solid #294a7a; box-shadow:0 10px 26px rgba(2,6,23,.35);
-      color:#eaf2ff; text-align:center;
-    }
-    #boot-overlay .boot-logo{
-      width:56px; height:56px; margin:0 auto 10px; border-radius:14px;
-      background: conic-gradient(from 0deg, #38bdf8, #2dd4bf, #38bdf8);
-      -webkit-mask: radial-gradient(circle 18px at 50% 50%, transparent 17px, #000 18px);
-              mask: radial-gradient(circle 18px at 50% 50%, transparent 17px, #000 18px);
-      animation: bootSpin 1.2s linear infinite;
-      filter: drop-shadow(0 6px 18px rgba(56,189,248,.35));
-    }
-    #boot-overlay .boot-title{ font-weight:700; letter-spacing:.02em; margin:0 0 10px; }
-    #boot-overlay .boot-progress{
-      height:8px; border-radius:999px; background:#0b1c35; border:1px solid #244166; overflow:hidden;
-    }
-    #boot-overlay .boot-bar{
-      display:block; height:100%; transform-origin:left center; transform:scaleX(0);
-      background:linear-gradient(90deg,#38bdf8,#2dd4bf); box-shadow:0 0 14px rgba(56,189,248,.45);
-      transition:transform .18s ease;
-    }
-    @keyframes bootSpin{ to{ transform:rotate(360deg) } }
-  `;
-  document.head.appendChild(st);
-  document.body.appendChild(wrap);
-
-  const bar = wrap.querySelector('.boot-bar');
-
-  // Gentle fake progress while assets load
-  let p = 0, raf;
-  function tick(){
-    // Ease toward 95% until onload fires
-    p += 0.25 + (95 - p) * 0.015;
-    if (p > 95) p = 95;
-    bar.style.transform = `scaleX(${p/100})`;
-    raf = requestAnimationFrame(tick);
-  }
-  raf = requestAnimationFrame(tick);
-
-  function done(){
-    cancelAnimationFrame(raf);
-    bar.style.transform = 'scaleX(1)';
-    wrap.style.opacity = '0';
-    wrap.style.pointerEvents = 'none';
-    setTimeout(()=>{ wrap.remove(); st.remove(); }, 380);
-  }
-
-  // Remove on full load, or fall back after 6s
-  window.addEventListener('load', done, { once:true });
-  setTimeout(done, 6000);
-})();
-
 /* =========================
    Smooth scroll for anchors
    ========================= */
@@ -392,7 +313,7 @@ window.addEventListener('orientationchange', () =>
     const btnNext = root.querySelector('.next');
 
     // Find or create dots wrapper (prefer sibling .dots used in HTML)
-    let dotsWrap = root.parentElement and root.parentElement.querySelector(':scope > .dots');
+    let dotsWrap = root.parentElement && root.parentElement.querySelector(':scope > .dots');
     if (!dotsWrap) dotsWrap = root.parentElement && root.parentElement.querySelector('.dots');
     if (!dotsWrap) {
       dotsWrap = document.createElement('div');
