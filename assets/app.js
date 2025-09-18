@@ -1,9 +1,9 @@
-/* ===== Page Boot Loader + Network Lines (self-contained) ===== */
+/* ================== BOOT LOADER + BOOT NETWORK LINES ================== */
 (function(){
   const boot = document.getElementById('boot');
   if (!boot) return;
 
-  // Skip if reduced motion
+  // Skip if user prefers reduced motion
   if (window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches) {
     boot.remove(); return;
   }
@@ -25,14 +25,13 @@
     const v = Math.max(0, Math.min(100, p|0));
     pctEl.textContent = v;
     barEl.style.width = v + '%';
-    // drive the conic gauge
-    boot.style.setProperty('--pct', v);
+    boot.style.setProperty('--pct', v); // drive conic gauge
   }
 
   function tick(){
     if (done) return;
-    const target = 92;                       // approach 92%, finish on load
-    prog += (target - prog) * 0.06 + 0.18;   // smooth + slightly slower
+    const target = 92;
+    prog += (target - prog) * 0.06 + 0.18;
     if (prog > target) prog = target;
     if (Math.random() < .05 && si < statuses.length-1) {
       statusEl.textContent = statuses[++si];
@@ -46,7 +45,7 @@
     done = true;
     let v = prog|0;
     const iv = setInterval(()=>{
-      v += 1;                                 // gentle final ramp
+      v += 1;
       render(v);
       if (v >= 100){
         clearInterval(iv);
@@ -57,17 +56,18 @@
   }
 
   window.addEventListener('load', finish);
-  setTimeout(finish, 9000);                   // safety cap
+  setTimeout(finish, 9000);  // safety cap
   tick();
 
-  /* ===== loader-only network-lines background on #boot-net (maroon theme) ===== */
+  // Boot-only network lines
   const canvas = document.getElementById('boot-net');
   const ctx = canvas.getContext('2d');
   let w, h, dpr, nodes = [];
 
   function resize(){
     dpr = Math.max(1, window.devicePixelRatio || 1);
-    w = canvas.clientWidth; h = canvas.clientHeight;
+    w = canvas.clientWidth = canvas.parentElement.clientWidth;
+    h = canvas.clientHeight = canvas.parentElement.clientHeight;
     canvas.width = w * dpr; canvas.height = h * dpr;
     ctx.setTransform(dpr,0,0,dpr,0,0);
     const count = Math.floor((w*h) / 22000);
@@ -82,7 +82,7 @@
   function step(){
     ctx.clearRect(0,0,w,h);
 
-    // grid — neutral/rose instead of blue
+    // subtle rose grid (not blue)
     ctx.globalAlpha = 0.06;
     ctx.strokeStyle = 'rgba(255, 220, 230, 0.35)';
     const grid = 42;
@@ -98,12 +98,12 @@
       if (a.x< -20) a.x=w+20; if (a.x>w+20) a.x=-20;
       if (a.y< -20) a.y=h+20; if (a.y>h+20) a.y=-20;
 
-      // dots (mix of brand/mint)
+      // dots (brand/mint)
       ctx.globalAlpha = 0.9;
       ctx.fillStyle = (i % 3 === 0) ? 'rgba(54,224,194,.9)' : 'rgba(161,15,47,.85)';
       ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, Math.PI*2); ctx.fill();
 
-      // links — maroon → mint
+      // links
       for (let j=i+1;j<nodes.length;j++){
         const b = nodes[j];
         const dx = a.x - b.x, dy = a.y - b.y;
@@ -126,140 +126,7 @@
   step();
 })();
 
-
-  /* ===== loader-only network-lines background on #boot-net ===== */
-  const canvas = document.getElementById('boot-net');
-  const ctx = canvas.getContext('2d');
-  let w, h, dpr, nodes = [];
-
-  function resize(){
-    dpr = Math.max(1, window.devicePixelRatio || 1);
-    w = canvas.clientWidth; h = canvas.clientHeight;
-    canvas.width = w * dpr; canvas.height = h * dpr;
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    const count = Math.floor((w*h) / 22000);
-    nodes = Array.from({length: count}, ()=>({
-      x: Math.random()*w, y: Math.random()*h,
-      vx: (Math.random()-.5)*0.16, vy: (Math.random()-.5)*0.16,
-      r: 1 + Math.random()*1.8
-    }));
-  }
-  window.addEventListener('resize', resize, {passive:true});
-
-  function step(){
-    ctx.clearRect(0,0,w,h);
-
-    // subtle grid
-    ctx.globalAlpha = 0.06;
-    ctx.strokeStyle = '#cbe0ff';
-    const grid = 42;
-    ctx.beginPath();
-    for(let x=0;x<w;x+=grid){ ctx.moveTo(x,0); ctx.lineTo(x,h); }
-    for(let y=0;y<h;y+=grid){ ctx.moveTo(0,y); ctx.lineTo(w,y); }
-    ctx.stroke();
-
-    // nodes + links
-    const maxDist = 120;
-    for (let i=0;i<nodes.length;i++){
-      const a = nodes[i];
-      a.x += a.vx; a.y += a.vy;
-      if (a.x< -20) a.x=w+20; if (a.x>w+20) a.x=-20;
-      if (a.y< -20) a.y=h+20; if (a.y>h+20) a.y=-20;
-
-      ctx.globalAlpha = 0.85;
-      ctx.fillStyle = 'rgba(51,225,198,.9)';
-      ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, Math.PI*2); ctx.fill();
-
-      for (let j=i+1;j<nodes.length;j++){
-        const b = nodes[j];
-        const dx = a.x - b.x, dy = a.y - b.y;
-        const dist = Math.hypot(dx, dy);
-        if (dist < maxDist){
-          const alpha = 1 - (dist / maxDist);
-          ctx.globalAlpha = alpha * 0.5;
-          const g = ctx.createLinearGradient(a.x,a.y,b.x,b.y);
-          g.addColorStop(0, '#a10f2f'); // brand
-          g.addColorStop(1, '#36e0c2'); // mint
-          ctx.strokeStyle = g; ctx.lineWidth = 1;
-          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(step);
-  }
-
-  resize();
-  step();
-})();
-
-
-  // ===== animated network lines just for the loader background =====
-  const canvas = document.getElementById('boot-net');
-  const ctx = canvas.getContext('2d');
-  let w, h, dpr, nodes = [];
-
-  function resize(){
-    dpr = Math.max(1, window.devicePixelRatio || 1);
-    w = canvas.clientWidth; h = canvas.clientHeight;
-    canvas.width = w * dpr; canvas.height = h * dpr;
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    const count = Math.floor((w*h) / 22000);
-    nodes = Array.from({length: count}, ()=>({
-      x: Math.random()*w, y: Math.random()*h,
-      vx: (Math.random()-.5)*0.16, vy: (Math.random()-.5)*0.16,
-      r: 1 + Math.random()*1.8
-    }));
-  }
-  window.addEventListener('resize', resize, {passive:true});
-
-  function step(){
-    ctx.clearRect(0,0,w,h);
-
-    // subtle grid
-    ctx.globalAlpha = 0.06;
-    ctx.strokeStyle = '#cbe0ff';
-    const grid = 42;
-    ctx.beginPath();
-    for(let x=0;x<w;x+=grid){ ctx.moveTo(x,0); ctx.lineTo(x,h); }
-    for(let y=0;y<h;y+=grid){ ctx.moveTo(0,y); ctx.lineTo(w,y); }
-    ctx.stroke();
-
-    // nodes + links
-    const maxDist = 120;
-    for (let i=0;i<nodes.length;i++){
-      const a = nodes[i];
-      a.x += a.vx; a.y += a.vy;
-      if (a.x< -20) a.x=w+20; if (a.x>w+20) a.x=-20;
-      if (a.y< -20) a.y=h+20; if (a.y>h+20) a.y=-20;
-
-      ctx.globalAlpha = 0.8;
-      ctx.fillStyle = 'rgba(51,225,198,.9)';
-      ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, Math.PI*2); ctx.fill();
-
-      for (let j=i+1;j<nodes.length;j++){
-        const b = nodes[j];
-        const dx = a.x - b.x, dy = a.y - b.y;
-        const dist = Math.hypot(dx, dy);
-        if (dist < maxDist){
-          const alpha = 1 - (dist / maxDist);
-          ctx.globalAlpha = alpha * 0.5;
-          const g = ctx.createLinearGradient(a.x,a.y,b.x,b.y);
-          g.addColorStop(0, '#7c3aed'); g.addColorStop(1, '#06b6d4');
-          ctx.strokeStyle = g; ctx.lineWidth = 1;
-          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(step);
-  }
-
-  resize();
-  step();
-})();
-
-/* =========================
-   Smooth scroll for anchors
-   ========================= */
+/* ================== UTILITIES ================== */
 document.addEventListener('click', (e) => {
   const a = e.target.closest('a[href^="#"]');
   if (!a) return;
@@ -271,9 +138,6 @@ document.addEventListener('click', (e) => {
   }
 });
 
-/* =========================
-   Copy email helper
-   ========================= */
 window.copyEmail = function (id = 'emailLink') {
   const text = document.getElementById(id)?.textContent?.trim();
   if (!text) return;
@@ -290,275 +154,7 @@ window.copyEmail = function (id = 'emailLink') {
   });
 };
 
-/* ==========================================
-   Agenda tabs + dynamic vertical timeline rail
-   ========================================== */
-function updateDayDate(which) {
-  const el = document.getElementById('dayDate');
-  if (!el) return;
-  el.textContent =
-    which === 'day2'
-      ? 'Friday, October 24, 2025'
-      : 'Thursday, October 23, 2025';
-}
-
-window.switchDay = function (which) {
-  const d1 = document.getElementById('day1'),
-        d2 = document.getElementById('day2');
-  const t1 = document.getElementById('tabDay1'),
-        t2 = document.getElementById('tabDay2');
-
-  if (which === 'day1') {
-    if (d1) d1.style.display = '';
-    if (d2) d2.style.display = 'none';
-    if (t1) t1.classList.add('active');
-    if (t2) t2.classList.remove('active');
-  } else {
-    if (d1) d1.style.display = 'none';
-    if (d2) d2.style.display = '';
-    if (t2) t2.classList.add('active');
-    if (t1) t1.classList.remove('active');
-  }
-
-  updateDayDate(which);
-  if (typeof drawTimeline === 'function') setTimeout(drawTimeline, 60);
-};
-
-function drawTimeline() {
-  const timeline = document.getElementById('timeline');
-  if (!timeline) return;
-
-  // clear previous dynamic nodes
-  Array.from(timeline.querySelectorAll('.tl-dyn')).forEach((el) => el.remove());
-
-  const day =
-    document.getElementById('day1') &&
-    document.getElementById('day1').style.display === 'none'
-      ? document.getElementById('day2')
-      : document.getElementById('day1');
-  if (!day) return;
-
-  const slots = Array.from(day.querySelectorAll('.slot'));
-  if (!slots.length) return;
-
-  const timelineRect = timeline.getBoundingClientRect();
-  const anyTC = day.querySelector('.timecell');
-  const tcRect = anyTC.getBoundingClientRect();
-  const railLeft = tcRect.right - timelineRect.left + 6;
-
-  // gradient rail
-  const rail = document.createElement('div');
-  rail.className = 'tl-dyn';
-  Object.assign(rail.style, {
-    position: 'absolute',
-    left: `${railLeft - 3}px`,
-    top: '0',
-    bottom: '0',
-    width: '6px',
-    borderRadius: '6px',
-    background: 'linear-gradient(180deg,#2dd4bf,#38bdf8)',
-    boxShadow:
-      '0 0 18px rgba(56,189,248,.45), 0 0 2px rgba(45,212,191,.6) inset',
-    opacity: '.95',
-    zIndex: '1',
-  });
-  timeline.appendChild(rail);
-
-  const centers = slots.map((s) => {
-    const r = s.querySelector('.timecell').getBoundingClientRect();
-    return (r.top + r.bottom) / 2 - timelineRect.top;
-  });
-
-  centers.forEach((y, i) => {
-    const node = document.createElement('div');
-    node.className = 'tl-dyn';
-    Object.assign(node.style, {
-      position: 'absolute',
-      left: `${railLeft - 9}px`,
-      top: `${y - 9}px`,
-      width: '18px',
-      height: '18px',
-      borderRadius: '999px',
-      background: '#0b1220',
-      border: '2px solid #7dd3fc',
-      boxShadow: '0 0 0 8px rgba(125,211,252,.15)',
-      zIndex: '2',
-    });
-    timeline.appendChild(node);
-
-    const inner = document.createElement('div');
-    inner.className = 'tl-dyn';
-    Object.assign(inner.style, {
-      position: 'absolute',
-      left: `${railLeft - 3}px`,
-      top: `${y - 3}px`,
-      width: '6px',
-      height: '6px',
-      borderRadius: '999px',
-      background: '#34d399',
-      animation: 'pulseGlow 1600ms ease-out infinite',
-      zIndex: '2',
-    });
-    timeline.appendChild(inner);
-
-    if (i < centers.length - 1) {
-      const next = centers[i + 1];
-      const seg = document.createElement('div');
-      seg.className = 'tl-dyn';
-      Object.assign(seg.style, {
-        position: 'absolute',
-        left: `${railLeft - 1}px`,
-        top: `${y + 9}px`,
-        width: '2px',
-        height: `${next - y - 18}px`,
-        background:
-          'linear-gradient(180deg, rgba(125,211,252,0.9), rgba(45,212,191,0.6))',
-        boxShadow: '0 0 10px rgba(56,189,248,.35) inset',
-        zIndex: '1',
-      });
-      timeline.appendChild(seg);
-    }
-  });
-
-  // one-time keyframes for small pulse
-  if (!document.getElementById('tl-style')) {
-    const st = document.createElement('style');
-    st.id = 'tl-style';
-    st.textContent =
-      '@keyframes pulseGlow{0%{box-shadow:0 0 0 0 rgba(52,211,153,.45);}70%{box-shadow:0 0 0 14px rgba(52,211,153,0);}100%{box-shadow:0 0 0 0 rgba(52,211,153,0);}}';
-    document.head.appendChild(st);
-  }
-}
-
-/* Initial state + redraw hooks */
-window.addEventListener('load', () => {
-  try {
-    const d1 = document.getElementById('day1');
-    const d2 = document.getElementById('day2');
-    if (d1) d1.style.display = '';
-    if (d2) d2.style.display = 'none';
-    const t1 = document.getElementById('tabDay1');
-    const t2 = document.getElementById('tabDay2');
-    if (t1) t1.classList.add('active');
-    if (t2) t2.classList.remove('active');
-  } catch (_) {}
-  updateDayDate('day1');
-  drawTimeline();
-});
-
-window.addEventListener('resize', () => {
-  clearTimeout(window.__tlr);
-  window.__tlr = setTimeout(drawTimeline, 120);
-});
-window.addEventListener('orientationchange', () =>
-  setTimeout(drawTimeline, 150)
-);
-
-/* ===========================================================
-   Network background (anchored shimmer)
-   =========================================================== */
-(function () {
-  const canvas = document.getElementById('net-bg');
-  if (!canvas) return;
-
-  // honor reduced motion
-  const prefersReduced =
-    window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
-  if (prefersReduced) {
-    canvas.remove();
-    return;
-  }
-
-  const ctx = canvas.getContext('2d');
-
-  let W, H, nodes = [], t0 = performance.now();
-  const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-
-  // Tweaks: denser nodes + longer links
-  let density = 0.00022;
-  let maxDist = 170;
-
-  function resize() {
-    W = canvas.width = Math.floor(window.innerWidth * pixelRatio);
-    H = canvas.height = Math.floor(window.innerHeight * pixelRatio);
-    canvas.style.width = window.innerWidth + 'px';
-    canvas.style.height = window.innerHeight + 'px';
-
-    // scale node count with area (guard rails for perf)
-    const target = Math.max(
-      80,
-      Math.min(240, Math.floor((W * H) / (pixelRatio * pixelRatio) * density))
-    );
-
-    nodes = Array.from({ length: target }, () => {
-      const bx = Math.random() * W;
-      const by = Math.random() * H;
-      return {
-        bx,
-        by,                                // base (anchor)
-        amp: 16 + Math.random() * 28,      // movement radius
-        spd: 0.35 + Math.random() * 0.55,  // angular speed (rad/s)
-        ph: Math.random() * Math.PI * 2,   // phase
-        r: 1.6 + Math.random() * 1.3,      // dot radius
-        hue: Math.random() < 0.5 ? 190 : 160, // sky / mint
-      };
-    });
-  }
-
-  function draw(now) {
-    const t = (now - t0) / 1000; // seconds
-    ctx.clearRect(0, 0, W, H);
-
-    // positions (anchored shimmer)
-    for (const n of nodes) {
-      n.x = n.bx + Math.cos(n.ph + t * n.spd) * n.amp;
-      n.y = n.by + Math.sin(n.ph + t * n.spd) * n.amp;
-    }
-
-    // dots
-    for (const n of nodes) {
-      ctx.beginPath();
-      ctx.fillStyle = `hsla(${n.hue}, 80%, 60%, 0.9)`;
-      ctx.arc(n.x, n.y, n.r * pixelRatio, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    // links
-    const linkCutoff = maxDist * pixelRatio;
-    for (let i = 0; i < nodes.length; i++) {
-      const a = nodes[i];
-      for (let j = i + 1; j < nodes.length; j++) {
-        const b = nodes[j];
-        const dx = a.x - b.x, dy = a.y - b.y;
-        const d = Math.hypot(dx, dy);
-        if (d < linkCutoff) {
-          const alpha = 1 - d / linkCutoff; // closer => stronger
-          // mint/sky blend
-          ctx.strokeStyle = `rgba(${alpha < 0.5 ? 52 : 56}, ${
-            alpha < 0.5 ? 211 : 189
-          }, ${alpha < 0.5 ? 153 : 248}, ${alpha * 0.6})`;
-          ctx.lineWidth = Math.max(0.6, pixelRatio * alpha);
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.stroke();
-        }
-      }
-    }
-
-    requestAnimationFrame(draw);
-  }
-
-  // boot
-  window.addEventListener('resize', resize, { passive: true });
-  window.addEventListener('orientationchange', () => setTimeout(resize, 120));
-  resize();
-  requestAnimationFrame(draw);
-})();
-
-/* ===========================================================
-   15th AGM Carousel logic (autoplay always; no page jump)
-   =========================================================== */
+/* ================== CAROUSELS ================== */
 (function initCarousels(){
   const carousels = Array.from(document.querySelectorAll('.carousel'));
   if (!carousels.length) return;
@@ -571,15 +167,12 @@ window.addEventListener('orientationchange', () =>
     const btnPrev = root.querySelector('.prev');
     const btnNext = root.querySelector('.next');
 
-    // Find or create dots wrapper (prefer sibling .dots used in HTML)
     let dotsWrap = root.parentElement && root.parentElement.querySelector(':scope > .dots');
-    if (!dotsWrap) dotsWrap = root.parentElement && root.parentElement.querySelector('.dots');
     if (!dotsWrap) {
       dotsWrap = document.createElement('div');
       dotsWrap.className = 'dots';
       root.insertAdjacentElement('afterend', dotsWrap);
     }
-
     slides.forEach((_, i) => {
       const b = document.createElement('button');
       b.className = 'dot';
@@ -592,11 +185,8 @@ window.addEventListener('orientationchange', () =>
     let timer = null;
     const delay = parseInt(root.dataset.autoplay || '0', 10);
 
-    function updateDots(){
-      dots.forEach((d,i)=> d.classList.toggle('active', i === index));
-    }
+    function updateDots(){ dots.forEach((d,i)=> d.classList.toggle('active', i === index)); }
 
-    // Horizontal-only scroll (NO page scroll)
     function goTo(i, behavior = 'smooth'){
       index = (i + slides.length) % slides.length;
       const slide = slides[index];
@@ -607,12 +197,10 @@ window.addEventListener('orientationchange', () =>
       updateDots();
     }
 
-    // Controls
     btnPrev && btnPrev.addEventListener('click', () => goTo(index - 1));
     btnNext && btnNext.addEventListener('click', () => goTo(index + 1));
     dots.forEach((d,i)=> d.addEventListener('click', () => goTo(i)));
 
-    // Keep index in sync on manual scroll inside track
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{
         if (e.isIntersecting){
@@ -623,7 +211,6 @@ window.addEventListener('orientationchange', () =>
     }, { root: track, threshold: 0.6 });
     slides.forEach(s => io.observe(s));
 
-    // --- Autoplay: ALWAYS ON (pause when tab is hidden) ---
     function start(){ if (!delay || timer) return; timer = setInterval(()=>goTo(index+1), delay); }
     function stop(){ if (timer){ clearInterval(timer); timer = null; } }
 
@@ -633,120 +220,114 @@ window.addEventListener('orientationchange', () =>
     root.addEventListener('focusout', start);
     document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
 
-    // Init
     updateDots();
-    goTo(0, 'auto'); // snap to first without animation
+    goTo(0, 'auto');
     start();
   });
 })();
 
-/* ===========================================================
-   Working-Groups ribbon scroller (slow, seamless)
-   =========================================================== */
+/* ================== WG RIBBON (slow, seamless) ================== */
 (function initRibbon(){
   const track = document.querySelector('.wg-ribbon-track');
   if (!track) return;
 
-  // Respect reduced motion
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  let totalWidth = 0;
-  let halfWidth = 0;
-
+  let totalWidth = 0, halfWidth = 0;
   function measure(){
-    totalWidth = Array.from(track.children)
-      .reduce((sum, el) => sum + el.getBoundingClientRect().width, 0);
+    totalWidth = Array.from(track.children).reduce((sum, el) => sum + el.getBoundingClientRect().width, 0);
     halfWidth = totalWidth / 2;
   }
 
-  // Re-measure after images load and on resize
   const imgs = Array.from(track.querySelectorAll('img'));
   let loaded = 0;
   function maybeMeasure(){ loaded++; if (loaded >= imgs.length) measure(); }
-  imgs.forEach(img => {
-    if (img.complete) maybeMeasure();
-    else img.addEventListener('load', maybeMeasure, { once:true });
-  });
-  window.addEventListener('resize', () => { measure(); });
+  imgs.forEach(img => { if (img.complete) maybeMeasure(); else img.addEventListener('load', maybeMeasure, { once:true }); });
+  window.addEventListener('resize', measure);
   window.addEventListener('orientationchange', () => setTimeout(measure, 120));
-  // Fallback measure after load in case some images were cached
   window.addEventListener('load', () => { if (!halfWidth) measure(); });
 
   let x = 0;
-  const SPEED = 12; // px/sec — tweak for slower/faster
+  const SPEED = 12; // px/sec
   let last = performance.now();
 
   function step(now){
     const dt = (now - last) / 1000; last = now;
     x -= SPEED * dt;
-
-    if (halfWidth > 0 && -x >= halfWidth){
-      x += halfWidth; // seamless wrap
-    }
-
+    if (halfWidth > 0 && -x >= halfWidth){ x += halfWidth; }
     track.style.transform = `translate3d(${x}px,0,0)`;
     requestAnimationFrame(step);
   }
-
   requestAnimationFrame(step);
 })();
 
-/* =========================
-   Simple lightbox for .gallery images
-   ========================= */
-(function initLightbox(){
-  const dlg = document.getElementById('lb');
-  if (!dlg) return;
-  const big = dlg.querySelector('img');
-  const closer = document.getElementById('lbClose');
+/* ================== PAGE NETWORK BACKGROUND (anchored shimmer) ================== */
+(function () {
+  const canvas = document.getElementById('net-bg');
+  if (!canvas) return;
 
-  document.addEventListener('click', (e)=>{
-    const t = e.target.closest('.gallery img');
-    if (!t) return;
-    const src = t.getAttribute('data-full') || t.src;
-    big.src = src;
-    dlg.showModal();
-  });
-  closer?.addEventListener('click', ()=> dlg.close());
-  dlg.addEventListener('click', (e)=>{ if (e.target === dlg) dlg.close(); });
+  if (window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches) {
+    canvas.remove();
+    return;
+  }
+
+  const ctx = canvas.getContext('2d');
+  let W, H, nodes = [], t0 = performance.now();
+  const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+
+  let density = 0.00022;
+  let maxDist = 170;
+
+  function resize() {
+    W = canvas.width = Math.floor(window.innerWidth * pixelRatio);
+    H = canvas.height = Math.floor(window.innerHeight * pixelRatio);
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+
+    const target = Math.max(80, Math.min(240, Math.floor((W * H) / (pixelRatio * pixelRatio) * density)));
+    nodes = Array.from({ length: target }, () => {
+      const bx = Math.random() * W, by = Math.random() * H;
+      return { bx, by, amp: 16 + Math.random() * 28, spd: 0.35 + Math.random() * 0.55, ph: Math.random() * Math.PI * 2, r: 1.6 + Math.random() * 1.3, hue: Math.random() < 0.5 ? 190 : 160 };
+    });
+  }
+
+  function draw(now) {
+    const t = (now - t0) / 1000;
+    ctx.clearRect(0, 0, W, H);
+
+    for (const n of nodes) {
+      n.x = n.bx + Math.cos(n.ph + t * n.spd) * n.amp;
+      n.y = n.by + Math.sin(n.ph + t * n.spd) * n.amp;
+    }
+
+    for (const n of nodes) {
+      ctx.beginPath();
+      ctx.fillStyle = `hsla(${n.hue}, 80%, 60%, 0.9)`;
+      ctx.arc(n.x, n.y, n.r * pixelRatio, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    const linkCutoff = maxDist * pixelRatio;
+    for (let i = 0; i < nodes.length; i++) {
+      const a = nodes[i];
+      for (let j = i + 1; j < nodes.length; j++) {
+        const b = nodes[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const d = Math.hypot(dx, dy);
+        if (d < linkCutoff) {
+          const alpha = 1 - d / linkCutoff;
+          ctx.strokeStyle = `rgba(${alpha < 0.5 ? 52 : 56}, ${alpha < 0.5 ? 211 : 189}, ${alpha < 0.5 ? 153 : 248}, ${alpha * 0.6})`;
+          ctx.lineWidth = Math.max(0.6, pixelRatio * alpha);
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize, { passive: true });
+  window.addEventListener('orientationchange', () => setTimeout(resize, 120));
+  resize();
+  requestAnimationFrame(draw);
 })();
-
-/* ===== Trim agenda height to last event (per day) =====
-   containerSel:  CSS selector for the day wrapper (e.g. '#day2')
-   pad:           extra minutes to keep after the last event (optional)
-*/
-function trimAgendaDay(containerSel, pad = 0){
-  const day = document.querySelector(containerSel);
-  if (!day) return;
-  const grid = day.querySelector('.schedule-grid');
-  if (!grid) return;
-
-  // Find the last event's end time (in minutes)
-  let maxEnd = 0;
-  grid.querySelectorAll('.event').forEach(ev => {
-    const start = parseFloat(ev.style.getPropertyValue('--start')) || 0;
-    const dur   = parseFloat(ev.style.getPropertyValue('--dur'))   || 0;
-    maxEnd = Math.max(maxEnd, start + dur);
-  });
-  if (!maxEnd) return;
-
-  // Optional small padding after the last event
-  maxEnd += pad;
-
-  // Apply end bound to the grid and hide hour labels beyond it
-  grid.style.setProperty('--day-end', maxEnd);
-
-  grid.querySelectorAll('.time').forEach(t => {
-    const at = parseFloat(t.style.getPropertyValue('--at')) || 0;
-    if (at > maxEnd) t.style.display = 'none';
-  });
-}
-
-// Run once when the page loads (you can also run after switching tabs)
-window.addEventListener('load', () => {
-  // Trim Day 2; add 0–30 min padding if you like: trimAgendaDay('#day2', 30)
-  trimAgendaDay('#day2', 0);
-});
-
-
 
