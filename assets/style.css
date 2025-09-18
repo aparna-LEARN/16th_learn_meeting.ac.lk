@@ -697,32 +697,27 @@ section.container > *:first-child{ margin-top:0; }
   tick();
 
 /* ===== Page Boot Loader (brand-styled, self-contained) ===== */
-
-/* brand palette for the loader */
 :root{
-  --learn-brand:#a10f2f;  /* maroon from logo */
+  --learn-brand:#a10f2f;  /* maroon */
   --learn-dark:#0b1831;
   --learn-mid:#14305d;
-  --learn-accent:#36e0c2; /* mint accent */
+  --learn-accent:#36e0c2; /* mint */
 }
 
-#boot{
+/* stronger selector + !important to win */
+body #boot{
   position:fixed; inset:0; z-index:9999;
   background:
     radial-gradient(1100px 520px at 110% -10%, rgba(161,15,47,.28), transparent 70%),
     radial-gradient(900px 500px at -10% 10%, rgba(20,48,93,.25), transparent 70%),
-    linear-gradient(120deg, var(--learn-dark), var(--learn-mid) 55%, #061c3f);
+    linear-gradient(120deg, var(--learn-dark), var(--learn-mid) 55%, #061c3f) !important;
   display:grid; place-items:center; overflow:hidden;
 }
 #boot.fade-out{opacity:0; pointer-events:none; transition:opacity .6s ease;}
 #boot-net{position:absolute; inset:0; width:100%; height:100%;}
 
 .boot-wrap{position:relative; width:min(720px,92vw); text-align:center; color:#dbeafe}
-
-/* center module */
 .boot-orbit{position:relative; width:180px; height:180px; margin:0 auto 26px; filter:drop-shadow(0 10px 30px rgba(0,0,0,.4));}
-
-/* hide old rings entirely (if left in HTML elsewhere) */
 .boot-orbit .ring{ display:none !important; }
 
 /* rotating hex “gem” */
@@ -737,21 +732,17 @@ section.container > *:first-child{ margin-top:0; }
 }
 @keyframes hex-rotate { to { transform: rotate(1turn); } }
 
-/* circular gauge that fills with progress */
+/* circular gauge */
 .gauge{
-  --pct: 0; /* set by JS */
+  --pct: 0;
   position:absolute; inset:0; border-radius:50%;
-  background:
-    conic-gradient(
-      var(--learn-brand) calc(var(--pct) * 1%),
-      rgba(255,255,255,.14) 0
-    );
+  background: conic-gradient(var(--learn-brand) calc(var(--pct)*1%), rgba(255,255,255,.14) 0);
   -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #000 0);
           mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #000 0);
   filter: drop-shadow(0 0 14px rgba(161,15,47,.35));
 }
 
-/* center badge */
+/* center badge + copy */
 .boot-orbit .badge{
   position:absolute; inset:56px; border-radius:14px;
   display:grid; place-items:center;
@@ -760,14 +751,12 @@ section.container > *:first-child{ margin-top:0; }
   border:1px solid rgba(255,255,255,.22);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 8px 24px rgba(0,0,0,.35);
 }
-
-/* copy & bar */
 .boot-status{margin:10px 0 10px; opacity:.95; color:#d8e7ff; text-shadow:0 1px 2px rgba(0,0,0,.35)}
 .boot-bar{height:8px; width:min(540px,92vw); margin:0 auto 6px; background:rgba(255,255,255,.18); border-radius:999px; overflow:hidden}
 .boot-bar-fill{height:100%; width:0; background:linear-gradient(90deg,var(--learn-brand),#ff8aa4,var(--learn-accent)); box-shadow:0 0 18px rgba(255,120,140,.35) inset; transition:width .28s ease;}
 .boot-percent{font-weight:700; color:#dff7ff; letter-spacing:.08em}
 
-/* falling dots (color-tuned) */
+/* dots */
 .boot-dots{position:absolute; left:0; top:50%; transform:translateY(-50%); width:8px; display:flex; flex-direction:column; gap:16px; padding-left:20px}
 .boot-dots span{width:6px; height:6px; border-radius:50%; background:var(--learn-accent); opacity:.85; animation:boot-fall 3.6s linear infinite; box-shadow:0 0 8px var(--learn-accent);}
 .boot-dots span:nth-child(2){animation-delay:.3s; background:#ff8aa4}
@@ -779,6 +768,7 @@ section.container > *:first-child{ margin-top:0; }
 @media (prefers-reduced-motion: reduce){
   #boot{display:none !important;}
 }
+
 
 
 
