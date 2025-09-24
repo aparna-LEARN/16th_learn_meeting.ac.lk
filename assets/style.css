@@ -345,7 +345,6 @@ section.container > *:first-child{ margin-top:0; }
 /* ====== SPONSORSHIP: full-bleed wrapper & animated background ====== */
 #sponsorship.sponsor-bleed{
   position: relative;
-  /* full-bleed (section only) */
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
   padding: 36px 0 56px;
@@ -353,15 +352,9 @@ section.container > *:first-child{ margin-top:0; }
 }
 #sponsorship .container{ position: relative; z-index: 2; }
 
-/* Background host */
-#sponsorship .s-bg{
-  position:absolute; inset:0;
-  z-index:0; pointer-events:none;
-}
-
-/* Neon grid floor (animated) */
+/* Animated neon grid floor */
 .grid-floor{
-  position:absolute; left:-12vw; right:-12vw; bottom:-20vh; height:82vh;
+  position:absolute; left:-12vw; right:-12vw; bottom:-22vh; height:84vh;
   background:
     repeating-linear-gradient(90deg, rgba(255,255,255,.12) 0 1px, transparent 1px 60px),
     repeating-linear-gradient(0deg,  rgba(255,255,255,.12) 0 1px, transparent 1px 60px),
@@ -380,19 +373,14 @@ section.container > *:first-child{ margin-top:0; }
   100% { background-position: 320px 240px, -240px 320px, 0 0, 0 0; }
 }
 
-/* (Optional) keep faint floating dots if you had them before */
-#sponsorship .grid{ position:absolute; inset:0; }
-#sponsorship .grid-back{ opacity:.20; }
-#sponsorship .grid-front{ opacity:.12; }
-#sponsorship .color-wash{ display:none; }
-
-/* ====== Sponsorship section content ====== */
+/* ====== Content ====== */
 .sponsor{ padding: 28px 0 40px; }
 .sponsor .section-title{ color:#0a2e63; }
 
 /* Tabs */
 .s-tabs{ display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 14px; }
 .s-tab{
+  --cup:#b9c2d3;           /* default tint (platinum-ish) - overridden per tier by JS+CSS below */
   position:relative;
   display:inline-flex; align-items:center; gap:10px;
   padding:10px 14px; border-radius:16px; cursor:pointer;
@@ -406,7 +394,6 @@ section.container > *:first-child{ margin-top:0; }
   border-color:#bcd7ff;
   box-shadow:0 12px 26px rgba(2,6,23,.16), inset 0 0 0 2px #ffffff;
 }
-/* tiny glow dot under the active tab */
 .s-tab.active::after{
   content:""; position:absolute; left:50%; bottom:-6px; width:10px; height:10px;
   transform:translateX(-50%); border-radius:50%;
@@ -414,28 +401,32 @@ section.container > *:first-child{ margin-top:0; }
   filter: blur(2px);
 }
 
-/* ===== Emoji trophies in tabs ===== */
+/* Trophy icon container */
 .twrap{
   display:inline-grid; place-items:center;
-  width:22px; height:22px; border-radius:8px;
+  width:24px; height:24px; border-radius:8px;
+  background:linear-gradient(135deg,#eef3fb,#d7deea);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.9);
 }
-.trophy-emoji{ font-size:18px; line-height:1; transform:translateZ(0); }
+.t-ico{ display:block; fill:var(--cup); }
 
-/* Tab backplates + per-tier tint */
-.twrap-platinum{ background:linear-gradient(135deg,#eef3fb,#d7deea); }
-.twrap-gold    { background:linear-gradient(135deg,#fff0a8,#ffd46b); }
-.twrap-silver  { background:linear-gradient(135deg,#f1f3f8,#dfe3ee); }
-.twrap-bronze  { background:linear-gradient(135deg,#ffe0b8,#ffc06d); }
+/* Per-tier tint for tabs (using data-tier on button) */
+.s-tab[data-tier="platinum"] .twrap{ background:linear-gradient(135deg,#eef3fb,#d7deea); }
+.s-tab[data-tier="platinum"] .t-ico{ --cup:#b9c2d3; }
 
-.twrap-platinum .trophy-emoji{ filter:grayscale(1) brightness(1.45) contrast(.95); }
-.twrap-gold     .trophy-emoji{ filter:saturate(1.05) brightness(1.02); }
-.twrap-silver   .trophy-emoji{ filter:grayscale(.85) brightness(1.25) contrast(1.05); }
-.twrap-bronze   .trophy-emoji{ filter:sepia(.85) saturate(1.2) hue-rotate(-12deg) brightness(.95); }
+.s-tab[data-tier="gold"] .twrap{ background:linear-gradient(135deg,#fff0a8,#ffd46b); }
+.s-tab[data-tier="gold"] .t-ico{ --cup:#c69300; }
 
-/* ===== Panels + badges ===== */
+.s-tab[data-tier="silver"] .twrap{ background:linear-gradient(135deg,#f1f3f8,#dfe3ee); }
+.s-tab[data-tier="silver"] .t-ico{ --cup:#a7b0bf; }
+
+.s-tab[data-tier="bronze"] .twrap{ background:linear-gradient(135deg,#ffe0b8,#ffc06d); }
+.s-tab[data-tier="bronze"] .t-ico{ --cup:#b8722a; }
+
+/* Panels */
 .s-panels{ position:relative; }
 .s-panel{
+  --cup:#b9c2d3; /* default; overridden via [data-tier] below */
   border-radius:18px; border:1px solid rgba(255,255,255,.18);
   background: rgba(255,255,255,.92);
   box-shadow: 0 18px 40px rgba(2,6,23,.20);
@@ -454,20 +445,26 @@ section.container > *:first-child{ margin-top:0; }
 .s-list{ margin:0; padding-left:16px; display:grid; gap:8px; }
 .s-list li{ line-height:1.55; }
 
-/* Big badge (panel header) */
+/* Big badge */
 .s-badge{
   width:72px; height:72px; border-radius:18px; display:grid; place-items:center; overflow:hidden;
   box-shadow:0 12px 28px rgba(2,6,23,.20), inset 0 0 0 1px rgba(255,255,255,.85);
+  background: linear-gradient(135deg,#eef3fb,#d7deea);
 }
-.trophy-emoji.big{ font-size:44px; }
-.badge-platinum{ background:linear-gradient(135deg,#eef3fb,#d7deea); }
-.badge-gold    { background:linear-gradient(135deg,#fff0a8,#ffd46b); }
-.badge-silver  { background:linear-gradient(135deg,#f1f3f8,#dfe3ee); }
-.badge-bronze  { background:linear-gradient(135deg,#ffe0b8,#ffc06d); }
-.badge-platinum .trophy-emoji{ filter:grayscale(1) brightness(1.45) contrast(.95); }
-.badge-gold     .trophy-emoji{ filter:saturate(1.05) brightness(1.02); }
-.badge-silver   .trophy-emoji{ filter:grayscale(.85) brightness(1.25) contrast(1.05); }
-.badge-bronze   .trophy-emoji{ filter:sepia(.85) saturate(1.2) hue-rotate(-12deg) brightness(.95); }
+.t-ico.big{ width:44px; height:44px; fill:var(--cup); }
+
+/* Badge background & cup tint per tier (on the panel) */
+.s-panel[data-tier="platinum"] .s-badge{ background:linear-gradient(135deg,#eef3fb,#d7deea); }
+.s-panel[data-tier="platinum"]{ --cup:#b9c2d3; }
+
+.s-panel[data-tier="gold"] .s-badge{ background:linear-gradient(135deg,#fff0a8,#ffd46b); }
+.s-panel[data-tier="gold"]{ --cup:#c69300; }
+
+.s-panel[data-tier="silver"] .s-badge{ background:linear-gradient(135deg,#f1f3f8,#dfe3ee); }
+.s-panel[data-tier="silver"]{ --cup:#a7b0bf; }
+
+.s-panel[data-tier="bronze"] .s-badge{ background:linear-gradient(135deg,#ffe0b8,#ffc06d); }
+.s-panel[data-tier="bronze"]{ --cup:#b8722a; }
 
 /* Responsive */
 @media (max-width:980px){
@@ -475,9 +472,10 @@ section.container > *:first-child{ margin-top:0; }
   .sponsor{ padding: 20px 0 28px; }
   .s-body{ grid-template-columns:1fr !important; }
   .s-badge{ width:64px; height:64px; }
-  .trophy-emoji.big{ font-size:38px; }
-  .grid-floor{ bottom:-26vh; height:88vh; }
+  .t-ico.big{ width:38px; height:38px; }
+  .grid-floor{ bottom:-28vh; height:92vh; }
 }
+
 
 
 
