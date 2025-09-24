@@ -452,6 +452,57 @@ window.addEventListener('orientationchange', () =>
   dlg.addEventListener('click', (e)=>{ if (e.target === dlg) dlg.close(); });
 })();
 
+
+
+/* ===== Sponsorship tabs: switch panels + animate ===== */
+(function initSponsorshipTabs(){
+  const root = document.getElementById('sponsorship');
+  if (!root) return;
+
+  const tabs = Array.from(root.querySelectorAll('.s-tab'));
+  const panels = {
+    platinum: root.querySelector('#tier-platinum'),
+    gold:     root.querySelector('#tier-gold'),
+    silver:   root.querySelector('#tier-silver'),
+    bronze:   root.querySelector('#tier-bronze'),
+  };
+
+  function show(tier){
+    tabs.forEach(t=>{
+      const on = t.dataset.tier === tier;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+
+    Object.entries(panels).forEach(([k,el])=>{
+      const on = (k === tier);
+      if (!el) return;
+      if (on){
+        el.hidden = false;
+        el.classList.remove('show');
+        void el.offsetWidth;       // restart CSS animation
+        el.classList.add('show');
+      } else {
+        el.hidden = true;
+        el.classList.remove('show');
+      }
+    });
+  }
+
+  tabs.forEach(t=> t.addEventListener('click', ()=> show(t.dataset.tier)));
+
+  // Keyboard: ← →
+  root.addEventListener('keydown', (e)=>{
+    const i = tabs.findIndex(t=> t.classList.contains('active'));
+    if (e.key === 'ArrowRight'){ e.preventDefault(); tabs[(i+1)%tabs.length].click(); }
+    if (e.key === 'ArrowLeft'){  e.preventDefault(); tabs[(i-1+tabs.length)%tabs.length].click(); }
+  });
+
+  show('platinum'); // default
+})();
+
+
+
 /* ===== Trim agenda height to last event (per day) =====
    containerSel:  CSS selector for the day wrapper (e.g. '#day2')
    pad:           extra minutes to keep after the last event (optional)
