@@ -319,6 +319,29 @@ section.container > *:first-child{ margin-top:0; }
   .al-title{ font-size: clamp(24px, 7vw, 36px); }
 }
 
+/* Bigger body copy inside the About panel (not the title) */
+#about-learn .al-body,
+#about-learn .al-points li > span:nth-of-type(2){
+  font-size: clamp(16px, 1.25vw, 19.5px);  /* was ~16–18px → now ~17–19.5px */
+  line-height: 1.55;
+}
+
+/* Slightly stronger weight for readability on dark glass */
+#about-learn .al-body,
+#about-learn .al-points li > span:nth-of-type(2){
+  font-weight: 500;
+}
+
+/* Mobile: keep it comfy, not huge */
+@media (max-width: 720px){
+  #about-learn .al-body,
+  #about-learn .al-points li > span:nth-of-type(2){
+    font-size: clamp(15.5px, 4.3vw, 18px);
+    line-height: 1.6;
+  }
+}
+
+
 
 
 /* ===========================================================
