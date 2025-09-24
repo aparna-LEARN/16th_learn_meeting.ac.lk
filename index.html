@@ -1,72 +1,363 @@
-<!-- ===== SPONSORSHIP (full-bleed, animated blue sky + neon grid) ===== -->
-<section id="sponsorship" class="sponsor-bleed">
-  <!-- Title kept clean; background starts below this -->
-  <div class="container sponsor-titlebar">
+
+
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>16th LEARN Meeting — October 23–24, 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Sri Lanka’s national research & education community—together for collaboration, planning, and action." />
+  <link rel="stylesheet" href="assets/style.css" />
+
+  <!-- Minimal CSS kept inline for the WG ribbon + Conduct/Contact split -->
+  <style>
+    /* ===== WG ribbon — taller so cards sit fully inside; full-bleed section ===== */
+    :root{ --wg-h: clamp(560px, 72vh, 920px); }
+
+    .wg-section{
+      position:relative;
+      /* make the ribbon span edge-to-edge while the cards still use .container */
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      margin-bottom: 28px;
+    }
+    .wg-ribbon{
+      position:absolute; inset:0;
+      height: var(--wg-h);
+      overflow:hidden;
+      z-index:0;
+    }
+    .wg-ribbon::before{
+      content:""; position:absolute; inset:0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.62), rgba(0,0,0,.40)),
+        radial-gradient(150% 70% at 50% 0%, rgba(0,0,0,.35), transparent 70%);
+      pointer-events:none;
+    }
+    .wg-ribbon-track{
+      position:absolute; left:0; top:0;
+      height: var(--wg-h);
+      display:flex; gap:0;
+      will-change:transform;
+      transform: translate3d(0,0,0);
+    }
+    .wg-ribbon img{
+      height: 100%;
+      width: auto;
+      flex: 0 0 auto;
+      display:block;
+      object-fit: cover;
+      filter:saturate(.95) contrast(1.05);
+      opacity:.9;
+      transform: translateZ(0);
+    }
+
+    /* Foreground (white cards) sits on top and at least as tall as ribbon */
+    .wg-content{
+      position:relative; z-index:1;
+      min-height: var(--wg-h);
+      padding:56px 0 34px;
+    }
+
+    /* Two white cards layout (your cards stay as-is) */
+    .wg-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px; }
+    .wg-card{ background:#fff; color:#0b1220; }
+
+    /* Slightly wider container for this section only (optional) */
+    #wgs .container{ max-width:1280px; }
+
+    @media (max-width:980px){
+      :root{ --wg-h: clamp(360px, 52vh, 560px); }
+      .wg-grid{ grid-template-columns:1fr; }
+      .wg-content{ padding-top:36px; }
+    }
+
+    /* Respect Reduced Motion */
+    @media (prefers-reduced-motion: reduce){
+      .wg-ribbon-track{ transform:none !important; }
+    }
+
+    /* ===== Conduct + Contact split with animated Lottie (business woman) ===== */
+    .conduct-split{
+      display:grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap:24px;
+      align-items:center;
+      margin-top: 8px;
+    }
+    .conduct-split .anim-col{ display:grid; place-items:center; padding:8px; }
+    .anim-box{
+      width:min(520px, 100%);
+      aspect-ratio: 1 / 1;
+    }
+    .anim-box dotlottie-wc{
+      width:100%; height:100%; display:block;
+      filter: drop-shadow(0 18px 40px rgba(2,6,23,.18));
+    }
+    .right-col{ display:grid; }
+    .stack{ display:grid; }
+    .gap-18{ row-gap:18px; }
+
+    @media (max-width:980px){
+      .conduct-split{ grid-template-columns:1fr; }
+      .conduct-split .anim-col{ order:-1; }
+      .anim-box{ width:min(420px,100%); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NETWORK LINES BACKGROUND (only behind white sections) -->
+  <canvas id="net-bg"></canvas>
+
+  <!-- Ambient page background (behind all content) -->
+  <div class="page-ambient" aria-hidden="true">
+    <span class="orb o1"></span>
+    <span class="orb o2"></span>
+    <span class="orb o3"></span>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="https://www.ac.lk/" target="_blank" rel="noopener" aria-label="LEARN">
+        <img src="assets/Learn_Logo.png" alt="LEARN" />
+      </a>
+
+      <div class="menu">
+        <a href="./">Home</a>
+        <a href="agenda.html">Agenda</a>
+        <a href="last-year.html">Last Year</a>
+        
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="container inner">
+      <h1>16th LEARN Meeting</h1>
+      <p class="lead"><strong>October 23–24, 2025 · <span style="color:#ffb353;">Stay tuned for the venue announcement</span></strong></p>
+      <p class="lead">Sri Lanka’s national research &amp; education community—together for collaboration, planning, and action.</p>
+      <div class="badges">
+        <span class="pill">AGM</span>
+        <span class="pill">GenAI Empowerment WG</span>
+        <span class="pill">AgriTech WG</span>
+        <span class="pill">Services Awareness</span>
+      </div>
+      <div class="hero-card floaty">
+        <div class="grid">
+          <div>Opening ceremony &amp; keynote • Social dinner &amp; networking</div>
+          <div class="muted">Roadmaps, coordinators, and next-step actions for 2025–26.</div>
+        </div>
+      </div>
+      <p style="margin-top:14px">
+        
+        <a class="btn btn-primary" href="agenda.html">View Agenda</a>
+      </p>
+    </div>
+  </header>
+
+
+    <!-- ===== ABOUT LEARN (after hero) ===== -->
+  <section id="about-learn" class="about-learn">
+    <div class="al-overlay"></div>
+  
+    <div class="container">
+      <div class="al-panel">
+        <header class="al-head">
+          <span class="al-bar" aria-hidden="true"></span>
+          <div>
+            <div class="al-kicker">ABOUT</div>
+            <h2 class="al-title">LEARN</h2>
+          </div>
+        </header>
+  
+        <div class="al-body">
+          <p>
+            <strong>Lanka Education and Research Network (LEARN)</strong> is the National Research and Education Network of Sri Lanka. It is a non-profit, government-owned organization that provides advanced ICT infrastructure and services to support the academic and research community of the country.
+          </p>
+  
+          <ul class="al-points">
+            <li>
+              <span class="al-bullet" aria-hidden="true"></span>
+              <span>
+                <strong>Established in 1989</strong>, LEARN connects all state universities, state and non-state higher education institutions, and several research organisations through a high-speed, secure, and reliable network. LEARN is also a full member of the global research and education networking community, including APAN, TEIN, and GEANT.
+              </span>
+            </li>
+            <li>
+              <span class="al-bullet" aria-hidden="true"></span>
+              <span>
+                Since 2009, LEARN has been operating as a company limited by guarantee under the Companies Act of Sri Lanka. It is governed by a Board of Directors and owned by the University Grants Commission (UGC) and state universities of Sri Lanka.
+              </span>
+            </li>
+          </ul>
+      </div>
+    </div>
+  </section>
+
+
+<!-- ABOUT (left text cards) + CAROUSEL (right) -->
+<section id="about">
+  <div class="container">
+    <div class="about-top">
+      <h2 class="section-title">About the LEARN Meeting</h2>
+      <div class="card about-carousel-title">
+        <h3 class="section-title" style="margin:0">15th AGM &amp; LEARN@35 — Highlights</h3>
+      </div>
+    </div>
+
+    <div class="grid cols-2">
+      <!-- LEFT: two cards -->
+      <div class="grid" style="gap:24px">
+        <div class="card">
+          <h3>What it is</h3>
+          <p>
+            The annual gathering of Sri Lanka’s research &amp; education community.
+            In 2025 we launch two new Working Groups—<strong>GenAI Empowerment</strong>
+            and <strong>AgriTech</strong>—and run a LEARN Services Awareness session.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Who should attend</h3>
+          <ul>
+            <li>Official delegates of member institutions (AGM)</li>
+            <li>Academics, researchers, IT leaders, administrators (WGs)</li>
+            <li>Campus IT, library, e-learning teams (Services)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- RIGHT: 15th AGM Photo Carousel -->
+      <div>
+        <div class="card" style="padding:0">
+          <div class="carousel" data-autoplay="5000" aria-label="15th AGM photo highlights">
+            <button class="c-btn prev" aria-label="Previous">‹</button>
+            <div class="track">
+              <figure class="slide">
+                <img loading="lazy" src="assets/15th/2.jpg" alt="Opening session — 15th AGM" />
+                <figcaption>.</figcaption>
+              </figure>
+              <figure class="slide">
+                <img loading="lazy" src="assets/15th/1.jpg" alt="Panel discussion" />
+                <figcaption>.</figcaption>
+              </figure>
+              <figure class="slide">
+                <img loading="lazy" src="assets/15th/3.jpg" alt="Networking break" />
+                <figcaption>.</figcaption>
+              </figure>
+              <figure class="slide">
+                <img loading="lazy" src="assets/15th/4.jpg" alt="Keynote" />
+                <figcaption>.</figcaption>
+              </figure>
+              
+              <figure class="slide">
+                <img loading="lazy" src="assets/15th/8.jpg" alt="Additional highlight" />
+                <figcaption>.</figcaption>
+              </figure>
+              <figure class="slide">
+                <img loading="lazy" src="assets/15th/5.jpg" alt="Team photo" />
+                <figcaption>.</figcaption>
+              </figure>
+              <figure class="slide">
+                <img loading="lazy" src="assets/15th/6.jpg" alt="Dinner" />
+                <figcaption>.</figcaption>
+              </figure>
+            </div>
+            <button class="c-btn next" aria-label="Next">›</button>
+          </div>
+          <div class="dots" aria-label="Slide indicators"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- KEY INFO -->
+  <section>
+    <div class="container">
+      <h2 class="section-title">Key Information</h2>
+      <div class="card">
+        <div class="grid cols-3">
+          <div class="kv">
+            <div class="ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="16" rx="3" stroke="#0a79a7" stroke-width="1.6" />
+                <path d="M3 9h18M8 3v4M16 3v4" stroke="#0a79a7" stroke-width="1.6" stroke-linecap="round" />
+              </svg>
+            </div>
+            <div><div><strong>Dates</strong></div>Thursday–Friday, Oct 23–24, 2025</div>
+          </div>
+          <div class="kv">
+            <div class="ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z" stroke="#0a79a7" stroke-width="1.6" />
+                <circle cx="12" cy="10" r="2.5" stroke="#0a79a7" stroke-width="1.6" />
+              </svg>
+            </div>
+            <div><div><strong>Venue</strong></div>To be announced</div>
+          </div>
+          <div class="kv">
+            <div class="ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M20 6L9 17l-5-5" stroke="#0a79a7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div><div><strong>Dress Code</strong></div>Smart casual</div>
+          </div>
+          <div class="kv" style="grid-column:1/-1">
+            <div class="ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2.5" stroke="#0a79a7" stroke-width="1.6"></rect>
+                <path d="M4 7l8 6 8-6" stroke="#0a79a7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+              <div>
+                <div><strong>Contact</strong></div>
+                <a id="emailLink" href="mailto:consultant@ops.learn.ac.lk">consultant@ops.learn.ac.lk</a>
+              </div>
+              <button class="btn btn-outline" onclick="copyEmail()">Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- ===== SPONSORSHIP (Tabbed, animated, emoji trophies) ===== -->
+  <section id="sponsorship" class="container sponsor">
     <h2 class="section-title">Sponsorship</h2>
-  </div>
-
-  <!-- Full-bleed animated background (offset is set by JS) -->
-  <div class="s-bg" aria-hidden="true">
-    <div class="sky"></div>
-    <div class="grid-floor"></div>
-  </div>
-
-  <!-- Foreground content -->
-  <div class="container sponsor">
-
+  
     <!-- Tabs -->
     <div class="s-tabs" role="tablist" aria-label="Sponsorship tiers">
       <button class="s-tab active" role="tab" aria-selected="true"
               aria-controls="tier-platinum" id="tab-platinum" data-tier="platinum">
-        <span class="twrap" aria-hidden="true">
-          <svg class="t-ico" viewBox="0 0 24 24" width="18" height="18">
-            <path d="M20 4h-3V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H4a1 1 0 0 0-1 1v2a5 5 0 0 0 5 5h1a5 5 0 0 0 4 2v2H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-5v-2a5 5 0 0 0 4-2h1a5 5 0 0 0 5-5V5a1 1 0 0 0-1-1Zm-1 3a3 3 0 0 1-3 3h-1V6h4v1ZM8 10a3 3 0 0 1-3-3V6h4v4H8Z"/>
-          </svg>
-        </span>
-        Platinum
+        <span class="medal medal-platinum" aria-hidden="true">🏆</span> Platinum
       </button>
-
       <button class="s-tab" role="tab" aria-selected="false"
               aria-controls="tier-gold" id="tab-gold" data-tier="gold">
-        <span class="twrap" aria-hidden="true">
-          <svg class="t-ico" viewBox="0 0 24 24" width="18" height="18">
-            <path d="M20 4h-3V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H4a1 1 0 0 0-1 1v2a5 5 0 0 0 5 5h1a5 5 0 0 0 4 2v2H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-5v-2a5 5 0 0 0 4-2h1a5 5 0 0 0 5-5V5a1 1 0 0 0-1-1Zm-1 3a3 3 0 0 1-3 3h-1V6h4v1ZM8 10a3 3 0 0 1-3-3V6h4v4H8Z"/>
-          </svg>
-        </span>
-        Gold
+        <span class="medal medal-gold" aria-hidden="true">🏆</span> Gold
       </button>
-
       <button class="s-tab" role="tab" aria-selected="false"
               aria-controls="tier-silver" id="tab-silver" data-tier="silver">
-        <span class="twrap" aria-hidden="true">
-          <svg class="t-ico" viewBox="0 0 24 24" width="18" height="18">
-            <path d="M20 4h-3V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H4a1 1 0 0 0-1 1v2a5 5 0 0 0 5 5h1a5 5 0 0 0 4 2v2H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-5v-2a5 5 0 0 0 4-2h1a5 5 0 0 0 5-5V5a1 1 0 0 0-1-1Zm-1 3a3 3 0 0 1-3 3h-1V6h4v1ZM8 10a3 3 0 0 1-3-3V6h4v4H8Z"/>
-          </svg>
-        </span>
-        Silver
+        <span class="medal medal-silver" aria-hidden="true">🏆</span> Silver
       </button>
-
       <button class="s-tab" role="tab" aria-selected="false"
               aria-controls="tier-bronze" id="tab-bronze" data-tier="bronze">
-        <span class="twrap" aria-hidden="true">
-          <svg class="t-ico" viewBox="0 0 24 24" width="18" height="18">
-            <path d="M20 4h-3V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H4a1 1 0 0 0-1 1v2a5 5 0 0 0 5 5h1a5 5 0 0 0 4 2v2H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-5v-2a5 5 0 0 0 4-2h1a5 5 0 0 0 5-5V5a1 1 0 0 0-1-1Zm-1 3a3 3 0 0 1-3 3h-1V6h4v1ZM8 10a3 3 0 0 1-3-3V6h4v4H8Z"/>
-          </svg>
-        </span>
-        Bronze
+        <span class="medal medal-bronze" aria-hidden="true">🏆</span> Bronze
       </button>
     </div>
-
-    <!-- Panels (unchanged content) -->
+  
+    <!-- Panels -->
     <div class="s-panels">
       <!-- Platinum -->
-      <article id="tier-platinum" class="s-panel show" role="tabpanel" aria-labelledby="tab-platinum" data-tier="platinum">
+      <article id="tier-platinum" class="s-panel show" role="tabpanel" aria-labelledby="tab-platinum">
         <header class="s-head">
-          <div class="s-badge">
-            <svg class="t-ico big" viewBox="0 0 24 24">
-              <path d="M20 4h-3V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H4a1 1 0 0 0-1 1v2a5 5 0 0 0 5 5h1a5 5 0 0 0 4 2v2H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-5v-2a5 5 0 0 0 4-2h1a5 5 0 0 0 5-5V5a1 1 0 0 0-1-1Zm-1 3a3 3 0 0 1-3 3h-1V6h4v1ZM8 10a3 3 0 0 1-3-3V6h4v4H8Z"/>
-            </svg>
-          </div>
+          <div class="s-badge badge-platinum"><span class="trophy" aria-hidden="true">🏆</span></div>
           <div>
             <h3 class="s-title">Platinum Sponsor — USD 10,000</h3>
             <p class="s-sub">Flagship visibility across the whole event.</p>
@@ -81,7 +372,7 @@
               <li>90-minute parallel session block (talks/case studies/demos).</li>
               <li>Exhibition/demo booth in the foyer.</li>
               <li>8 complimentary registrations.</li>
-              <li>Recognition during Opening &amp; Closing Ceremonies.</li>
+              <li>Recognition during Opening & Closing Ceremonies.</li>
               <li>Featured in post-event reports and communications.</li>
             </ul>
           </div>
@@ -91,15 +382,11 @@
           </div>
         </div>
       </article>
-
+  
       <!-- Gold -->
-      <article id="tier-gold" class="s-panel" role="tabpanel" aria-labelledby="tab-gold" hidden data-tier="gold">
+      <article id="tier-gold" class="s-panel" role="tabpanel" aria-labelledby="tab-gold" hidden>
         <header class="s-head">
-          <div class="s-badge">
-            <svg class="t-ico big" viewBox="0 0 24 24">
-              <path d="M20 4h-3V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H4a1 1 0 0 0-1 1v2a5 5 0 0 0 5 5h1a5 5 0 0 0 4 2v2H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-5v-2a5 5 0 0 0 4-2h1a5 5 0 0 0 5-5V5a1 1 0 0 0-1-1Zm-1 3a3 3 0 0 1-3 3h-1V6h4v1ZM8 10a3 3 0 0 1-3-3V6h4v4H8Z"/>
-            </svg>
-          </div>
+          <div class="s-badge badge-gold"><span class="trophy" aria-hidden="true">🏆</span></div>
           <div>
             <h3 class="s-title">Gold Sponsor — USD 6,000</h3>
             <p class="s-sub">Strong presence across main and parallel tracks.</p>
@@ -110,7 +397,7 @@
             <h4>Benefits</h4>
             <ul class="s-list">
               <li>Recognition on website, banners, and program booklet.</li>
-              <li>Branding in main &amp; parallel session venues.</li>
+              <li>Branding in main & parallel session venues.</li>
               <li>45-minute technical talk/demo slot.</li>
               <li>Option to host an exhibition/demo booth.</li>
               <li>5 complimentary registrations.</li>
@@ -123,15 +410,11 @@
           </div>
         </div>
       </article>
-
+  
       <!-- Silver -->
-      <article id="tier-silver" class="s-panel" role="tabpanel" aria-labelledby="tab-silver" hidden data-tier="silver">
+      <article id="tier-silver" class="s-panel" role="tabpanel" aria-labelledby="tab-silver" hidden>
         <header class="s-head">
-          <div class="s-badge">
-            <svg class="t-ico big" viewBox="0 0 24 24">
-              <path d="M20 4h-3V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H4a1 1 0 0 0-1 1v2a5 5 0 0 0 5 5h1a5 5 0 0 0 4 2v2H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-5v-2a5 5 0 0 0 4-2h1a5 5 0 0 0 5-5V5a1 1 0 0 0-1-1Zm-1 3a3 3 0 0 1-3 3h-1V6h4v1ZM8 10a3 3 0 0 1-3-3V6h4v4H8Z"/>
-            </svg>
-          </div>
+          <div class="s-badge badge-silver"><span class="trophy" aria-hidden="true">🏆</span></div>
           <div>
             <h3 class="s-title">Silver Sponsor — USD 4,000</h3>
             <p class="s-sub">Mid-level visibility with exhibition option.</p>
@@ -153,15 +436,11 @@
           </div>
         </div>
       </article>
-
+  
       <!-- Bronze -->
-      <article id="tier-bronze" class="s-panel" role="tabpanel" aria-labelledby="tab-bronze" hidden data-tier="bronze">
+      <article id="tier-bronze" class="s-panel" role="tabpanel" aria-labelledby="tab-bronze" hidden>
         <header class="s-head">
-          <div class="s-badge">
-            <svg class="t-ico big" viewBox="0 0 24 24">
-              <path d="M20 4h-3V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H4a1 1 0 0 0-1 1v2a5 5 0 0 0 5 5h1a5 5 0 0 0 4 2v2H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-5v-2a5 5 0 0 0 4-2h1a5 5 0 0 0 5-5V5a1 1 0 0 0-1-1Zm-1 3a3 3 0 0 1-3 3h-1V6h4v1ZM8 10a3 3 0 0 1-3-3V6h4v4H8Z"/>
-            </svg>
-          </div>
+          <div class="s-badge badge-bronze"><span class="trophy" aria-hidden="true">🏆</span></div>
           <div>
             <h3 class="s-title">Bronze Sponsor — USD 2,000</h3>
             <p class="s-sub">Entry-level presence with direct networking.</p>
@@ -184,7 +463,226 @@
         </div>
       </article>
     </div>
+  </section>
+
+
+  <!-- ===================== WORKING GROUPS — title bar OUTSIDE the ribbon ===================== -->
+  <section class="container wg-titlebar">
+    <h2 class="section-title">Working Groups</h2>
+    <p class="wg-sub">Hands-on communities driving projects, training, and real outcomes for 2025–26.</p>
+  </section>
+
+  <!-- ===================== WORKING GROUPS with photo ribbon (cards only over images) ===================== -->
+  <section id="wgs" class="wg-section">
+    <!-- Full-width slow ribbon behind (images duplicated for seamless loop) -->
+    <div class="wg-ribbon" aria-hidden="true">
+      <div class="wg-ribbon-track">
+        <img src="assets/wg-ribbon/6.jpg" alt="" />
+        <img src="assets/wg-ribbon/7.jpg" alt="" />
+        <img src="assets/wg-ribbon/8.jpg" alt="" />
+        <img src="assets/wg-ribbon/9.jpg" alt="" />
+        <!-- duplicate set for seamless loop -->
+        <img src="assets/wg-ribbon/6.jpg" alt="" />
+        <img src="assets/wg-ribbon/7.jpg" alt="" />
+        <img src="assets/wg-ribbon/8.jpg" alt="" />
+        <img src="assets/wg-ribbon/9.jpg" alt="" />
+      </div>
+    </div>
+
+    <!-- Only the cards overlay the ribbon (no section heading here) -->
+    <div class="container wg-content">
+      <div class="wg-grid">
+        <!-- WG 1: AgriTech -->
+        <article class="card wg-card">
+          <header class="wg-top">
+            <div class="wg-icon" aria-hidden="true">🌱</div>
+            <div>
+              <h3 class="wg-title">WG 1: AgriTech</h3>
+              <div class="wg-tags">
+                <span class="chip">IoT</span><span class="chip">Remote Sensing</span><span class="chip">AI</span><span class="chip">Data Platforms</span>
+              </div>
+            </div>
+          </header>
+
+          <p class="muted"><strong>Purpose:</strong> Connect agriculture faculties, research centres, and IT teams to apply digital technologies across education, research, and extension.</p>
+
+          <details class="wg-acc" open>
+            <summary><span>Expected Outcomes (2025–26)</span></summary>
+            <ul class="wg-list">
+              <li><strong>2–3 collaborative pilots</strong> (e.g., smart farm sensor network; shared agri-data repository)</li>
+              <li><strong>Quarterly knowledge-sharing</strong> sessions and a community portal</li>
+              <li><strong>Published roadmap</strong> with roles, milestones, and metrics</li>
+            </ul>
+          </details>
+
+          <footer class="wg-foot">
+            <div class="join"><span class="dot"></span> Who should join:</div>
+            <p class="muted">Academics &amp; researchers in agriculture; IT/IoT specialists; administrators supporting agri projects.</p>
+          </footer>
+        </article>
+
+        <!-- WG 2: GenAI Empowerment -->
+        <article class="card wg-card">
+          <header class="wg-top">
+            <div class="wg-icon" aria-hidden="true">🤖</div>
+            <div>
+              <h3 class="wg-title">WG 2: GenAI Empowerment</h3>
+              <div class="wg-tags">
+                <span class="chip">Teaching</span><span class="chip">Research</span><span class="chip">Student Services</span><span class="chip">Ops</span>
+              </div>
+            </div>
+          </header>
+
+          <p class="muted"><strong>Purpose:</strong> Build national capacity to use Generative AI responsibly in teaching, research, student services, and NREN operations.</p>
+
+          <details class="wg-acc" open>
+            <summary><span>Expected Outcomes (2025–26)</span></summary>
+            <ul class="wg-list">
+              <li><strong>2–3 pilot projects</strong> (e.g., student services chatbot; AI-assisted teaching toolkit)</li>
+              <li><strong>2–3 training programs</strong> for faculty, researchers, and IT teams</li>
+              <li><strong>Practical guidelines</strong> for safe, ethical GenAI use in higher education</li>
+            </ul>
+          </details>
+
+          <footer class="wg-foot">
+            <div class="join"><span class="dot"></span> Who should join:</div>
+            <p class="muted">CS/IT academics, learning technologists, librarians, student services leaders, and campus IT managers.</p>
+          </footer>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MAIN SESSIONS ===================== -->
+  <section class="container">
+    <h2 class="section-title">Main Sessions</h2>
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>16th Annual General Meeting (AGM)</h3>
+        <p><strong>Participants:</strong> Official delegates of LEARN member organizations (VCs or nominees).</p>
+      </div>
+      <div class="card">
+        <h3>LEARN Board Meeting</h3>
+        <p><strong>Participants:</strong> LEARN Board members (Closed meeting).</p>
+      </div>
+      <div class="card">
+        <h3>LEARN Services Awareness Session</h3>
+        <p>A session for the broader LEARN community and prospective members. Topics include:</p>
+        <ul>
+          <li><strong>Identity & Access:</strong> eduID, identity federation, eduGAIN</li>
+          <li><strong>Connectivity & Mobility:</strong> eduroam, eduVPN</li>
+          <li><strong>Cybersecurity & Support:</strong> LEARN-CSIRT, TAC</li>
+          <li><strong>Collaboration & Cloud:</strong> conferencing, e-learning, storage</li>
+        </ul>
+        <p><em>Bring your questions! We’ll share deployment guides, contacts, and success stories.</em></p>
+      </div>
+      <div class="card">
+        <h3>Opening Ceremony & Social Dinner</h3>
+        <p>The Opening Ceremony welcomes the community, introduces the WGs, and features a keynote address. The Social Dinner (Day 1 evening) brings everyone together to build relationships and kickstart collaborations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Conduct + Contact (with animated illustration) ===================== -->
+<section id="conduct-contact" class="container conduct-split">
+  <!-- LEFT: transparent animation -->
+  <div class="anim-col">
+    <div class="anim-box">
+      <dotlottie-wc
+        src="https://lottie.host/1291f68b-7ac9-4f8f-bad5-dbde6414ee92/1U4pT76QEi.lottie"
+        background="transparent"
+        autoplay
+        loop
+        speed="1"
+      ></dotlottie-wc>
+    </div>
+  </div>
+
+  <!-- RIGHT: Contact only, centered heading, equal-width cards -->
+  <div class="right-col stack gap-18" style="justify-items:center;">
+    <h2 class="section-title" style="margin:6px 0 0; text-align:center;">Contact</h2>
+
+    <div class="grid cols-2" style="max-width:920px; margin:0 auto; justify-items:stretch;">
+      <div class="card" style="width:100%;">
+        <h3>Email</h3>
+        <p><a id="emailLink2" href="mailto:consultant@ops.learn.ac.lk">consultant@ops.learn.ac.lk</a></p>
+        <button class="btn btn-outline" onclick="copyEmail('emailLink2')">Copy</button>
+      </div>
+
+      <div class="card" style="width:100%;">
+        <h3>Website</h3>
+        <p><a href="https://www.ac.lk" target="_blank" rel="noopener noreferrer">https://www.ac.lk</a></p>
+      </div>
+    </div>
   </div>
 </section>
+
+
+
+
+
+  <footer class="footer">
+    <div class="container">
+      <small>&copy; <span id="y"></span> LEARN — Lanka Education And Research Network</small>
+    </div>
+  </footer>
+
+  <div id="toast" style="background:#0a79a7;border-radius:12px;bottom:18px;box-shadow:0 10px 26px rgba(2,6,23,.25);color:#fff;left:50%;opacity:0;padding:10px 14px;pointer-events:none;position:fixed;transform:translateX(-50%) translateY(20px);transition:all .35s ease">Copied!</div>
+
+  <!-- Lottie web component loader -->
+  <script type="module" src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js"></script>
+  <!-- Pause autoplay if user prefers reduced motion -->
+  <script>
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('dotlottie-wc[autoplay]').forEach(el => el.removeAttribute('autoplay'));
+    }
+  </script>
+
+  <script src="assets/app.js"></script>
+
+  <!-- Slow, seamless WG ribbon scroller -->
+  <script>
+  (function(){
+    const track = document.querySelector('.wg-ribbon-track');
+    if(!track) return;
+
+    let totalWidth = 0;
+    let halfWidth = 0;
+
+    function measure(){
+      totalWidth = Array.from(track.children)
+        .reduce((sum, el) => sum + el.getBoundingClientRect().width, 0);
+      halfWidth = totalWidth / 2;
+    }
+
+    const imgs = Array.from(track.querySelectorAll('img'));
+    let loaded = 0;
+    imgs.forEach(img => {
+      if (img.complete) { loaded++; if (loaded === imgs.length) measure(); }
+      else img.addEventListener('load', () => { loaded++; if (loaded === imgs.length) measure(); }, {once:true});
+    });
+    window.addEventListener('resize', measure);
+
+    let x = 0;
+    const SPEED = 12; // px/sec (smaller = slower)
+    let last = performance.now();
+
+    function step(now){
+      const dt = (now - last) / 1000; last = now;
+      x -= SPEED * dt;
+      if (halfWidth > 0 && -x >= halfWidth){ x += halfWidth; }
+      track.style.transform = `translate3d(${x}px,0,0)`;
+      requestAnimationFrame(step);
+    }
+
+    if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      requestAnimationFrame(step);
+    }
+  })();
+  </script>
+
+  <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>
 
 
