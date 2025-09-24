@@ -177,7 +177,7 @@ section.container > *:first-child{ margin-top:0; }
 }
 .wg-acc{margin-top:10px;border:1px dashed var(--ring);border-radius:12px;padding:10px 12px;background:#fff}
 .wg-acc > summary{cursor:pointer;list-style:none;font-weight:600;color:var(--brand);display:flex;align-items:center;gap:8px}
-.wg-acc > summary::before{content:'â–¸';color:var(--brand-2);transition:transform .2s ease}
+.wg-acc > summary::before{content:'Ã¢â€“Â¸';color:var(--brand-2);transition:transform .2s ease}
 .wg-acc[open] > summary::before{transform:rotate(90deg)}
 .wg-list{margin:8px 0 0 18px}
 .wg-list li{margin:6px 0}
@@ -251,7 +251,7 @@ section.container > *:first-child{ margin-top:0; }
 .about-learn{
   position: relative;
   margin: 18px 0 36px;
-  /* full-bleed image strip */
+  /* full-bleed image strip like the WG ribbon */
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
   padding: 48px 0;
@@ -264,7 +264,7 @@ section.container > *:first-child{ margin-top:0; }
     url("AbtLearn/whtlearn.png") center/cover no-repeat fixed;
 }
 
-/* subtle animated glow overlay */
+/* subtle animated glow or lens flare (optional overlay) */
 .about-learn .al-overlay{
   position:absolute; inset:0; pointer-events:none;
   background:
@@ -272,7 +272,7 @@ section.container > *:first-child{ margin-top:0; }
     radial-gradient(900px 520px at 40% 65%, rgba(255,255,255,.08), transparent 70%);
 }
 
-/* translucent panel */
+/* the translucent panel */
 .al-panel{
   position: relative;
   max-width: 1180px;
@@ -294,7 +294,7 @@ section.container > *:first-child{ margin-top:0; }
   margin: 2px 0 0;
   font-size: clamp(28px, 4.6vw, 48px);
   line-height: 1;
-  color: #ff4c4c;  /* red “LEARN” */
+  color: #ff4c4c;     /* red â€œLEARNâ€ like your mock */
   text-shadow: 0 4px 18px rgba(0,0,0,.35);
 }
 
@@ -322,7 +322,7 @@ section.container > *:first-child{ margin-top:0; }
 /* Bigger body copy inside the About panel (not the title) */
 #about-learn .al-body,
 #about-learn .al-points li > span:nth-of-type(2){
-  font-size: clamp(16px, 1.25vw, 19.5px);
+  font-size: clamp(16px, 1.25vw, 19.5px);  /* was ~16â€“18px â†’ now ~17â€“19.5px */
   line-height: 1.55;
 }
 
@@ -341,374 +341,93 @@ section.container > *:first-child{ margin-top:0; }
   }
 }
 
+/* ===== Sponsorship tabs & panels ===== */
+.sponsor{ margin-top: 10px; }
 
-/* ===========================================================
-   Sponsorship (full-bleed, animated neon grid, tier-colored trophies)
-   =========================================================== */
-<!-- ==================== SPONSORSHIP (standalone demo) ==================== -->
-<section id="sponsorship" class="sponsor-bleed">
-  <div class="container sponsor-titlebar">
-    <h2 class="section-title">Sponsorship</h2>
-  </div>
-
-  <!-- full-bleed animated background; JS sets --bgTop so it starts BELOW the title -->
-  <div class="s-bg" aria-hidden="true">
-    <div class="sky"></div>
-    <div class="grid-floor"></div>
-  </div>
-
-  <div class="container sponsor">
-    <!-- Tabs -->
-    <div class="s-tabs" role="tablist" aria-label="Sponsorship tiers">
-      <button class="s-tab active" role="tab" aria-selected="true"
-              aria-controls="tier-platinum" id="tab-platinum" data-tier="platinum">
-        <span class="twrap" aria-hidden="true">
-          <svg class="t-ico" viewBox="0 0 24 24"><path d="M20 4h-3V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H4a1 1 0 0 0-1 1v2a5 5 0 0 0 5 5h1a5 5 0 0 0 4 2v2H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-5v-2a5 5 0 0 0 4-2h1a5 5 0 0 0 5-5V5a1 1 0 0 0-1-1Zm-1 3a3 3 0 0 1-3 3h-1V6h4v1ZM8 10a3 3 0 0 1-3-3V6h4v4H8Z"/></svg>
-        </span> Platinum
-      </button>
-
-      <button class="s-tab" role="tab" aria-selected="false"
-              aria-controls="tier-gold" id="tab-gold" data-tier="gold">
-        <span class="twrap" aria-hidden="true">
-          <svg class="t-ico" viewBox="0 0 24 24"><path d="M20 4h-3V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H4a1 1 0 0 0-1 1v2a5 5 0 0 0 5 5h1a5 5 0 0 0 4 2v2H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-5v-2a5 5 0 0 0 4-2h1a5 5 0 0 0 5-5V5a1 1 0 0 0-1-1Zm-1 3a3 3 0 0 1-3 3h-1V6h4v1ZM8 10a3 3 0 0 1-3-3V6h4v4H8Z"/></svg>
-        </span> Gold
-      </button>
-
-      <button class="s-tab" role="tab" aria-selected="false"
-              aria-controls="tier-silver" id="tab-silver" data-tier="silver">
-        <span class="twrap" aria-hidden="true">
-          <svg class="t-ico" viewBox="0 0 24 24"><path d="M20 4h-3V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H4a1 1 0 0 0-1 1v2a5 5 0 0 0 5 5h1a5 5 0 0 0 4 2v2H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-5v-2a5 5 0 0 0 4-2h1a5 5 0 0 0 5-5V5a1 1 0 0 0-1-1Zm-1 3a3 3 0 0 1-3 3h-1V6h4v1ZM8 10a3 3 0 0 1-3-3V6h4v4H8Z"/></svg>
-        </span> Silver
-      </button>
-
-      <button class="s-tab" role="tab" aria-selected="false"
-              aria-controls="tier-bronze" id="tab-bronze" data-tier="bronze">
-        <span class="twrap" aria-hidden="true">
-          <svg class="t-ico" viewBox="0 0 24 24"><path d="M20 4h-3V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H4a1 1 0 0 0-1 1v2a5 5 0 0 0 5 5h1a5 5 0 0 0 4 2v2H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-5v-2a5 5 0 0 0 4-2h1a5 5 0 0 0 5-5V5a1 1 0 0 0-1-1Zm-1 3a3 3 0 0 1-3 3h-1V6h4v1ZM8 10a3 3 0 0 1-3-3V6h4v4H8Z"/></svg>
-        </span> Bronze
-      </button>
-    </div>
-
-    <!-- Panels -->
-    <div class="s-panels">
-      <article id="tier-platinum" class="s-panel show" role="tabpanel" aria-labelledby="tab-platinum" data-tier="platinum">
-        <header class="s-head">
-          <div class="s-badge">
-            <svg class="t-ico big" viewBox="0 0 24 24"><path d="M20 4h-3V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H4a1 1 0 0 0-1 1v2a5 5 0 0 0 5 5h1a5 5 0 0 0 4 2v2H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-5v-2a5 5 0 0 0 4-2h1a5 5 0 0 0 5-5V5a1 1 0 0 0-1-1Zm-1 3a3 3 0 0 1-3 3h-1V6h4v1ZM8 10a3 3 0 0 1-3-3V6h4v4H8Z"/></svg>
-          </div>
-          <div>
-            <h3 class="s-title">Platinum Sponsor — USD 10,000</h3>
-            <p class="s-sub">Flagship visibility across the whole event.</p>
-          </div>
-        </header>
-        <div class="grid cols-2 s-body">
-          <div class="card s-card">
-            <h4>Benefits</h4>
-            <ul class="s-list">
-              <li>Recognition on all materials (website, banners, booklet, press).</li>
-              <li>Prominent branding in hall and networking areas.</li>
-              <li>90-minute parallel session block (talks/case studies/demos).</li>
-              <li>Exhibition/demo booth in the foyer.</li>
-              <li>8 complimentary registrations.</li>
-              <li>Recognition during Opening &amp; Closing Ceremonies.</li>
-              <li>Featured in post-event reports and communications.</li>
-            </ul>
-          </div>
-          <div class="card s-card">
-            <h4>Sponsorship Value</h4>
-            <p>Highest visibility and deep engagement with Sri Lanka’s higher education leadership and ICT community.</p>
-          </div>
-        </div>
-      </article>
-
-      <article id="tier-gold" class="s-panel" role="tabpanel" aria-labelledby="tab-gold" hidden data-tier="gold">
-        <header class="s-head">
-          <div class="s-badge">
-            <svg class="t-ico big" viewBox="0 0 24 24"><path d="M20 4h-3V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H4a1 1 0 0 0-1 1v2a5 5 0 0 0 5 5h1a5 5 0 0 0 4 2v2H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-5v-2a5 5 0 0 0 4-2h1a5 5 0 0 0 5-5V5a1 1 0 0 0-1-1Zm-1 3a3 3 0 0 1-3 3h-1V6h4v1ZM8 10a3 3 0 0 1-3-3V6h4v4H8Z"/></svg>
-          </div>
-          <div>
-            <h3 class="s-title">Gold Sponsor — USD 6,000</h3>
-            <p class="s-sub">Strong presence across main and parallel tracks.</p>
-          </div>
-        </header>
-        <div class="grid cols-2 s-body">
-          <div class="card s-card">
-            <h4>Benefits</h4>
-            <ul class="s-list">
-              <li>Recognition on website, banners, and program booklet.</li>
-              <li>Branding in main &amp; parallel session venues.</li>
-              <li>45-minute technical talk/demo slot.</li>
-              <li>Option to host an exhibition/demo booth.</li>
-              <li>5 complimentary registrations.</li>
-              <li>Recognition during the Closing Ceremony.</li>
-            </ul>
-          </div>
-          <div class="card s-card">
-            <h4>Sponsorship Value</h4>
-            <p>Targeted opportunity to showcase solutions with a technical presentation and exhibition access.</p>
-          </div>
-        </div>
-      </article>
-
-      <article id="tier-silver" class="s-panel" role="tabpanel" aria-labelledby="tab-silver" hidden data-tier="silver">
-        <header class="s-head">
-          <div class="s-badge">
-            <svg class="t-ico big" viewBox="0 0 24 24"><path d="M20 4h-3V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H4a1 1 0 0 0-1 1v2a5 5 0 0 0 5 5h1a5 5 0 0 0 4 2v2H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-5v-2a5 5 0 0 0 4-2h1a5 5 0 0 0 5-5V5a1 1 0 0 0-1-1Zm-1 3a3 3 0 0 1-3 3h-1V6h4v1ZM8 10a3 3 0 0 1-3-3V6h4v4H8Z"/></svg>
-          </div>
-          <div>
-            <h3 class="s-title">Silver Sponsor — USD 4,000</h3>
-            <p class="s-sub">Mid-level visibility with exhibition option.</p>
-          </div>
-        </header>
-        <div class="grid cols-2 s-body">
-          <div class="card s-card">
-            <h4>Benefits</h4>
-            <ul class="s-list">
-              <li>Recognition on website, banners, and program booklet.</li>
-              <li>Option to host an exhibition/demo booth.</li>
-              <li>3 complimentary registrations.</li>
-              <li>Recognition during the Closing Ceremony.</li>
-            </ul>
-          </div>
-          <div class="card s-card">
-            <h4>Sponsorship Value</h4>
-            <p>Connect directly with academics, IT staff, and researchers.</p>
-          </div>
-        </div>
-      </article>
-
-      <article id="tier-bronze" class="s-panel" role="tabpanel" aria-labelledby="tab-bronze" hidden data-tier="bronze">
-        <header class="s-head">
-          <div class="s-badge">
-            <svg class="t-ico big" viewBox="0 0 24 24"><path d="M20 4h-3V3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v1H4a1 1 0 0 0-1 1v2a5 5 0 0 0 5 5h1a5 5 0 0 0 4 2v2H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-5v-2a5 5 0 0 0 4-2h1a5 5 0 0 0 5-5V5a1 1 0 0 0-1-1Zm-1 3a3 3 0 0 1-3 3h-1V6h4v1ZM8 10a3 3 0 0 1-3-3V6h4v4H8Z"/></svg>
-          </div>
-          <div>
-            <h3 class="s-title">Bronze Sponsor — USD 2,000</h3>
-            <p class="s-sub">Entry-level presence with direct networking.</p>
-          </div>
-        </header>
-        <div class="grid cols-2 s-body">
-          <div class="card s-card">
-            <h4>Benefits</h4>
-            <ul class="s-list">
-              <li>Recognition on banners, booklet, and website.</li>
-              <li>Small exhibition table/demo in the foyer.</li>
-              <li>2 complimentary registrations.</li>
-              <li>Recognition during the Closing Ceremony.</li>
-            </ul>
-          </div>
-          <div class="card s-card">
-            <h4>Sponsorship Value</h4>
-            <p>Visible branding plus access to the LEARN community.</p>
-          </div>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<style>
-/* ---------- FULL-BLEED & BACKGROUND ---------- */
-#sponsorship.sponsor-bleed{
-  position:relative;
-  margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);
-  overflow:hidden; padding-bottom:56px;
-}
-.sponsor-titlebar{position:relative; z-index:3; padding:24px 0 8px;}
-.sponsor-titlebar .section-title{margin:0; color:#0a2e63}
-#sponsorship .s-bg{
-  position:absolute; left:0; right:0; bottom:0;
-  top:var(--bgTop, 76px); z-index:1; pointer-events:none; overflow:hidden;
-}
-/* sky */
-.sky{
-  position:absolute; inset:-10% -5% 0;
-  background:
-    radial-gradient(1000px 500px at 20% 10%, rgba(56,189,248,.25), transparent 60%),
-    radial-gradient(900px 480px at 80% 20%, rgba(45,212,191,.18), transparent 65%),
-    radial-gradient(1400px 700px at 50% -10%, rgba(56,189,248,.22), transparent 55%),
-    linear-gradient(180deg,#f6fbff 0%, #eaf4ff 60%, #e6f1ff 100%);
-  opacity:.95; filter:saturate(1.05) contrast(1.02);
-}
-.sky::after{
-  content:""; position:absolute; inset:0;
-  background:
-    radial-gradient(circle at 10% 25%, rgba(12,122,196,.10) 0 2px, transparent 3px) 0 0/120px 120px,
-    radial-gradient(circle at 60% 55%, rgba(38,170,204,.10) 0 2px, transparent 3px) 0 0/140px 140px,
-    linear-gradient(60deg, rgba(11,78,162,.07) 1px, transparent 1px) 0 0/48px 48px,
-    linear-gradient(-60deg, rgba(11,78,162,.07) 1px, transparent 1px) 0 0/48px 48px;
-  mix-blend-mode:multiply; opacity:.6; animation: sky-float 28s linear infinite;
-}
-@keyframes sky-float{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(120px,80px,0)}}
-/* grid */
-.grid-floor{
-  position:absolute; left:-12vw; right:-12vw; bottom:-24vh; height:84vh;
-  background:
-    repeating-linear-gradient(90deg, rgba(255,255,255,.14) 0 1px, transparent 1px 60px),
-    repeating-linear-gradient(0deg,  rgba(255,255,255,.14) 0 1px, transparent 1px 60px),
-    radial-gradient(1200px 520px at 50% -10%, rgba(56,189,248,.25), transparent 60%),
-    linear-gradient(180deg,#0a2e63 0%, #0b1831 38%, #080f1d 100%);
-  transform-origin:center bottom;
-  transform:perspective(900px) rotateX(62deg);
-  filter:saturate(1.1) contrast(1.06);
-  opacity:.9; animation:grid-drift 18s linear infinite;
-  border-top-left-radius:70px; border-top-right-radius:70px;
-  box-shadow: inset 0 40px 80px rgba(255,255,255,.18);
-}
-@keyframes grid-drift{
-  0%{background-position:0 0,0 0,0 0,0 0}
-  100%{background-position:320px 240px,-240px 320px,0 0,0 0}
-}
-@media (prefers-reduced-motion:reduce){ .sky::after, .grid-floor{animation:none} }
-#sponsorship .sponsor{position:relative; z-index:2; padding:8px 0 40px;}
-
-/* ---------- CONTENT & SAFEGUARDS AGAINST GLOBAL SVG RESETS ---------- */
-#sponsorship svg{max-width:none; height:auto;}
-#sponsorship .t-ico{width:18px !important; height:18px !important; display:block;}
-#sponsorship .t-ico.big{width:44px !important; height:44px !important;}
-
-/* Tabs */
-.s-tabs{ display:flex; gap:10px; flex-wrap:wrap; margin:8px 0 14px; }
+.s-tabs{ display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 14px; }
 .s-tab{
-  position:relative; display:inline-flex; align-items:center; gap:10px;
-  padding:10px 14px; border-radius:16px; cursor:pointer;
-  background:#ffffff; border:2px solid #cfd7e6; color:#0a2e63; font-weight:800;
-  box-shadow:0 8px 18px rgba(2,6,23,.10);
-  transition:transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
+  display:inline-flex; align-items:center; gap:10px;
+  padding:10px 14px; border-radius:14px; cursor:pointer;
+  background:#fff; border:2px solid #d2d9e7; color:#0a2e63; font-weight:700;
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
 }
 .s-tab:hover{ transform:translateY(-2px); }
 .s-tab.active{
-  background:linear-gradient(180deg,#f7fbff,#eef5ff);
-  border-color:#bcd7ff;
-  box-shadow:0 12px 26px rgba(2,6,23,.16), inset 0 0 0 2px #ffffff;
+  background:linear-gradient(180deg,#f5fbff,#eef7ff);
+  box-shadow:0 10px 22px rgba(2,6,23,.12), inset 0 0 0 2px #ffffff;
+  border-color:#cfe5ff;
 }
-.s-tab.active::after{
-  content:""; position:absolute; left:50%; bottom:-6px; width:10px; height:10px;
-  transform:translateX(-50%); border-radius:50%;
-  background: radial-gradient(circle, rgba(56,189,248,.9), rgba(45,212,191,.85));
-  filter: blur(2px);
-}
-/* trophy colors in tabs (currentColor) */
-.twrap{
-  display:inline-grid; place-items:center;
-  width:24px; height:24px; border-radius:8px;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.9);
-  color:#b9c2d3;
-}
-.s-tab[data-tier="platinum"] .twrap{ background:linear-gradient(135deg,#eef3fb,#d7deea); color:#b9c2d3;}
-.s-tab[data-tier="gold"]     .twrap{ background:linear-gradient(135deg,#fff0a8,#ffd46b); color:#c69300;}
-.s-tab[data-tier="silver"]   .twrap{ background:linear-gradient(135deg,#f1f3f8,#dfe3ee); color:#a7b0bf;}
-.s-tab[data-tier="bronze"]   .twrap{ background:linear-gradient(135deg,#ffe0b8,#ffc06d); color:#b8722a;}
+.medal{ font-size:18px; line-height:1; }
+.medal-platinum{ filter:grayscale(.2) brightness(1.1); }
+.medal-gold{    filter:saturate(1.1); }
+.medal-silver{  filter:grayscale(.1) brightness(1.05); }
+.medal-bronze{  filter:saturate(1.05) hue-rotate(-12deg); }
 
-/* Panels */
 .s-panels{ position:relative; }
 .s-panel{
-  --cup:#b9c2d3;
-  border-radius:22px; border:1px solid rgba(255,255,255,.18);
-  background: rgba(255,255,255,.95);
-  box-shadow: 0 24px 50px rgba(2,6,23,.22);
-  padding:20px; transform-origin: 20% 20%;
-  animation: s-pop .35s ease both;
+  border-radius:18px; border:1px solid var(--ring); background:#fff; box-shadow:var(--shadow);
+  padding:18px; transform-origin: 20% 20%;
+  animation: s-fade .35s ease both;
 }
 .s-panel[hidden]{ display:none !important; }
-@keyframes s-pop{0%{opacity:0; transform:translateY(8px) scale(.985)}100%{opacity:1; transform:translateY(0) scale(1)}}
-.s-head{ display:flex; align-items:center; gap:16px; margin-bottom:12px; }
-.s-title{ margin:0 0 2px; color:#0a2e63; font-size:clamp(22px,2.4vw,32px); }
-.s-sub{ margin:0; color:#5b7189; }
+.s-panel.show{ animation: s-pop .35s ease both; }
+
+@keyframes s-fade{ from{opacity:0; transform:scale(.98)} to{opacity:1; transform:scale(1)} }
+@keyframes s-pop{  0%{opacity:0; transform:translateY(8px) scale(.98)}
+                  100%{opacity:1; transform:translateY(0) scale(1)} }
+
+.s-head{ display:flex; align-items:center; gap:14px; margin-bottom:12px; }
+.s-title{ margin:0 0 2px; color:var(--brand); }
+.s-sub{ margin:0; color:var(--muted); }
 .s-body{ align-items:start; }
-.s-card{ background:#ffffff; border:1px solid #e6edf7; border-radius:18px; padding:14px 16px; box-shadow:0 10px 24px rgba(2,6,23,.08)}
-.s-card h4{ margin:0 0 10px; color:#0a2e63; }
-.s-list{ margin:0; padding-left:16px; display:grid; gap:12px; }
-.s-list li{ line-height:1.6; }
+.s-card h4{ margin:0 0 8px; color:#0a2e63; }
+.s-list{ margin:0; padding-left:16px; display:grid; gap:8px; }
+.s-list li{ line-height:1.55; }
 
-/* Big badge trophy uses --cup */
+/* Neon baseline accent */
+.s-panel{ position:relative; }
+.s-panel::after{
+  content:""; position:absolute; left:10px; right:10px; bottom:-2px; height:3px; border-radius:6px;
+  background:linear-gradient(90deg,rgba(45,212,191,.6),rgba(56,189,248,.6));
+  filter:blur(.8px); opacity:.6;
+}
+
+/* ===== Trophy badges (emoji, auto-tinted per tier) ===== */
 .s-badge{
-  width:72px; height:72px; border-radius:18px; display:grid; place-items:center; overflow:hidden;
-  box-shadow:0 12px 28px rgba(2,6,23,.20), inset 0 0 0 1px rgba(255,255,255,.85);
-  background: linear-gradient(135deg,#eef3fb,#d7deea);
-  color:var(--cup);
+  width:76px; height:76px; border-radius:20px;
+  display:grid; place-items:center; position:relative; overflow:hidden;
+  box-shadow:0 12px 28px rgba(2,6,23,.18), inset 0 0 0 1px rgba(255,255,255,.8);
+  isolation:isolate;
 }
-.s-panel[data-tier="platinum"]{ --cup:#b9c2d3; }
-.s-panel[data-tier="gold"]{ --cup:#c69300; }
-.s-panel[data-tier="silver"]{ --cup:#a7b0bf; }
-.s-panel[data-tier="bronze"]{ --cup:#b8722a; }
-.s-panel[data-tier="platinum"] .s-badge{ background:linear-gradient(135deg,#eef3fb,#d7deea); }
-.s-panel[data-tier="gold"] .s-badge{ background:linear-gradient(135deg,#fff0a8,#ffd46b); }
-.s-panel[data-tier="silver"] .s-badge{ background:linear-gradient(135deg,#f1f3f8,#dfe3ee); }
-.s-panel[data-tier="bronze"] .s-badge{ background:linear-gradient(135deg,#ffe0b8,#ffc06d); }
+.s-badge::after{
+  content:""; position:absolute; inset:-30%;
+  background: radial-gradient(closest-side, rgba(255,255,255,.45), transparent 70%);
+  mix-blend-mode: soft-light; filter: blur(18px); opacity:.65;
+  animation: s-halo 3.8s ease-in-out infinite; z-index:0;
+}
+@keyframes s-halo{
+  0%,100%{ transform: translate(0,0) scale(1); opacity:.55; }
+  50%{ transform: translate(4px,-4px) scale(1.06); opacity:.75; }
+}
+.trophy{ font-size:44px; line-height:1; z-index:1; filter:saturate(1.05) brightness(1.02); }
 
-/* Responsive */
+.badge-platinum{ background:linear-gradient(135deg,#eef3fb,#d7deea); }
+.badge-gold    { background:linear-gradient(135deg,#fff3b4,#ffd46b); }
+.badge-silver  { background:linear-gradient(135deg,#f1f3f8,#dfe3ee); }
+.badge-bronze  { background:linear-gradient(135deg,#ffe6c0,#ffc06d); }
+
+/* Color the ðŸ† itself via filters */
+.badge-platinum .trophy{ filter: grayscale(1) brightness(1.55) contrast(0.95); }
+.badge-gold     .trophy{ filter: saturate(1.15) brightness(1.05) contrast(1.05); }
+.badge-silver   .trophy{ filter: grayscale(.85) brightness(1.25) contrast(1.05); }
+.badge-bronze   .trophy{ filter: sepia(.8) saturate(1.2) hue-rotate(-12deg) brightness(.98); }
+
 @media (max-width:980px){
-  #sponsorship.sponsor-bleed{ padding-bottom:40px; }
-  .cols-2{ grid-template-columns:1fr; }
-  .s-badge{ width:64px; height:64px; }
-  #sponsorship .t-ico.big{ width:38px !important; height:38px !important; }
-  .grid-floor{ bottom:-28vh; height:92vh; }
+  .s-body{ grid-template-columns:1fr !important; }
+  .s-badge{ width:66px; height:66px; border-radius:18px; }
+  .trophy{ font-size:38px; }
 }
-</style>
 
-<script>
-/* Tabs logic */
-(function initSponsorshipTabs(){
-  const root = document.getElementById('sponsorship');
-  if (!root) return;
-
-  const tabs = Array.from(root.querySelectorAll('.s-tab'));
-  const panels = {
-    platinum: root.querySelector('#tier-platinum'),
-    gold:     root.querySelector('#tier-gold'),
-    silver:   root.querySelector('#tier-silver'),
-    bronze:   root.querySelector('#tier-bronze'),
-  };
-
-  function show(tier){
-    tabs.forEach(t=>{
-      const on = t.dataset.tier === tier;
-      t.classList.toggle('active', on);
-      t.setAttribute('aria-selected', on ? 'true' : 'false');
-    });
-    Object.entries(panels).forEach(([k,el])=>{
-      if (!el) return;
-      const on = (k === tier);
-      el.hidden = !on;
-      if (on){
-        el.classList.remove('show');
-        void el.offsetWidth;
-        el.classList.add('show');
-      } else {
-        el.classList.remove('show');
-      }
-    });
-  }
-  tabs.forEach(t=> t.addEventListener('click', ()=> show(t.dataset.tier)));
-  root.addEventListener('keydown', (e)=>{
-    const i = tabs.findIndex(t=> t.classList.contains('active'));
-    if (e.key === 'ArrowRight'){ e.preventDefault(); tabs[(i+1)%tabs.length].click(); }
-    if (e.key === 'ArrowLeft'){  e.preventDefault(); tabs[(i-1+tabs.length)%tabs.length].click(); }
-  });
-  show('platinum');
-})();
-
-/* Start the background BELOW the titlebar */
-(function fitBgBelowTitle(){
-  const sec = document.getElementById('sponsorship');
-  if (!sec) return;
-  const bg = sec.querySelector('.s-bg');
-  const titlebar = sec.querySelector('.sponsor-titlebar');
-  if (!bg || !titlebar) return;
-
-  const recalc = () => {
-    const top = (titlebar.offsetTop + titlebar.offsetHeight) - sec.offsetTop;
-    bg.style.setProperty('--bgTop', Math.max(0, top) + 'px');
-  };
-  recalc();
-  window.addEventListener('resize', recalc);
-  if (window.ResizeObserver){
-    const ro = new ResizeObserver(recalc);
-    ro.observe(titlebar);
-  }
-})();
-</script>
 
 
 /* ===========================================================
@@ -1101,7 +820,6 @@ section.container > *:first-child{ margin-top:0; }
 @media (max-width:560px){
   .anim-box{ width:100%; aspect-ratio: 1 / 1.1; }
 }
-
 
 
 
