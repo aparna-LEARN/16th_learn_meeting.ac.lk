@@ -430,16 +430,21 @@ section.container > *:first-child{ margin-top:0; }
 
 
 
-/* ===== Sponsorship full-bleed background with animated grid ===== */
+/* =========================
+   SPONSORSHIP — consolidated
+   ========================= */
+
+/* Theme tokens for the glass section */
 :root{
-  --s-ink: #eaf2ff;          /* headings on glass */
-  --s-ink-sub: #cfe1ff;      /* sub text on glass */
-  --s-ink-body: #dbe7ffcc;   /* body on glass */
-  --glass-bg: rgba(255,255,255,0.07);
-  --glass-border: rgba(255,255,255,0.22);
+  --s-ink:       #eaf2ff;          /* headings on glass */
+  --s-ink-sub:   #cfe1ff;          /* sub text on glass */
+  --s-ink-body:  #dbe7ffcc;        /* body on glass */
+  --glass-bg:    rgba(255,255,255,0.07);
+  --glass-border:rgba(255,255,255,0.22);
   --glass-inner: rgba(255,255,255,0.10);
 }
 
+/* Full-bleed background wrapper + animated grid canvas */
 .s-bg{
   position: relative;
   margin-left:  calc(50% - 50vw);
@@ -460,49 +465,20 @@ section.container > *:first-child{ margin-top:0; }
 .s-inner{ position: relative; z-index: 2; }
 #s-grid{ position:absolute; inset:0; width:100%; height:100%; display:block; z-index:1; opacity:.85; }
 
-/* ===== Typography for glass vibe ===== */
+/* Typography colors on glass */
 #sponsorship .section-title{ color:var(--s-ink); }
 #sponsorship .s-title{ color:var(--s-ink); }
 #sponsorship .s-sub{ color:var(--s-ink-sub); }
 #sponsorship, #sponsorship p, #sponsorship li{ color:var(--s-ink-body); }
 
-/* ===== Glass panels ===== */
-#sponsorship .s-panel{
-  background: linear-gradient(180deg, var(--glass-bg), rgba(255,255,255,0.04));
-  border: 1px solid var(--glass-border);
-  border-radius: 18px;
-  backdrop-filter: blur(10px) saturate(140%);
-  -webkit-backdrop-filter: blur(10px) saturate(140%);
-  box-shadow:
-    0 20px 48px rgba(2,6,23,.40),
-    inset 0 0 0 1px rgba(255,255,255,.06);
-}
-#sponsorship .s-panel::after{
-  /* subtle neon baseline */
-  content:""; position:absolute; left:10px; right:10px; bottom:-2px; height:3px; border-radius:6px;
-  background:linear-gradient(90deg,rgba(45,212,191,.7),rgba(56,189,248,.8),rgba(168,85,247,.75),rgba(244,114,182,.75));
-  filter:blur(1px); opacity:.7;
-}
+/* Container nudge */
+.sponsor{ margin-top: 10px; }
 
-/* Inner “cards” inside the panel: also glass + transparent */
-#sponsorship .s-card{
-  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-  border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 16px;
-  backdrop-filter: blur(8px) saturate(120%);
-  -webkit-backdrop-filter: blur(8px) saturate(120%);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
-}
-#sponsorship .s-card h4{ color:var(--s-ink); }
-
-/* Lists spacing stays tidy on glass */
-#sponsorship .s-list{ gap:10px; }
-
-/* ===== Tabs become glass pills ===== */
+/* ---------- Tabs (glass pills) ---------- */
 .s-tabs{ display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 14px; }
 .s-tab{
   display:inline-flex; align-items:center; gap:10px;
-  padding:10px 14px; border-radius:999px; cursor:pointer;
+  padding:10px 16px; border-radius:999px; cursor:pointer;
   color:var(--s-ink); font-weight:700;
   background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
   border:1px solid rgba(255,255,255,0.22);
@@ -518,135 +494,111 @@ section.container > *:first-child{ margin-top:0; }
   box-shadow: 0 12px 28px rgba(2,6,23,.45), inset 0 0 0 1px rgba(255,255,255,0.10);
 }
 
-/* Emoji trophy looks nicer brighter on dark */
-.trophy{ filter: saturate(1.1) brightness(1.08) !important; }
-
-/* Badge glass tweak */
-.s-badge{
-  background: linear-gradient(135deg, rgba(255,255,255,0.22), rgba(255,255,255,0.06));
-  border: 1px solid rgba(255,255,255,0.28);
-  backdrop-filter: blur(8px) saturate(140%);
-  -webkit-backdrop-filter: blur(8px) saturate(140%);
-}
-.s-badge::after{ opacity:.6; }
-
-/* Mobile tweaks */
-@media (max-width:980px){
-  #sponsorship .s-body{ grid-template-columns:1fr !important; }
-}
-
-/* Reduced motion fallback */
-@media (prefers-reduced-motion: reduce){
-  #s-grid{ display:none; }
-  .s-bg{
-    background:
-      radial-gradient(1000px 600px at 85% 10%, rgba(34,211,238,.22), transparent 60%),
-      radial-gradient(900px 600px at 10% 90%, rgba(167,139,250,.20), transparent 60%),
-      linear-gradient(180deg, rgba(3,7,18,.95), rgba(3,7,18,.86) 35%, rgba(3,7,18,.95)),
-      repeating-linear-gradient( to right, rgba(148,163,184,.12) 0 1px, transparent 1px 28px ),
-      repeating-linear-gradient( to bottom, rgba(148,163,184,.10) 0 1px, transparent 1px 28px );
-  }
-}
-
-
-
-/* ===== Emoji trophy chips (tabs) ===== */
-
+/* Emoji trophy chips inside tabs */
 .medal{
   font-size:18px; line-height:1;
   display:inline-grid; place-items:center;
   width:28px; height:28px; border-radius:999px;
   box-shadow: inset 0 0 0 2px rgba(255,255,255,.65), 0 6px 16px rgba(2,6,23,.35);
   margin-right:6px;
-  position: relative;
 }
 .medal .emo{ filter: drop-shadow(0 1px 1px rgba(2,6,23,.45)); }
 
-/* Chip fill colors (frame) */
+/* Tab chip fills (frame color) */
 .medal-platinum{ background:linear-gradient(135deg,#eef3fb,#d7deea); }
 .medal-gold    { background:linear-gradient(135deg,#fff3b4,#ffd46b); }
 .medal-silver  { background:linear-gradient(135deg,#f1f3f8,#dfe3ee); }
 .medal-bronze  { background:linear-gradient(135deg,#ffe6c0,#ffc06d); }
 
-/* Badge container (you already have this look) */
+/* Recolor the emoji in the tab chips */
+.medal-gold   .emo { filter: drop-shadow(0 1px 1px rgba(2,6,23,.45)); }
+.medal-silver .emo { filter: drop-shadow(0 1px 1px rgba(2,6,23,.45)) grayscale(1) brightness(1.24) contrast(1.06); }
+.medal-bronze .emo { filter: drop-shadow(0 1px 1px rgba(2,6,23,.45)) sepia(1) saturate(1.25) hue-rotate(-12deg) brightness(.98) contrast(1.02); }
+.medal-platinum .emo { filter: drop-shadow(0 1px 1px rgba(2,6,23,.45)) grayscale(1) brightness(1.38) contrast(.96); }
+
+/* ---------- Panels (outer glass card) ---------- */
+.s-panels{ position:relative; }
+.s-panel{
+  position:relative;
+  border-radius:18px;
+  background: linear-gradient(180deg, var(--glass-bg), rgba(255,255,255,0.04));
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 20px 48px rgba(2,6,23,.40), inset 0 0 0 1px rgba(255,255,255,.06);
+  padding:18px;
+  transform-origin: 20% 20%;
+  animation: s-pop .35s ease both;
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+}
+.s-panel[hidden]{ display:none !important; }
+@keyframes s-pop{  0%{opacity:0; transform:translateY(8px) scale(.98)}
+                  100%{opacity:1; transform:translateY(0) scale(1)} }
+
+/* Neon baseline accent */
+.s-panel::after{
+  content:""; position:absolute; left:10px; right:10px; bottom:-2px; height:3px; border-radius:6px;
+  background:linear-gradient(90deg,rgba(45,212,191,.7),rgba(56,189,248,.8),rgba(168,85,247,.75),rgba(244,114,182,.75));
+  filter:blur(1px); opacity:.7;
+}
+
+/* Panel header & inner cards */
+.s-head{ display:flex; align-items:center; gap:14px; margin-bottom:12px; }
+.s-card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+}
+.s-card h4{ margin:0 0 8px; color:var(--s-ink); }
+.s-list{ margin:0; padding-left:16px; display:grid; gap:10px; }
+.s-list li{ line-height:1.55; }
+
+/* ---------- Badge + emoji trophy in header ---------- */
 .s-badge{
   width:76px; height:76px; border-radius:20px;
   display:grid; place-items:center; position:relative; overflow:hidden;
+  background: linear-gradient(135deg, rgba(255,255,255,0.22), rgba(255,255,255,0.06));
+  border: 1px solid rgba(255,255,255,0.28);
   box-shadow: 0 12px 28px rgba(2,6,23,.38), inset 0 0 0 1px rgba(255,255,255,.06);
-  backdrop-filter: blur(10px) saturate(140%); -webkit-backdrop-filter: blur(10px) saturate(140%);
-  border:1px solid rgba(255,255,255,.28);
+  backdrop-filter: blur(8px) saturate(140%);
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  isolation:isolate;
 }
-.s-badge .trophy{ font-size:44px; line-height:1; filter: drop-shadow(0 6px 14px rgba(2,6,23,.45)); }
+.s-badge::after{
+  content:""; position:absolute; inset:-30%;
+  background: radial-gradient(closest-side, rgba(255,255,255,.45), transparent 70%);
+  mix-blend-mode: soft-light; filter: blur(18px); opacity:.6; animation: s-halo 3.8s ease-in-out infinite;
+}
+@keyframes s-halo{ 0%,100%{ transform:translate(0,0) scale(1); opacity:.5 } 50%{ transform:translate(4px,-4px) scale(1.06); opacity:.75 } }
 
-/* Badge fills (frame) */
+.s-badge .trophy{
+  font-size:44px; line-height:1;
+  display:inline-block;
+  isolation:isolate;
+  -webkit-filter: var(--trophy-filter, drop-shadow(0 6px 14px rgba(2,6,23,.45)));
+          filter: var(--trophy-filter, drop-shadow(0 6px 14px rgba(2,6,23,.45)));
+}
+
+/* Badge frame fills */
 .badge-platinum{ background:linear-gradient(135deg,#eef3fb,#d7deea); }
 .badge-gold    { background:linear-gradient(135deg,#fff3b4,#ffd46b); }
 .badge-silver  { background:linear-gradient(135deg,#f1f3f8,#dfe3ee); }
 .badge-bronze  { background:linear-gradient(135deg,#ffe6c0,#ffc06d); }
 
-/* ===== THE IMPORTANT PART: recolor the emoji itself via CSS filters ===== */
-/* Gold emoji stays default (nice already) */
-.medal-gold   .emo,
-.badge-gold   .emo { filter: drop-shadow(0 1px 1px rgba(2,6,23,.45)); }
+/* Recolor the emoji inside badges (Safari-safe) */
+.badge-gold    .trophy{ -webkit-filter: drop-shadow(0 6px 14px rgba(2,6,23,.45)) !important; filter: drop-shadow(0 6px 14px rgba(2,6,23,.45)) !important; }
+.badge-silver  .trophy{ -webkit-filter: drop-shadow(0 6px 14px rgba(2,6,23,.45)) grayscale(1) brightness(1.24) contrast(1.06) !important; filter: drop-shadow(0 6px 14px rgba(2,6,23,.45)) grayscale(1) brightness(1.24) contrast(1.06) !important; }
+.badge-bronze  .trophy{ -webkit-filter: drop-shadow(0 6px 14px rgba(2,6,23,.45)) sepia(1) saturate(1.25) hue-rotate(-12deg) brightness(.98) contrast(1.02) !important; filter: drop-shadow(0 6px 14px rgba(2,6,23,.45)) sepia(1) saturate(1.25) hue-rotate(-12deg) brightness(.98) contrast(1.02) !important; }
+.badge-platinum.trophy,
+.badge-platinum  .trophy{ -webkit-filter: drop-shadow(0 6px 14px rgba(2,6,23,.45)) grayscale(1) brightness(1.38) contrast(.96) !important; filter: drop-shadow(0 6px 14px rgba(2,6,23,.45)) grayscale(1) brightness(1.38) contrast(.96) !important; }
 
-/* Silver: desaturate + brighten + tiny contrast */
-.medal-silver .emo,
-.badge-silver .emo {
-  filter:
-    drop-shadow(0 1px 1px rgba(2,6,23,.45))
-    grayscale(1) brightness(1.24) contrast(1.06);
+/* Responsive */
+@media (max-width:980px){
+  #sponsorship .s-body{ grid-template-columns:1fr !important; }
+  .s-badge{ width:66px; height:66px; border-radius:18px; }
 }
-
-/* Bronze: warm hue with sepia */
-.medal-bronze .emo,
-.badge-bronze .emo {
-  filter:
-    drop-shadow(0 1px 1px rgba(2,6,23,.45))
-    sepia(1) saturate(1.25) hue-rotate(-12deg) brightness(.98) contrast(1.02);
-}
-
-/* Platinum: very pale, slightly cool */
-.medal-platinum .emo,
-.badge-platinum .emo {
-  filter:
-    drop-shadow(0 1px 1px rgba(2,6,23,.45))
-    grayscale(1) brightness(1.38) contrast(.96);
-}
-
-/* Tabs spacing remains tidy */
-.s-tab{ gap:10px; padding:12px 16px; }
-
-/* ===== TROPHY COLOR FIX (put at end of style.css) ===== */
-
-/* 1) make badge trophy use a variable so tiers can override it */
-.s-badge .trophy{
-  /* default look (gold) */
-  filter: var(--trophy-filter, drop-shadow(0 6px 14px rgba(2,6,23,.45)));
-}
-
-/* 2) tier-specific filters (change emoji color inside the badge) */
-.badge-gold {                         /* gold stays mostly default */
-  --trophy-filter: drop-shadow(0 6px 14px rgba(2,6,23,.45));
-}
-
-.badge-silver{
-  --trophy-filter:
-    drop-shadow(0 6px 14px rgba(2,6,23,.45))
-    grayscale(1) brightness(1.24) contrast(1.06);
-}
-
-.badge-bronze{
-  --trophy-filter:
-    drop-shadow(0 6px 14px rgba(2,6,23,.45))
-    sepia(1) saturate(1.25) hue-rotate(-12deg) brightness(.98) contrast(1.02);
-}
-
-.badge-platinum{
-  --trophy-filter:
-    drop-shadow(0 6px 14px rgba(2,6,23,.45))
-    grayscale(1) brightness(1.38) contrast(.96);
-}
-
 
 
 
