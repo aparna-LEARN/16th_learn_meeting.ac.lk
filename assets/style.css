@@ -242,6 +242,85 @@ section.container > *:first-child{ margin-top:0; }
   #net-bg{ display:none; }
 }
 
+
+/* ===========================================================
+   About LEARN
+   =========================================================== */
+
+/* ===== ABOUT LEARN (glass card over background photo) ===== */
+.about-learn{
+  position: relative;
+  margin: 18px 0 36px;
+  /* full-bleed image strip like the WG ribbon */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: 48px 0;
+  min-height: 520px;
+
+  /* background photo */
+  background:
+    radial-gradient(60% 40% at 50% 20%, rgba(0,0,0,.30), transparent 60%),
+    linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.35)),
+    url("assets/AbtLearn/whtlearn.png") center/cover no-repeat fixed;
+}
+
+/* subtle animated glow or lens flare (optional overlay) */
+.about-learn .al-overlay{
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(800px 500px at 60% 45%, rgba(255,120,120,.10), transparent 60%),
+    radial-gradient(900px 520px at 40% 65%, rgba(255,255,255,.08), transparent 70%);
+}
+
+/* the translucent panel */
+.al-panel{
+  position: relative;
+  max-width: 1180px;
+  margin: 0 auto;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.22);
+  color: #ffffff;
+  box-shadow: 0 18px 50px rgba(2,6,23,.35);
+  border-radius: 28px;
+  padding: clamp(18px, 3.5vw, 28px);
+  backdrop-filter: blur(12px) saturate(140%);
+}
+
+/* header styles */
+.al-head{ display:flex; align-items:center; gap:16px; margin-bottom: 12px; }
+.al-bar{ width:10px; height:64px; border-radius:8px; background:#0b1220; box-shadow: inset 0 0 0 3px rgba(255,255,255,.15); }
+.al-kicker{ font-weight:800; letter-spacing:.06em; color:#e9eef7; opacity:.95; }
+.al-title{
+  margin: 2px 0 0;
+  font-size: clamp(28px, 4.6vw, 48px);
+  line-height: 1;
+  color: #ff4c4c;     /* red “LEARN” like your mock */
+  text-shadow: 0 4px 18px rgba(0,0,0,.35);
+}
+
+/* body text */
+.al-body p{ margin: 10px 0 14px; color:#f2f6ff; }
+.al-points{ list-style: none; padding:0; margin: 6px 0 0; display:grid; gap:16px; }
+.al-points li{ display:grid; grid-template-columns: 26px 1fr; gap:12px; align-items:start; }
+.al-bullet{
+  width: 20px; height: 20px; border-radius: 6px;
+  background: #b60144;             /* LEARN red tone */
+  transform: rotate(45deg);         /* diamond bullet */
+  margin-top: 2px;
+  box-shadow: 0 6px 14px rgba(182,1,68,.35);
+}
+.al-body strong{ color:#fff; }
+
+/* tighten on small screens */
+@media (max-width: 720px){
+  .about-learn{ padding: 34px 0; }
+  .al-panel{ border-radius: 22px; }
+  .al-bar{ height: 48px; }
+  .al-title{ font-size: clamp(24px, 7vw, 36px); }
+}
+
+
+
 /* ===========================================================
    Carousel (scroll-snap + arrows + dots)
    =========================================================== */
