@@ -502,6 +502,26 @@ window.addEventListener('orientationchange', () =>
 })();
 
 
+/* Keep the background below the titlebar (responsive-safe) */
+(function adjustSponsorBg(){
+  const sec   = document.getElementById('sponsorship');
+  if (!sec) return;
+  const bg    = sec.querySelector('.s-bg');
+  const title = sec.querySelector('.sponsor-titlebar');
+
+  function setTop(){
+    if (!bg || !title) return;
+    const h = Math.ceil(title.getBoundingClientRect().height);
+    bg.style.top = h + 'px';
+  }
+
+  window.addEventListener('load', setTop);
+  window.addEventListener('resize', () => requestAnimationFrame(setTop));
+  window.addEventListener('orientationchange', () => setTimeout(setTop, 120));
+})();
+
+
+
 /* =========================
    Finish index Page
    ========================= */
