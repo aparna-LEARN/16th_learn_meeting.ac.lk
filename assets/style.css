@@ -550,6 +550,55 @@ section.container > *:first-child{ margin-top:0; }
 
 
 
+/* ===== Emoji trophy chips (tabs) ===== */
+.medal{
+  font-size:18px; line-height:1;
+  display:inline-grid; place-items:center;
+  width:28px; height:28px; border-radius:999px;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.65), 0 6px 16px rgba(2,6,23,.35);
+  margin-right:6px;
+}
+
+/* Tab medal tints */
+.medal-platinum{ background:linear-gradient(135deg,#eef3fb,#d7deea); }
+.medal-gold    { background:linear-gradient(135deg,#fff3b4,#ffd46b); }
+.medal-silver  { background:linear-gradient(135deg,#f1f3f8,#dfe3ee); }
+.medal-bronze  { background:linear-gradient(135deg,#ffe6c0,#ffc06d); }
+
+/* ===== Panel badges (bigger glass card with emoji inside) ===== */
+.s-badge{
+  width:76px; height:76px; border-radius:20px;
+  display:grid; place-items:center; position:relative; overflow:hidden;
+  box-shadow: 0 12px 28px rgba(2,6,23,.38), inset 0 0 0 1px rgba(255,255,255,.06);
+  backdrop-filter: blur(10px) saturate(140%); -webkit-backdrop-filter: blur(10px) saturate(140%);
+  border:1px solid rgba(255,255,255,.28);
+}
+.s-badge .trophy{ font-size:44px; line-height:1; }
+
+/* Badge tier fills (what you showed in your screenshot) */
+.badge-platinum{ background:linear-gradient(135deg,#eef3fb,#d7deea); }
+.badge-gold    { background:linear-gradient(135deg,#fff3b4,#ffd46b); }
+.badge-silver  { background:linear-gradient(135deg,#f1f3f8,#dfe3ee); }
+.badge-bronze  { background:linear-gradient(135deg,#ffe6c0,#ffc06d); }
+
+/* Optional: subtle animated halo on badges */
+.s-badge::after{
+  content:""; position:absolute; inset:-30%;
+  background: radial-gradient(closest-side, rgba(255,255,255,.45), transparent 70%);
+  mix-blend-mode: soft-light; filter: blur(18px); opacity:.55;
+  animation: s-halo 3.8s ease-in-out infinite; z-index:0;
+}
+@keyframes s-halo{
+  0%,100%{ transform: translate(0,0) scale(1); opacity:.5; }
+  50%{ transform: translate(4px,-4px) scale(1.06); opacity:.75; }
+}
+
+/* Tabs layout tweaks so the medal + label look tidy on glass */
+.s-tab{ gap:10px; padding:12px 16px; }
+
+
+
+
 
 
 
