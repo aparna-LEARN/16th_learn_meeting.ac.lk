@@ -501,7 +501,9 @@ window.addEventListener('orientationchange', () =>
   show('platinum'); // default
 })();
 
-
+/* =========================
+   Finish index Page
+   ========================= */
 
 /* ===== Trim agenda height to last event (per day) =====
    containerSel:  CSS selector for the day wrapper (e.g. '#day2')
