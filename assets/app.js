@@ -454,7 +454,7 @@ window.addEventListener('orientationchange', () =>
 
 
 
-/* ===== Sponsorship tabs: switch panels + animate ===== */
+/* ===== Sponsorship: tabs switching + show/hide panels ===== */
 (function initSponsorshipTabs(){
   const root = document.getElementById('sponsorship');
   if (!root) return;
@@ -473,14 +473,13 @@ window.addEventListener('orientationchange', () =>
       t.classList.toggle('active', on);
       t.setAttribute('aria-selected', on ? 'true' : 'false');
     });
-
     Object.entries(panels).forEach(([k,el])=>{
       if (!el) return;
       const on = (k === tier);
       if (on){
         el.hidden = false;
         el.classList.remove('show');
-        void el.offsetWidth;            // restart CSS animation
+        void el.offsetWidth; // restart CSS animation
         el.classList.add('show');
       } else {
         el.hidden = true;
@@ -488,36 +487,36 @@ window.addEventListener('orientationchange', () =>
       }
     });
   }
-
   tabs.forEach(t=> t.addEventListener('click', ()=> show(t.dataset.tier)));
-
-  // Keyboard navigation: ← →
   root.addEventListener('keydown', (e)=>{
     const i = tabs.findIndex(t=> t.classList.contains('active'));
     if (e.key === 'ArrowRight'){ e.preventDefault(); tabs[(i+1)%tabs.length].click(); }
     if (e.key === 'ArrowLeft'){  e.preventDefault(); tabs[(i-1+tabs.length)%tabs.length].click(); }
   });
-
-  show('platinum'); // default
+  show('platinum');
 })();
 
-
-/* Keep the background below the titlebar (responsive-safe) */
-(function adjustSponsorBg(){
-  const sec   = document.getElementById('sponsorship');
+/* ===== Sponsorship: start the background BELOW the titlebar ===== */
+(function fitBgBelowTitle(){
+  const sec = document.getElementById('sponsorship');
   if (!sec) return;
-  const bg    = sec.querySelector('.s-bg');
-  const title = sec.querySelector('.sponsor-titlebar');
+  const bg = sec.querySelector('.s-bg');
+  const titlebar = sec.querySelector('.sponsor-titlebar');
+  if (!bg || !titlebar) return;
 
-  function setTop(){
-    if (!bg || !title) return;
-    const h = Math.ceil(title.getBoundingClientRect().height);
-    bg.style.top = h + 'px';
+  const recalc = () => {
+    // distance from section top to the bottom of the titlebar
+    const top = (titlebar.offsetTop + titlebar.offsetHeight) - sec.offsetTop;
+    bg.style.setProperty('--bgTop', Math.max(0, top) + 'px');
+  };
+
+  recalc();
+  window.addEventListener('resize', recalc);
+  // react to font loading / layout shifts
+  if (window.ResizeObserver){
+    const ro = new ResizeObserver(recalc);
+    ro.observe(titlebar);
   }
-
-  window.addEventListener('load', setTop);
-  window.addEventListener('resize', () => requestAnimationFrame(setTop));
-  window.addEventListener('orientationchange', () => setTimeout(setTop, 120));
 })();
 
 
