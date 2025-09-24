@@ -251,7 +251,7 @@ section.container > *:first-child{ margin-top:0; }
 .about-learn{
   position: relative;
   margin: 18px 0 36px;
-  /* full-bleed image strip like the WG ribbon */
+  /* full-bleed image strip */
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
   padding: 48px 0;
@@ -264,7 +264,7 @@ section.container > *:first-child{ margin-top:0; }
     url("AbtLearn/whtlearn.png") center/cover no-repeat fixed;
 }
 
-/* subtle animated glow or lens flare (optional overlay) */
+/* subtle animated glow overlay */
 .about-learn .al-overlay{
   position:absolute; inset:0; pointer-events:none;
   background:
@@ -272,7 +272,7 @@ section.container > *:first-child{ margin-top:0; }
     radial-gradient(900px 520px at 40% 65%, rgba(255,255,255,.08), transparent 70%);
 }
 
-/* the translucent panel */
+/* translucent panel */
 .al-panel{
   position: relative;
   max-width: 1180px;
@@ -294,7 +294,7 @@ section.container > *:first-child{ margin-top:0; }
   margin: 2px 0 0;
   font-size: clamp(28px, 4.6vw, 48px);
   line-height: 1;
-  color: #ff4c4c;     /* red “LEARN” like your mock */
+  color: #ff4c4c;  /* red “LEARN” */
   text-shadow: 0 4px 18px rgba(0,0,0,.35);
 }
 
@@ -322,7 +322,7 @@ section.container > *:first-child{ margin-top:0; }
 /* Bigger body copy inside the About panel (not the title) */
 #about-learn .al-body,
 #about-learn .al-points li > span:nth-of-type(2){
-  font-size: clamp(16px, 1.25vw, 19.5px);  /* was ~16–18px → now ~17–19.5px */
+  font-size: clamp(16px, 1.25vw, 19.5px);
   line-height: 1.55;
 }
 
@@ -342,6 +342,10 @@ section.container > *:first-child{ margin-top:0; }
 }
 
 
+/* ===========================================================
+   Sponsorship (full-bleed, animated neon grid, tier-colored trophies)
+   =========================================================== */
+
 /* Section wrapper */
 #sponsorship.sponsor-bleed{
   position: relative;
@@ -355,11 +359,10 @@ section.container > *:first-child{ margin-top:0; }
 .sponsor-titlebar{ position: relative; z-index: 3; padding: 8px 0 6px; }
 .sponsor-titlebar .section-title{ margin: 0; }
 
-/* Background layer — we’ll set .style.top via JS so it starts below the titlebar */
+/* Background layer — .s-bg top is adjusted by JS so it starts below the titlebar */
 #sponsorship .s-bg{
   position: absolute; left: 0; right: 0; bottom: 0; 
-  /* top is set dynamically; provide a safe fallback: */
-  top: 64px;              
+  top: 64px; /* safe fallback */
   z-index: 0;
 }
 
@@ -387,14 +390,6 @@ section.container > *:first-child{ margin-top:0; }
 /* Content sits above the background */
 #sponsorship .sponsor{ position: relative; z-index: 2; }
 
-/* (Keep the trophy/tabs/panels CSS you already pasted earlier) */
-
-/* Responsive tweak */
-@media (max-width:980px){
-  .grid-floor{ bottom:-28vh; height:92vh; }
-}
-
-
 /* ====== Content ====== */
 .sponsor{ padding: 28px 0 40px; }
 .sponsor .section-title{ color:#0a2e63; }
@@ -402,7 +397,7 @@ section.container > *:first-child{ margin-top:0; }
 /* Tabs */
 .s-tabs{ display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 14px; }
 .s-tab{
-  --cup:#b9c2d3;           /* default tint (platinum-ish) - overridden per tier by JS+CSS below */
+  --cup:#b9c2d3;           /* default tint (platinum-ish) - overridden per tier */
   position:relative;
   display:inline-flex; align-items:center; gap:10px;
   padding:10px 14px; border-radius:16px; cursor:pointer;
@@ -497,9 +492,6 @@ section.container > *:first-child{ margin-top:0; }
   .t-ico.big{ width:38px; height:38px; }
   .grid-floor{ bottom:-28vh; height:92vh; }
 }
-
-
-
 
 /* ===========================================================
    Carousel (scroll-snap + arrows + dots)
