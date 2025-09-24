@@ -475,12 +475,12 @@ window.addEventListener('orientationchange', () =>
     });
 
     Object.entries(panels).forEach(([k,el])=>{
-      const on = (k === tier);
       if (!el) return;
+      const on = (k === tier);
       if (on){
         el.hidden = false;
         el.classList.remove('show');
-        void el.offsetWidth;       // restart CSS animation
+        void el.offsetWidth;            // restart CSS animation
         el.classList.add('show');
       } else {
         el.hidden = true;
@@ -491,7 +491,7 @@ window.addEventListener('orientationchange', () =>
 
   tabs.forEach(t=> t.addEventListener('click', ()=> show(t.dataset.tier)));
 
-  // Keyboard: ← →
+  // Keyboard navigation: ← →
   root.addEventListener('keydown', (e)=>{
     const i = tabs.findIndex(t=> t.classList.contains('active'));
     if (e.key === 'ArrowRight'){ e.preventDefault(); tabs[(i+1)%tabs.length].click(); }
