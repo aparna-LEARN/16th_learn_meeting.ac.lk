@@ -501,6 +501,7 @@ window.addEventListener('orientationchange', () =>
   show('platinum'); // default
 })();
 
+
 /* =========================
    Finish index Page
    ========================= */
