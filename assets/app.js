@@ -454,7 +454,7 @@ window.addEventListener('orientationchange', () =>
 
 
 
-/* ===== Sponsorship: tabs switching + show/hide panels ===== */
+/* ===== Sponsorship tabs: switch panels + animate ===== */
 (function initSponsorshipTabs(){
   const root = document.getElementById('sponsorship');
   if (!root) return;
@@ -473,13 +473,14 @@ window.addEventListener('orientationchange', () =>
       t.classList.toggle('active', on);
       t.setAttribute('aria-selected', on ? 'true' : 'false');
     });
+
     Object.entries(panels).forEach(([k,el])=>{
-      if (!el) return;
       const on = (k === tier);
+      if (!el) return;
       if (on){
         el.hidden = false;
         el.classList.remove('show');
-        void el.offsetWidth; // restart CSS animation
+        void el.offsetWidth;       // restart CSS animation
         el.classList.add('show');
       } else {
         el.hidden = true;
@@ -487,39 +488,18 @@ window.addEventListener('orientationchange', () =>
       }
     });
   }
+
   tabs.forEach(t=> t.addEventListener('click', ()=> show(t.dataset.tier)));
+
+  // Keyboard: ← →
   root.addEventListener('keydown', (e)=>{
     const i = tabs.findIndex(t=> t.classList.contains('active'));
     if (e.key === 'ArrowRight'){ e.preventDefault(); tabs[(i+1)%tabs.length].click(); }
     if (e.key === 'ArrowLeft'){  e.preventDefault(); tabs[(i-1+tabs.length)%tabs.length].click(); }
   });
-  show('platinum');
+
+  show('platinum'); // default
 })();
-
-/* ===== Sponsorship: start the background BELOW the titlebar ===== */
-(function fitBgBelowTitle(){
-  const sec = document.getElementById('sponsorship');
-  if (!sec) return;
-  const bg = sec.querySelector('.s-bg');
-  const titlebar = sec.querySelector('.sponsor-titlebar');
-  if (!bg || !titlebar) return;
-
-  const recalc = () => {
-    // distance from section top to the bottom of the titlebar
-    const top = (titlebar.offsetTop + titlebar.offsetHeight) - sec.offsetTop;
-    bg.style.setProperty('--bgTop', Math.max(0, top) + 'px');
-  };
-
-  recalc();
-  window.addEventListener('resize', recalc);
-  // react to font loading / layout shifts
-  if (window.ResizeObserver){
-    const ro = new ResizeObserver(recalc);
-    ro.observe(titlebar);
-  }
-})();
-
-
 
 /* =========================
    Finish index Page
