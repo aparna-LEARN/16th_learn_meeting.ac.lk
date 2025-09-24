@@ -501,6 +501,126 @@ window.addEventListener('orientationchange', () =>
   show('platinum'); // default
 })();
 
+
+/* ===== Animated grid background for Sponsorship (canvas) ===== */
+(function initSponsorGrid(){
+  const cvs = document.getElementById('s-grid');
+  if (!cvs) return;
+
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+  // respect reduced motion
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+
+  const ctx = cvs.getContext('2d');
+
+  let w = 0, h = 0;
+  let t = 0;            // time accumulator
+  let raf = 0;
+
+  // grid spacing (CSS pixels)
+  const BASE = 36;
+  const LINE = 1;       // line thickness (device px)
+  const DOTR = 1.5;     // dot radius
+
+  // resize to element box
+  function fit(){
+    const rect = cvs.getBoundingClientRect();
+    w = Math.max(1, Math.floor(rect.width * DPR));
+    h = Math.max(1, Math.floor(rect.height * DPR));
+    cvs.width = w; cvs.height = h;
+    cvs.style.width = rect.width + 'px';
+    cvs.style.height = rect.height + 'px';
+  }
+  fit();
+  addEventListener('resize', fit);
+
+  // helpers for colors
+  const cGrid  = 'rgba(203,213,225,0.14)'; // grid lines
+  const cDots  = 'rgba(203,213,225,0.22)'; // points
+  const cGlow1 = 'rgba(56,189,248,0.22)';  // cyan
+  const cGlow2 = 'rgba(167,139,250,0.20)'; // purple
+  const cGlow3 = 'rgba(244,114,182,0.18)'; // pink
+
+  function paint(dt){
+    t += dt;
+
+    ctx.clearRect(0,0,w,h);
+
+    // soft glows drifting behind grid
+    ctx.save();
+    ctx.filter = 'blur(40px)';
+    const cx = (w/2) + Math.cos(t*0.12) * (w*0.18);
+    const cy = (h*0.35) + Math.sin(t*0.10) * (h*0.12);
+    radial(cx, cy, Math.max(w,h)*0.5, cGlow1);
+
+    const cx2 = (w*0.18) + Math.cos(t*0.16+1.2)*(w*0.12);
+    const cy2 = (h*0.75) + Math.sin(t*0.14+0.8)*(h*0.10);
+    radial(cx2, cy2, Math.max(w,h)*0.45, cGlow2);
+
+    const cx3 = (w*0.86) + Math.cos(t*0.09+2.1)*(w*0.10);
+    const cy3 = (h*0.18) + Math.sin(t*0.11+0.4)*(h*0.08);
+    radial(cx3, cy3, Math.max(w,h)*0.38, cGlow3);
+    ctx.restore();
+
+    // animated offset (slow drift)
+    const sp = BASE * DPR;
+    const offX = (t * 12) % sp;   // 12 px/sec
+    const offY = (t * 8)  % sp;   // 8  px/sec
+
+    // grid lines
+    ctx.strokeStyle = cGrid;
+    ctx.lineWidth = LINE * DPR;
+
+    ctx.beginPath();
+    for (let x = -offX; x <= w; x += sp) {
+      ctx.moveTo(x, 0); ctx.lineTo(x, h);
+    }
+    for (let y = -offY; y <= h; y += sp) {
+      ctx.moveTo(0, y); ctx.lineTo(w, y);
+    }
+    ctx.stroke();
+
+    // dots at intersections (lighter density for perf)
+    ctx.fillStyle = cDots;
+    const step = sp * 2; // every other intersection
+    for (let x = -offX; x <= w; x += step) {
+      for (let y = -offY; y <= h; y += step) {
+        ctx.beginPath();
+        ctx.arc(x, y, DOTR * DPR, 0, Math.PI*2);
+        ctx.fill();
+      }
+    }
+  }
+
+  function radial(x,y,r,fill){
+    const g = ctx.createRadialGradient(x,y,0, x,y,r);
+    g.addColorStop(0, fill);
+    g.addColorStop(1, 'transparent');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(x,y,r,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  let last = performance.now();
+  function loop(now){
+    const dt = Math.min(0.06, (now - last)/1000); // clamp delta
+    last = now;
+    paint(dt);
+    raf = requestAnimationFrame(loop);
+  }
+  raf = requestAnimationFrame(loop);
+
+  // cleanup if needed (not essential for a single page)
+  addEventListener('visibilitychange', ()=>{
+    if (document.hidden){ cancelAnimationFrame(raf); }
+    else { last = performance.now(); raf = requestAnimationFrame(loop); }
+  });
+})();
+
+
 /* =========================
    Finish index Page
    ========================= */
