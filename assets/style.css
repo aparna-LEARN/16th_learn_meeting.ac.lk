@@ -616,6 +616,38 @@ section.container > *:first-child{ margin-top:0; }
 /* Tabs spacing remains tidy */
 .s-tab{ gap:10px; padding:12px 16px; }
 
+/* ===== TROPHY COLOR FIX (put at end of style.css) ===== */
+
+/* 1) make badge trophy use a variable so tiers can override it */
+.s-badge .trophy{
+  /* default look (gold) */
+  filter: var(--trophy-filter, drop-shadow(0 6px 14px rgba(2,6,23,.45)));
+}
+
+/* 2) tier-specific filters (change emoji color inside the badge) */
+.badge-gold {                         /* gold stays mostly default */
+  --trophy-filter: drop-shadow(0 6px 14px rgba(2,6,23,.45));
+}
+
+.badge-silver{
+  --trophy-filter:
+    drop-shadow(0 6px 14px rgba(2,6,23,.45))
+    grayscale(1) brightness(1.24) contrast(1.06);
+}
+
+.badge-bronze{
+  --trophy-filter:
+    drop-shadow(0 6px 14px rgba(2,6,23,.45))
+    sepia(1) saturate(1.25) hue-rotate(-12deg) brightness(.98) contrast(1.02);
+}
+
+.badge-platinum{
+  --trophy-filter:
+    drop-shadow(0 6px 14px rgba(2,6,23,.45))
+    grayscale(1) brightness(1.38) contrast(.96);
+}
+
+
 
 
 
