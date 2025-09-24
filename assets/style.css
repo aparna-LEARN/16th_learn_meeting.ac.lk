@@ -342,17 +342,28 @@ section.container > *:first-child{ margin-top:0; }
 }
 
 
-/* ====== SPONSORSHIP: full-bleed wrapper & animated background ====== */
+/* Section wrapper */
 #sponsorship.sponsor-bleed{
   position: relative;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  padding: 36px 0 56px;
+  padding-bottom: 56px;
   overflow: hidden;
 }
-#sponsorship .container{ position: relative; z-index: 2; }
 
-/* Animated neon grid floor */
+/* Titlebar sits above everything; no background behind it */
+.sponsor-titlebar{ position: relative; z-index: 3; padding: 8px 0 6px; }
+.sponsor-titlebar .section-title{ margin: 0; }
+
+/* Background layer — we’ll set .style.top via JS so it starts below the titlebar */
+#sponsorship .s-bg{
+  position: absolute; left: 0; right: 0; bottom: 0; 
+  /* top is set dynamically; provide a safe fallback: */
+  top: 64px;              
+  z-index: 0;
+}
+
+/* Animated neon grid */
 .grid-floor{
   position:absolute; left:-12vw; right:-12vw; bottom:-22vh; height:84vh;
   background:
@@ -372,6 +383,17 @@ section.container > *:first-child{ margin-top:0; }
   0%   { background-position: 0 0, 0 0, 0 0, 0 0; }
   100% { background-position: 320px 240px, -240px 320px, 0 0, 0 0; }
 }
+
+/* Content sits above the background */
+#sponsorship .sponsor{ position: relative; z-index: 2; }
+
+/* (Keep the trophy/tabs/panels CSS you already pasted earlier) */
+
+/* Responsive tweak */
+@media (max-width:980px){
+  .grid-floor{ bottom:-28vh; height:92vh; }
+}
+
 
 /* ====== Content ====== */
 .sponsor{ padding: 28px 0 40px; }
