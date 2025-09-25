@@ -187,8 +187,21 @@ section.container > *:first-child{ margin-top:0; }
 }
 .wg-acc{margin-top:10px;border:1px dashed var(--ring);border-radius:12px;padding:10px 12px;background:#fff}
 .wg-acc > summary{cursor:pointer;list-style:none;font-weight:600;color:var(--brand);display:flex;align-items:center;gap:8px}
-.wg-acc > summary::before{content:'Ã¢â€“Â¸';color:var(--brand-2);transition:transform .2s ease}
-.wg-acc[open] > summary::before{transform:rotate(90deg)}
+/* NEW (safe arrow + rotation) */
+.wg-acc > summary{ list-style: none; }
+.wg-acc > summary::-webkit-details-marker{ display:none; } /* hide default marker */
+
+.wg-acc > summary::before{
+  content:"▸";                   /* U+25B8 */
+  display:inline-block;
+  font-size:16px;
+  color:var(--brand-2);
+  margin-right:8px;
+  transform:rotate(0deg);
+  transition: transform .2s ease;
+}
+.wg-acc[open] > summary::before{ transform:rotate(90deg); }
+/* Finish NEW (safe arrow + rotation) */
 .wg-list{margin:8px 0 0 18px}
 .wg-list li{margin:6px 0}
 .wg-foot{margin-top:10px}
