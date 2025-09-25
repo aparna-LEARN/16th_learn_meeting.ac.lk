@@ -364,6 +364,107 @@ section.container > *:first-child{ margin-top:0; }
   }
 }
 
+
+/* ===========================================================
+   Key Highlights
+   =========================================================== */
+/* spacing hook (use if not added already) */
+:root{ --v-gap: clamp(28px, 5vw, 64px); }
+#highlights{ margin: var(--v-gap) 0; }
+
+/* ===== 2025 Highlights ===== */
+.hl{
+  position: relative;
+  overflow: clip;
+  background:
+    radial-gradient(1200px 600px at 10% 10%, rgba(56,189,248,.08), transparent 60%),
+    radial-gradient(900px 540px at 95% 90%, rgba(45,212,191,.08), transparent 60%);
+}
+
+.hl-card{
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--ring);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  padding: clamp(18px, 3vw, 28px);
+  isolation:isolate;
+}
+
+/* subtle watermark "2025" */
+.hl-card::after{
+  content: "2025";
+  position: absolute;
+  right: clamp(8px, 3vw, 24px);
+  top: -6px;
+  font-weight: 800;
+  font-size: clamp(64px, 16vw, 160px);
+  letter-spacing: -0.035em;
+  color: rgba(10,46,99,.06);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* header */
+.hl-head{ display:flex; align-items:baseline; gap:10px; margin-bottom: 6px; }
+.hl-kicker{
+  font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+  color:#b60144; background:#ffe7ef; border:1px solid #f7c3d2;
+  padding:4px 8px; border-radius:999px; font-size:12px;
+}
+
+/* list with animated ticks */
+.hl-list{ list-style:none; padding:0; margin: 6px 0 12px; display:grid; gap:10px; }
+.hl-list li{
+  position: relative;
+  padding-left: 42px;
+  line-height: 1.55;
+  border-bottom: 1px dashed rgba(2,6,23,.08);
+}
+.hl-list li:last-child{ border-bottom:0; }
+
+/* bullet disk */
+.hl-list li::before{
+  content:""; position:absolute; left:0; top:8px; width:22px; height:22px; border-radius:50%;
+  background:
+    radial-gradient(circle at 50% 50%, #fff 0 46%, transparent 47%),
+    conic-gradient(from 0deg, #0a79a7, #73c6ff, #0a79a7);
+  box-shadow: 0 2px 8px rgba(10,121,167,.25);
+}
+
+/* checkmark (draws in on reveal) */
+.hl-list li::after{
+  content:""; position:absolute; left:6px; top:13px; width:10px; height:6px;
+  border-left:2px solid #0a79a7; border-bottom:2px solid #0a79a7;
+  transform: rotate(-45deg) scale(.6); opacity:0; transition: .4s ease;
+}
+.reveal.in .hl-list li:nth-child(1)::after{ opacity:1; transform:rotate(-45deg) scale(1); transition-delay:.05s; }
+.reveal.in .hl-list li:nth-child(2)::after{ opacity:1; transform:rotate(-45deg) scale(1); transition-delay:.12s; }
+.reveal.in .hl-list li:nth-child(3)::after{ opacity:1; transform:rotate(-45deg) scale(1); transition-delay:.19s; }
+.reveal.in .hl-list li:nth-child(4)::after{ opacity:1; transform:rotate(-45deg) scale(1); transition-delay:.26s; }
+.reveal.in .hl-list li:nth-child(5)::after{ opacity:1; transform:rotate(-45deg) scale(1); transition-delay:.33s; }
+
+/* CTA link pill */
+.hl-cta{ margin: 6px 0 0; }
+.link-pill{
+  display:inline-flex; align-items:center; gap:8px; font-weight:700; color:var(--brand);
+  padding:8px 12px; border-radius:999px; border:1px solid #cfe5ff;
+  background:linear-gradient(180deg,#f5fbff,#eef7ff);
+  box-shadow:0 8px 18px rgba(2,6,23,.10), inset 0 0 0 2px #fff;
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+.link-pill:hover{ transform: translateY(-2px); filter:brightness(1.02); }
+
+/* entrance animation hook (you already use .reveal; keeping it consistent) */
+.reveal{ opacity:0; transform: translateY(14px) scale(.98); transition: all .6s cubic-bezier(.2,.7,.2,1); }
+.reveal.in{ opacity:1; transform: translateY(0) scale(1); }
+
+@media (prefers-reduced-motion: reduce){
+  .reveal{ opacity:1 !important; transform:none !important; }
+}
+
+
+
 /* ===========================================================
    Sponsorship Values
    =========================================================== */
