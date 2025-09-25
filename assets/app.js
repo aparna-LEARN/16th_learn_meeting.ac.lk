@@ -381,6 +381,58 @@ window.addEventListener('orientationchange', () =>
   });
 })();
 
+
+/* =========================
+   Key Highlights
+   ========================= */
+
+/* ===== Highlights: reveal + count-up ===== */
+(function(){
+  // reveal
+  const hl = document.querySelector('#highlights .reveal');
+  if (hl && 'IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold: .25});
+    io.observe(hl);
+  }else if(hl){ hl.classList.add('in'); }
+
+  // count-up (respects reduced motion)
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const counters = document.querySelectorAll('#highlights .count');
+  if (!counters.length) return;
+
+  function animate(el){
+    const to = parseInt(el.dataset.to || '0', 10);
+    if (reduce){ el.textContent = to; return; }
+
+    const dur = parseInt(el.dataset.duration || '1200', 10);
+    const start = performance.now();
+    const from = 0;
+
+    function easeOutCubic(x){ return 1 - Math.pow(1 - x, 3); }
+
+    function step(now){
+      const t = Math.min(1, (now - start) / dur);
+      const v = Math.round(from + (to - from) * easeOutCubic(t));
+      el.textContent = v.toString();
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // trigger count-up when the number is visible
+  const cIo = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if (e.isIntersecting){ animate(e.target); cIo.unobserve(e.target); }
+    });
+  }, {threshold:.6});
+  counters.forEach(c => cIo.observe(c));
+})();
+
+
 /* ===========================================================
    Working-Groups ribbon scroller (slow, seamless)
    =========================================================== */
