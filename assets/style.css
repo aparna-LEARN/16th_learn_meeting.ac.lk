@@ -15,6 +15,16 @@
   --radius:18px;
 }
 
+:root{ --v-gap: clamp(28px, 5vw, 64px); }   
+
+header.hero{ margin-bottom: var(--v-gap); }
+#about-learn{ margin-top: var(--v-gap); margin-bottom: var(--v-gap); }
+#about{ margin: var(--v-gap) 0; }
+#why-sponsor{ margin: var(--v-gap) 0; }     
+.wg-titlebar{ margin-top: var(--v-gap); }
+.s-bg{ margin-top: var(--v-gap); }          
+
+
 /* reset-ish */
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
