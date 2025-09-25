@@ -297,6 +297,85 @@ window.addEventListener('orientationchange', () =>
   requestAnimationFrame(draw);
 })();
 
+/* =========================
+   Network lines in Hero
+   ========================= */
+/* ===== HERO: white network lines (lightweight, respects reduced motion) ===== */
+(function(){
+  const cvs = document.getElementById('hero-net');
+  if (!cvs) return;
+
+  // reduce motion → remove the effect
+  if (window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches){
+    cvs.remove(); return;
+  }
+
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  const ctx = cvs.getContext('2d');
+
+  let w = 0, h = 0, nodes = [];
+  const SPEED = 0.10;               // base velocity
+  const LINK = 140;                 // link distance in CSS px
+
+  function fit(){
+    const r = cvs.getBoundingClientRect();
+    w = Math.max(1, Math.floor(r.width * DPR));
+    h = Math.max(1, Math.floor(r.height * DPR));
+    cvs.width = w; cvs.height = h;
+    cvs.style.width = r.width + 'px';
+    cvs.style.height = r.height + 'px';
+
+    // node count scales with area (fast + pretty)
+    const count = Math.max(70, Math.min(200, Math.floor((w*h)/(DPR*DPR) * 0.00018)));
+    nodes = Array.from({ length: count }, () => ({
+      x: Math.random()*w,
+      y: Math.random()*h,
+      r: 1.0 + Math.random()*1.2,
+      ax: (Math.random()*2-1) * SPEED * DPR,
+      ay: (Math.random()*2-1) * SPEED * DPR
+    }));
+  }
+
+  function step(){
+    ctx.clearRect(0,0,w,h);
+
+    // nudge nodes + bounce at edges
+    for (const n of nodes){
+      n.x += n.ax; n.y += n.ay;
+      if (n.x < 0 || n.x > w) n.ax *= -1;
+      if (n.y < 0 || n.y > h) n.ay *= -1;
+    }
+
+    // links
+    const max = LINK * DPR;
+    for (let i=0;i<nodes.length;i++){
+      const a = nodes[i];
+      for (let j=i+1;j<nodes.length;j++){
+        const b = nodes[j];
+        const dx = a.x - b.x, dy = a.y - b.y, d = Math.hypot(dx,dy);
+        if (d < max){
+          const t = 1 - d / max;                         // proximity 0..1
+          ctx.strokeStyle = `rgba(255,255,255,${t*0.35})`;
+          ctx.lineWidth = Math.max(0.6, DPR * t * 0.9);
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+        }
+      }
+    }
+
+    // dots on top
+    ctx.fillStyle = 'rgba(255,255,255,.85)';
+    for (const n of nodes){
+      ctx.beginPath(); ctx.arc(n.x, n.y, n.r*DPR, 0, Math.PI*2); ctx.fill();
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  // keep crisp on resize
+  new ResizeObserver(fit).observe(cvs);
+  fit(); requestAnimationFrame(step);
+})();
+
 /* ===========================================================
    15th AGM Carousel logic (autoplay always; no page jump)
    =========================================================== */
