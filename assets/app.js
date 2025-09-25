@@ -453,7 +453,54 @@ window.addEventListener('orientationchange', () =>
 })();
 
 
+/* =========================
+   Sponsorship Values
+   ========================= */
+/* ===== WHY PARTNER: scroll reveal + light parallax ===== */
+(function(){
+  // Scroll reveal
+  const els = document.querySelectorAll('#why-sponsor .reveal');
+  if ('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.2 });
+    els.forEach(el => io.observe(el));
+  }else{
+    els.forEach(el => el.classList.add('in'));
+  }
 
+  // Parallax on scroll (very gentle)
+  const p = document.querySelector('#why-sponsor .parallax');
+  if (!p) return;
+
+  const speed = parseFloat(p.dataset.speed || '0.15');
+  let lastY = window.scrollY;
+
+  function tick(){
+    const y = window.scrollY;
+    const dy = (y - lastY);
+    lastY = y;
+    // translate the image wrapper; clamp for safety
+    const current = parseFloat(p._parY || 0);
+    let next = current - dy * speed;
+    next = Math.max(-14, Math.min(14, next));
+    p.style.transform = `translate3d(0, ${next}px, 0)`;
+    p._parY = next;
+    requestAnimationFrame(tick);
+  }
+
+  // Respect reduced motion
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) requestAnimationFrame(tick);
+})();
+
+
+
+/* =========================
+   sponsorship panel
+   ========================= */
 /* ===== Sponsorship tabs: switch panels + animate ===== */
 
 (function initSponsorshipTabs(){
