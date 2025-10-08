@@ -1139,6 +1139,85 @@ section.container > *:first-child{ margin-top:0; }
   .schedule-grid .ev-title{ font-size:14px; }
 }
 
+
+
+/* =============================
+   Agenda Ceremony Button
+   ============================= */
+
+
+/* ========= Agenda: button inside event ========= */
+.ev-btn{
+  margin-top:10px;
+  display:inline-flex; align-items:center; gap:10px;
+  padding:10px 14px; border-radius:14px; cursor:pointer;
+  background:linear-gradient(180deg,#162942,#112237);
+  color:#eaf2ff; font-weight:700; border:1px solid rgba(120,164,255,.28);
+  box-shadow:0 8px 22px rgba(2,6,23,.35), inset 0 0 0 1px rgba(255,255,255,.06);
+  transition:transform .15s ease, filter .15s ease, box-shadow .15s ease;
+}
+.ev-btn:hover{ transform:translateY(-2px); filter:saturate(1.05); }
+.ev-btn:focus-visible{ outline:3px solid #38bdf8; outline-offset:2px; }
+.ev-btn-dot{
+  width:10px; height:10px; border-radius:50%;
+  background:linear-gradient(90deg,#2dd4bf,#38bdf8); display:inline-block;
+  box-shadow:0 0 10px rgba(56,189,248,.6);
+}
+
+/* ========= Modal (dialog) ========= */
+.modal{
+  border:0; padding:0; background:transparent; color:#eaf2ff;
+  max-width:none; width:min(680px, calc(100% - 32px));
+}
+.modal::backdrop{
+  background: radial-gradient(600px 400px at 60% 30%, rgba(56,189,248,.16), transparent 60%),
+              radial-gradient(800px 520px at 40% 70%, rgba(45,212,191,.14), transparent 65%),
+              rgba(2,6,23,.72);
+  backdrop-filter: blur(3px);
+}
+.modal-card{
+  margin: 10vh auto 0;
+  background: linear-gradient(180deg,#0f1b2e,#0b1220);
+  border:1px solid #1c2b48; border-radius:18px; padding:16px 16px 14px;
+  box-shadow: 0 18px 48px rgba(2,6,23,.55), inset 0 0 0 1px rgba(255,255,255,.04);
+  position:relative;
+}
+.modal-close{
+  position:absolute; top:8px; right:10px;
+  width:32px; height:32px; border-radius:10px; border:1px solid #2a3e61;
+  background:#0c1629; color:#eaf2ff; font-size:20px; line-height:1;
+  cursor:pointer; box-shadow: var(--shadow);
+}
+.modal-close:hover{ filter:brightness(1.08); }
+
+.modal-kicker{
+  display:inline-block; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+  font-size:12px; color:#cfe1ff; background:#0e2038; border:1px solid #20375f;
+  padding:4px 8px; border-radius:999px; margin-bottom:6px;
+}
+.modal-title{
+  margin:6px 0 8px; font-size:clamp(22px,3.4vw,28px);
+  background:linear-gradient(90deg,#38bdf8,#2dd4bf);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.modal-body{ color:#cfe1ff; line-height:1.6; }
+.modal-footer{ margin-top:12px; display:flex; justify-content:flex-end; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .ev-btn:hover{ transform:none; }
+}
+
+
+
+
+
+
+
+
+
+
+
 /* =============================
    Working Groups ribbon (full-bleed, slow-moving images)
    ============================= */
