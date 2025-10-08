@@ -19,7 +19,6 @@
         <a href="./">Home</a>
         <a href="agenda.html">Agenda</a>
         <a href="last-year.html">Last Year</a>
-        
       </div>
     </div>
   </nav>
@@ -50,18 +49,16 @@
         <div class="card schedule">
           <h3 style="margin:0 0 8px">Day 1</h3>
 
-          <!-- tracks-2 = 2 parallel tracks | start 08:00 (480) end 24:00 (1440) -->
           <div id="gridDay1"
                class="schedule-grid tracks-2"
                data-start="480" data-end="1440" data-label-step="60"
                style="--day-start:480; --day-end:1440;">
 
-            <!-- 09:00–10:30 | two parallel WGs -->
+            <!-- 09:00–10:30 -->
             <div class="event span-all" style="--start:540; --dur:90; --col:1;">
               <div class="ev-title">Initiation of WGs &amp; ToR </div>
               <div class="ev-meta">09:00 – 10:30</div>
             </div>
-
 
             <!-- 10:30–11:00 | break -->
             <div class="event break span-all" style="--start:630; --dur:30;">
@@ -69,7 +66,7 @@
               <div class="ev-meta">10:30 – 11:00</div>
             </div>
 
-            <!-- 11:00–12:30 | two parallel WGs -->
+            <!-- 11:00–12:30 -->
             <div class="event" style="--start:660; --dur:90; --col:1;">
               <div class="ev-title">WG 1: Agri</div>
               <div class="ev-meta">11:00 – 12:30</div>
@@ -85,8 +82,7 @@
               <div class="ev-meta">12:30 – 01:30</div>
             </div>
 
-            <!-- 13:30–15:00 | two parallel WGs -->
-
+            <!-- 13:30–15:00 -->
             <div class="event" style="--start:810; --dur:90; --col:1;">
               <div class="ev-title">WG 1: Agri</div>
               <div class="ev-meta">01:30 – 03:00</div>
@@ -96,14 +92,13 @@
               <div class="ev-meta">01:30 – 03:00</div>
             </div>
 
-
             <!-- 15:00–15:30 | break -->
             <div class="event break span-all" style="--start:900; --dur:30;">
               <div class="ev-title">Tea Break</div>
               <div class="ev-meta">03:00 – 03:30</div>
             </div>
 
-            <!-- 15:30–17:00 | plenary -->
+            <!-- 15:30–17:00 -->
             <div class="event" style="--start:930; --dur:90; --col:1;">
               <div class="ev-title">WG 1: Agri</div>
               <div class="ev-meta">03:30 – 05:00</div>
@@ -113,22 +108,19 @@
               <div class="ev-meta">03:30 – 05:00</div>
             </div>
 
-
-            <!-- 17:00–19:00 | Board -->
+            <!-- 17:00–19:00 -->
             <div class="event span-all" style="--start:1020; --dur:120;">
               <div class="ev-title">Board Meeting with Welcome Drink</div>
               <div class="ev-meta">05:00 – 07:00</div>
               <p class="muted" style="margin:6px 0 0">Board members only.</p>
             </div>
 
-            <!-- 19:00–24:00 | Social Dinner to midnight -->
+            <!-- 19:00–24:00 -->
             <div class="event span-all" style="--start:1140; --dur:300;">
               <div class="ev-title">LEARN Social Dinner</div>
               <div class="ev-meta">07:00 PM onwards</div>
               <p class="muted" style="margin:6px 0 0">Meet, connect, and celebrate the kickoff.</p>
             </div>
-
-
           </div>
         </div>
       </div>
@@ -138,18 +130,20 @@
         <div class="card schedule">
           <h3 style="margin:0 0 8px">Day 2</h3>
 
-          <!-- tracks-3 = 3 parallel tracks | start 08:00 -->
           <div id="gridDay2"
                class="schedule-grid tracks-3"
                data-start="480" data-end="1440" data-label-step="60"
                style="--day-start:480; --day-end:1440;">
 
-            <!-- 09:00–10:30 | Opening Ceremony -->
+            <!-- 09:00–10:30 | Opening Ceremony + button -->
             <div class="event span-all" style="--start:540; --dur:90; --col:1;">
-              <div class="ev-title">Opening ceremony of LEARN meetings - Keynote (Dr Veerachai) & Dep Minister</div>
+              <div class="ev-title">Opening Ceremony — Keynote (Dr Veerachai) &amp; Dep. Minister</div>
               <div class="ev-meta">09:00 – 10:30</div>
+              <button class="ev-btn" onclick="openModal('oc-agenda')">
+                <span class="ev-btn-dot" aria-hidden="true"></span>
+                View agenda
+              </button>
             </div>
-            
 
             <!-- 10:30–11:00 | break -->
             <div class="event break span-all" style="--start:630; --dur:30;">
@@ -192,11 +186,10 @@
               <div class="ev-meta">03:00 – 03:30</div>
             </div>
 
-            <!-- 15:30–17:00 | closing -->
+            <!-- 15:30–16:30 | closing -->
             <div class="event span-all" style="--start:930; --dur:60;">
               <div class="ev-title">Closing Ceremony</div>
               <div class="ev-meta">03:30 – 04:30</div>
-              
             </div>
 
           </div>
@@ -212,16 +205,36 @@
     </div>
   </footer>
 
-  <!-- Your site script (optional) -->
+  <!-- Opening Ceremony Agenda Modal -->
+  <dialog id="oc-agenda" class="modal">
+    <div class="modal-card">
+      <button class="modal-close" aria-label="Close" onclick="closeModal('oc-agenda')">×</button>
+      <div class="modal-kicker">Opening Ceremony</div>
+      <h3 class="modal-title">Agenda</h3>
+      <p class="modal-body">
+        <strong>Stay tuned</strong> for the opening ceremony agenda. We’ll publish the detailed
+        sequence (welcomes, keynote order, and protocol items) here shortly.
+      </p>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('oc-agenda')">Close</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Optional canvases if used elsewhere -->
+  <canvas id="net-bg"></canvas>
+  <canvas id="hero-net"></canvas>
+
+  <!-- Scripts -->
   <script src="assets/app.js"></script>
 
-  <!-- Generate hourly time labels for each schedule grid (uses data-start/data-end) -->
+  <!-- Hour labels generator (kept from your version) -->
   <script>
   (function(){
     document.querySelectorAll('.schedule-grid').forEach(grid => {
-      const start = +grid.dataset.start || 480;     // default 08:00
-      const end   = +grid.dataset.end   || 1440;    // default 24:00
-      const step  = +grid.dataset.labelStep || 60;  // label every 60 min
+      const start = +grid.dataset.start || 480;
+      const end   = +grid.dataset.end   || 1440;
+      const step  = +grid.dataset.labelStep || 60;
 
       for (let t = start; t <= end; t += step){
         const div = document.createElement('div');
@@ -242,7 +255,7 @@
   })();
   </script>
 
-  <!-- Tabs fallback (if not already in assets/app.js) -->
+  <!-- Tabs fallback (already in app.js, but safe) -->
   <script>
   window.switchDay = window.switchDay || function(which){
     document.getElementById('day1').style.display = (which==='day1') ? '' : 'none';
@@ -258,3 +271,4 @@
   <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>
+
