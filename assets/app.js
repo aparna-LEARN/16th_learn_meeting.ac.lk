@@ -932,3 +932,23 @@ window.addEventListener('load', () => {
   trimAgendaDay('#day2', 0);
 });
 
+
+
+
+
+/* ---------- Simple modal helpers (dialog) ---------- */
+window.openModal = function(id){
+  const d = document.getElementById(id);
+  if (!d) return;
+  if (typeof d.showModal === 'function') d.showModal();
+  else d.setAttribute('open',''); // fallback
+};
+window.closeModal = function(id){
+  const d = document.getElementById(id);
+  if (!d) return;
+  if (typeof d.close === 'function') d.close();
+  else d.removeAttribute('open'); // fallback
+};
+
+
+
