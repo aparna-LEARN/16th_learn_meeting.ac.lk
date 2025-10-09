@@ -950,5 +950,26 @@ window.closeModal = function(id){
   else d.removeAttribute('open'); // fallback
 };
 
+// --- Optional: autofocus the dialog on open, return focus on close ---
+(function enhanceDialogFocus(){
+  const d = document.getElementById('oc-agenda');
+  if (!d || typeof d.showModal !== 'function') return;
+  let lastFocus = null;
+  window.openModal = function(id){
+    const dlg = document.getElementById(id);
+    if (!dlg) return;
+    lastFocus = document.activeElement;
+    dlg.showModal();
+    dlg.querySelector('.modal-close')?.focus();
+  };
+  window.closeModal = function(id){
+    const dlg = document.getElementById(id);
+    if (!dlg) return;
+    dlg.close();
+    lastFocus?.focus?.();
+  };
+})();
+
+
 
 
