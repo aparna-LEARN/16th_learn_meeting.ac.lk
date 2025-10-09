@@ -678,74 +678,58 @@ section.container > *:first-child{ margin-top:0; }
 
 /* Tea breaks & lunch (warm) â€” softened butter tones */
 /* ================= Tea breaks & Lunch — balanced butter glass ================ */
-/* tweak these two numbers if you want more/less punch */
+/* ================= Tea breaks & Lunch — bright & transparent butter ================ */
+/* one slider to tune overall strength (0–100). try 78–88 for your theme */
 :root{
-  --butter-alpha-break: 72%;  /* 60–80% is a good range */
-  --butter-alpha-lunch: 68%;
+  --butter-strength: 84;   /* raise = brighter/less transparent, lower = softer */
+  --butter-edge: #fff4c7;  /* top-edge gloss */
+  --butter-1:   #ffe69a;   /* light butter */
+  --butter-2:   #ffd36a;   /* deeper butter */
+  --butter-brd: #e9c86a;   /* border base */
 }
 
-.schedule-grid .event.break{
-  background:
-    /* soft top highlight for pill look */
-    linear-gradient( to top, rgba(255,255,255,.12), rgba(255,255,255,0) 38% ),
-    /* buttery body, semi-opaque */
-    linear-gradient(180deg,
-      color-mix(in oklab, var(--butter-200) var(--butter-alpha-break), transparent),
-      color-mix(in oklab, var(--butter-400) var(--butter-alpha-break), transparent)
-    );
-  border: 1px solid color-mix(in oklab, var(--butter-border) 85%, transparent);
-  color:#2a2200;
-  box-shadow:
-    0 6px 14px color-mix(in oklab, var(--butter-border) 24%, transparent),
-    inset 0 1px 0 rgba(255,255,255,.28); /* crisp top edge */
-  backdrop-filter: saturate(118%) blur(1.5px);
-  -webkit-backdrop-filter: saturate(118%) blur(1.5px);
-}
+.schedule-grid .event.break,
 .schedule-grid .event.lunch{
+  /* translucent buttery body with a soft top gloss */
   background:
-    linear-gradient( to top, rgba(255,255,255,.10), rgba(255,255,255,0) 36% ),
+    linear-gradient(to top, rgba(255,255,255,.24), rgba(255,255,255,0) 42%),
     linear-gradient(180deg,
-      color-mix(in oklab, var(--butter-300) var(--butter-alpha-lunch), transparent),
-      color-mix(in oklab, var(--butter-500) var(--butter-alpha-lunch), transparent)
+      color-mix(in oklab, var(--butter-1) var(--butter-strength)%, transparent),
+      color-mix(in oklab, var(--butter-2) var(--butter-strength)%, transparent)
     );
-  border: 1px solid color-mix(in oklab, var(--butter-border) 85%, transparent);
+  border: 1px solid color-mix(in oklab, var(--butter-brd) 88%, transparent);
   color:#2a2200;
+  /* subtle “glassiness” so it reads as a pill, not a solid slab */
   box-shadow:
-    0 6px 14px color-mix(in oklab, var(--butter-border) 24%, transparent),
-    inset 0 1px 0 rgba(255,255,255,.26);
+    0 8px 18px color-mix(in oklab, var(--butter-brd) 28%, transparent),
+    inset 0 1px 0 var(--butter-edge);
+  backdrop-filter: blur(1.8px) saturate(120%) brightness(1.02);
+  -webkit-backdrop-filter: blur(1.8px) saturate(120%) brightness(1.02);
 }
 
-/* keep inline time darker for contrast */
-.schedule-grid .event.break .ev-meta{ color:#5c4700; opacity:.96; }
-
-/* optional: tiny lift on hover */
+/* tiny hover lift for feedback */
 .schedule-grid .event.break:hover,
 .schedule-grid .event.lunch:hover{
-  filter:saturate(1.05) brightness(1.02);
-  transform:translateY(-1px);
+  filter: saturate(1.06) brightness(1.02);
+  transform: translateY(-1px);
 }
 
-
-/* Tea Break only: time on the left of label */
-.schedule-grid .event.break:not(.lunch){ flex-direction:row; gap:10px; }
-.schedule-grid .event.break:not(.lunch) .ev-meta,
-.schedule-grid .event.break:not(.lunch) .ev-title{
-  margin:0; line-height:1.15; display:inline-block;
-}
-.schedule-grid .event.break:not(.lunch) .ev-meta{
-  order:0; font-weight:700; letter-spacing:.02em; color:#5c4700;
-}
-.schedule-grid .event.break:not(.lunch) .ev-title{
-  order:1; font-weight:800; color:#2a2200;
+/* inline time stays darker for contrast */
+.schedule-grid .event.break .ev-meta,
+.schedule-grid .event.lunch .ev-meta{
+  color:#5c4700; opacity:.98;
 }
 
-/* gutter between parallel tracks */
-.schedule-grid > *[style*="--col:2"]{ margin-left:4px; }
-
-@media (max-width: 820px){
-  .schedule-grid{ --time-col:74px; --row-h:28px; }
-  .schedule-grid .ev-title{ font-size:14px; }
+/* If you still want Lunch slightly fuller than Tea, keep this tiny nudge */
+.schedule-grid .event.lunch{
+  background:
+    linear-gradient(to top, rgba(255,255,255,.22), rgba(255,255,255,0) 40%),
+    linear-gradient(180deg,
+      color-mix(in oklab, var(--butter-1) calc(var(--butter-strength) + 2%), transparent),
+      color-mix(in oklab, var(--butter-2) calc(var(--butter-strength) + 2%), transparent)
+    );
 }
+
 
 
 /* ================= Finish Tea breaks & Lunch — balanced butter glass ================ */
