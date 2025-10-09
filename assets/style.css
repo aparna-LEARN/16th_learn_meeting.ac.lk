@@ -787,6 +787,24 @@ section.container > *:first-child{ margin-top:0; }
 .schedule-grid .event.lunch{ position:relative; z-index:1; }
 
 
+/* ===================== YELLOW LABEL STYLE ===================== */
+.schedule-grid .event.break .ev-title,
+.schedule-grid .event.lunch .ev-title {
+  color: #ffda68;             /* warm yellow tone */
+  text-shadow: 0 0 8px rgba(255, 218, 104, 0.5),
+               0 1px 1px rgba(0, 0, 0, 0.4); /* gentle glow and depth */
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.schedule-grid .event.break .ev-meta,
+.schedule-grid .event.lunch .ev-meta {
+  color: rgba(255, 240, 200, 0.9); /* lighter yellow for time text */
+  font-weight: 600;
+  text-shadow: 0 0 5px rgba(255, 215, 100, 0.4);
+}
+
+
 
 
 /* ================= Finish Tea breaks & Lunch — balanced butter glass ================ */
