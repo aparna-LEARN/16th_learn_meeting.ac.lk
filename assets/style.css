@@ -730,6 +730,63 @@ section.container > *:first-child{ margin-top:0; }
     );
 }
 
+/* ===================== BREAK/LUNCH — text & sizing fix ===================== */
+
+/* Keep pill content centered, stacked, and inside the capsule */
+.schedule-grid .event.break,
+.schedule-grid .event.lunch{
+  display:flex;
+  flex-direction:column;       /* stack title & time */
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:14px 16px;           /* a bit more breathing room */
+  min-height: calc(var(--row-h) - 2px);
+  overflow:hidden;             /* prevent text poking out */
+  border-radius:14px;          /* ensure rounded mask for overflow */
+}
+
+/* High-contrast ink for butter background */
+:root{
+  --butter-ink: #1e1500;   /* title */
+  --butter-sub: #5c4700;   /* time/meta */
+}
+
+/* Title & time colors inside the butter pills */
+.schedule-grid .event.break .ev-title,
+.schedule-grid .event.lunch .ev-title{
+  color: var(--butter-ink);
+  font-weight: 800;
+  letter-spacing:.01em;
+  text-shadow: 0 1px 0 rgba(255,255,255,.45); /* subtle lift on translucent bg */
+}
+
+.schedule-grid .event.break .ev-meta,
+.schedule-grid .event.lunch .ev-meta{
+  color: var(--butter-sub);
+  opacity: .98;
+  margin-top: 4px;
+  text-shadow: 0 1px 0 rgba(255,255,255,.35);
+}
+
+/* If you still want TEA BREAK to show time on the same line, keep this tiny gap: */
+@media (min-width: 740px){
+  .schedule-grid .event.break:not(.lunch){
+    flex-direction:row;
+    gap:10px;
+  }
+  .schedule-grid .event.break:not(.lunch) .ev-title,
+  .schedule-grid .event.break:not(.lunch) .ev-meta{
+    margin:0;
+    line-height:1.15;
+  }
+}
+
+/* Make sure pills sit above the faint grid so letters don’t blend into lines */
+.schedule-grid .event.break,
+.schedule-grid .event.lunch{ position:relative; z-index:1; }
+
+
 
 
 /* ================= Finish Tea breaks & Lunch — balanced butter glass ================ */
