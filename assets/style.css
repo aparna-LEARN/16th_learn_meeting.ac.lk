@@ -677,16 +677,54 @@ section.container > *:first-child{ margin-top:0; }
 .schedule-grid .ev-meta{ font-size:12px; opacity:.85; margin-top:4px; }
 
 /* Tea breaks & lunch (warm) â€” softened butter tones */
+/* ================= Tea breaks & Lunch — balanced butter glass ================ */
+/* tweak these two numbers if you want more/less punch */
+:root{
+  --butter-alpha-break: 72%;  /* 60–80% is a good range */
+  --butter-alpha-lunch: 68%;
+}
+
 .schedule-grid .event.break{
-  background: linear-gradient(180deg, var(--butter-200), var(--butter-400));
-  border-color: var(--butter-border);
+  background:
+    /* soft top highlight for pill look */
+    linear-gradient( to top, rgba(255,255,255,.12), rgba(255,255,255,0) 38% ),
+    /* buttery body, semi-opaque */
+    linear-gradient(180deg,
+      color-mix(in oklab, var(--butter-200) var(--butter-alpha-break), transparent),
+      color-mix(in oklab, var(--butter-400) var(--butter-alpha-break), transparent)
+    );
+  border: 1px solid color-mix(in oklab, var(--butter-border) 85%, transparent);
   color:#2a2200;
-  box-shadow: 0 6px 12px color-mix(in oklab, var(--butter-border) 25%, transparent);
+  box-shadow:
+    0 6px 14px color-mix(in oklab, var(--butter-border) 24%, transparent),
+    inset 0 1px 0 rgba(255,255,255,.28); /* crisp top edge */
+  backdrop-filter: saturate(118%) blur(1.5px);
+  -webkit-backdrop-filter: saturate(118%) blur(1.5px);
 }
-.schedule-grid .event.break .ev-meta{ color:#5c4700; opacity:.95; }
 .schedule-grid .event.lunch{
-  background: linear-gradient(180deg, var(--butter-300), var(--butter-500));
+  background:
+    linear-gradient( to top, rgba(255,255,255,.10), rgba(255,255,255,0) 36% ),
+    linear-gradient(180deg,
+      color-mix(in oklab, var(--butter-300) var(--butter-alpha-lunch), transparent),
+      color-mix(in oklab, var(--butter-500) var(--butter-alpha-lunch), transparent)
+    );
+  border: 1px solid color-mix(in oklab, var(--butter-border) 85%, transparent);
+  color:#2a2200;
+  box-shadow:
+    0 6px 14px color-mix(in oklab, var(--butter-border) 24%, transparent),
+    inset 0 1px 0 rgba(255,255,255,.26);
 }
+
+/* keep inline time darker for contrast */
+.schedule-grid .event.break .ev-meta{ color:#5c4700; opacity:.96; }
+
+/* optional: tiny lift on hover */
+.schedule-grid .event.break:hover,
+.schedule-grid .event.lunch:hover{
+  filter:saturate(1.05) brightness(1.02);
+  transform:translateY(-1px);
+}
+
 
 /* Tea Break only: time on the left of label */
 .schedule-grid .event.break:not(.lunch){ flex-direction:row; gap:10px; }
@@ -710,7 +748,7 @@ section.container > *:first-child{ margin-top:0; }
 }
 
 
-
+/* ================= Finish Tea breaks & Lunch — balanced butter glass ================ */
 
 /* =============================
    Agenda Ceremony Button
