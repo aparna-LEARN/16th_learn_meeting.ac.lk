@@ -478,6 +478,56 @@ section.container > *:first-child{ margin-top:0; }
   .reveal{ opacity:1 !important; transform:none !important; }
 }
 
+/* ===========================================================
+   Participation Notice
+   =========================================================== */
+
+/* ============================= Prominent Participation Notice ============================= */
+.notice-bar{
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #0f1b2e, #0b1220);
+  border: 1px solid #203758;
+  box-shadow: 0 10px 26px rgba(2,6,23,.28), inset 0 0 0 1px rgba(255,255,255,.04);
+  color: #eaf2ff;
+}
+
+.nb-left{
+  display:flex; align-items:center; gap:10px;
+  padding-right:10px; border-right:1px solid rgba(207,229,255,.12);
+}
+.nb-ico{
+  width:28px; height:28px; border-radius:10px;
+  display:grid; place-items:center; font-size:18px; line-height:1;
+  background: linear-gradient(180deg, rgba(56,189,248,.16), rgba(45,212,191,.10));
+  border: 1px solid rgba(99,102,241,.18);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+}
+.nb-title{
+  font-weight:800; letter-spacing:.02em; color:#cfe1ff;
+}
+.nb-text{
+  font-weight:600; color:#eaf2ff;
+}
+.nb-text b{
+  color:#7dd3fc;
+}
+
+/* Compact on small screens */
+@media (max-width:640px){
+  .notice-bar{
+    grid-template-columns: 1fr;
+    text-align:left;
+  }
+  .nb-left{
+    border-right:0; padding-right:0;
+  }
+}
 
 
 /* ===========================================================
