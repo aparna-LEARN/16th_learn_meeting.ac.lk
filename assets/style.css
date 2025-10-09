@@ -676,17 +676,38 @@ section.container > *:first-child{ margin-top:0; }
 .schedule-grid .ev-title{ font-weight:700; line-height:1.2; }
 .schedule-grid .ev-meta{ font-size:12px; opacity:.85; margin-top:4px; }
 
-/* Tea breaks & lunch (warm) — softened butter tones */
+/* Tea breaks & lunch — translucent butter glass */
 .schedule-grid .event.break{
-  background: linear-gradient(180deg, var(--butter-200), var(--butter-400));
-  border-color: var(--butter-border);
+  /* more transparent + slightly darker stroke for contrast */
+  background:
+    linear-gradient(180deg,
+      color-mix(in oklab, var(--butter-300) 60%, transparent),
+      color-mix(in oklab, var(--butter-400) 60%, transparent)
+    );
+  border: 1px solid color-mix(in oklab, var(--butter-border) 70%, transparent);
   color:#2a2200;
-  box-shadow: 0 6px 12px color-mix(in oklab, var(--butter-border) 25%, transparent);
+  box-shadow: 0 6px 10px color-mix(in oklab, var(--butter-border) 18%, transparent);
+  backdrop-filter: saturate(115%) blur(2px);
+  -webkit-backdrop-filter: saturate(115%) blur(2px);
 }
-.schedule-grid .event.break .ev-meta{ color:#5c4700; opacity:.95; }
+
+/* Lunch a touch stronger but still translucent */
 .schedule-grid .event.lunch{
-  background: linear-gradient(180deg, var(--butter-300), var(--butter-500));
+  background:
+    linear-gradient(180deg,
+      color-mix(in oklab, var(--butter-300) 55%, transparent),
+      color-mix(in oklab, var(--butter-500) 55%, transparent)
+    );
+  border: 1px solid color-mix(in oklab, var(--butter-border) 70%, transparent);
+  color:#2a2200;
+  box-shadow: 0 6px 10px color-mix(in oklab, var(--butter-border) 18%, transparent);
+  backdrop-filter: saturate(115%) blur(2px);
+  -webkit-backdrop-filter: saturate(115%) blur(2px);
 }
+
+/* keep the inline meta darker for readability */
+.schedule-grid .event.break .ev-meta{ color:#5c4700; opacity:.95; }
+
 
 /* Tea Break only: time on the left of label */
 .schedule-grid .event.break:not(.lunch){ flex-direction:row; gap:10px; }
