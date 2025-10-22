@@ -165,7 +165,7 @@ section.container > *:first-child{ margin-top:0; }
 .wg-acc > summary{ list-style: none; }
 .wg-acc > summary::-webkit-details-marker{ display:none; } /* hide default marker */
 .wg-acc > summary::before{
-  content:"â–¸"; display:inline-block; font-size:16px; color:var(--brand-2); margin-right:8px;
+  content:"Ã¢â€“Â¸"; display:inline-block; font-size:16px; color:var(--brand-2); margin-right:8px;
   transform:rotate(0deg); transition: transform .2s ease;
 }
 .wg-acc[open] > summary::before{ transform:rotate(90deg); }
@@ -411,7 +411,7 @@ section.container > *:first-child{ margin-top:0; }
   .trophy{ font-size:38px; }
 }
 
-/* ========================= SPONSORSHIP â€” consolidated (glass version) ========================= */
+/* ========================= SPONSORSHIP Ã¢â‚¬â€ consolidated (glass version) ========================= */
 :root{
   --s-ink:#eaf2ff;
   --s-ink-sub:#cfe1ff;
@@ -676,10 +676,10 @@ section.container > *:first-child{ margin-top:0; }
 .schedule-grid .ev-title{ font-weight:700; line-height:1.2; }
 .schedule-grid .ev-meta{ font-size:12px; opacity:.85; margin-top:4px; }
 
-/* Tea breaks & lunch (warm) â€” softened butter tones */
-/* ================= Tea breaks & Lunch — balanced butter glass ================ */
-/* ================= Tea breaks & Lunch — bright & transparent butter ================ */
-/* one slider to tune overall strength (0–100). try 78–88 for your theme */
+/* Tea breaks & lunch (warm) Ã¢â‚¬â€ softened butter tones */
+/* ================= Tea breaks & Lunch â€” balanced butter glass ================ */
+/* ================= Tea breaks & Lunch â€” bright & transparent butter ================ */
+/* one slider to tune overall strength (0â€“100). try 78â€“88 for your theme */
 :root{
   --butter-strength: 84;   /* raise = brighter/less transparent, lower = softer */
   --butter-edge: #fff4c7;  /* top-edge gloss */
@@ -699,7 +699,7 @@ section.container > *:first-child{ margin-top:0; }
     );
   border: 1px solid color-mix(in oklab, var(--butter-brd) 88%, transparent);
   color:#2a2200;
-  /* subtle “glassiness” so it reads as a pill, not a solid slab */
+  /* subtle â€œglassinessâ€ so it reads as a pill, not a solid slab */
   box-shadow:
     0 8px 18px color-mix(in oklab, var(--butter-brd) 28%, transparent),
     inset 0 1px 0 var(--butter-edge);
@@ -730,7 +730,7 @@ section.container > *:first-child{ margin-top:0; }
     );
 }
 
-/* ===================== BREAK/LUNCH — text & sizing fix ===================== */
+/* ===================== BREAK/LUNCH â€” text & sizing fix ===================== */
 
 /* Keep pill content centered, stacked, and inside the capsule */
 .schedule-grid .event.break,
@@ -782,7 +782,7 @@ section.container > *:first-child{ margin-top:0; }
   }
 }
 
-/* Make sure pills sit above the faint grid so letters don’t blend into lines */
+/* Make sure pills sit above the faint grid so letters donâ€™t blend into lines */
 .schedule-grid .event.break,
 .schedule-grid .event.lunch{ position:relative; z-index:1; }
 
@@ -807,7 +807,7 @@ section.container > *:first-child{ margin-top:0; }
 
 
 
-/* ================= Finish Tea breaks & Lunch — balanced butter glass ================ */
+/* ================= Finish Tea breaks & Lunch â€” balanced butter glass ================ */
 
 /* =============================
    Agenda Ceremony Button
@@ -1031,276 +1031,3 @@ section.container > *:first-child{ margin-top:0; }
 @media (max-width:560px){
   .anim-box{ width:100%; aspect-ratio: 1 / 1.1; }
 }
-
-
-
-/* ===================== Root & palette ===================== */
-:root{
-  --brand:#0a2e63; --brand-2:#0a79a7; --teal:#0b2d2d;
-  --mint:#2dd4bf; --sky:#38bdf8; --accent:#ffcc33;
-  --ink:#0b1220; --text:#12202f; --muted:#5b7189;
-  --bg:#ffffff; --card:#f6f8fb; --ring:#e6edf7;
-  --shadow:0 12px 34px rgba(2,6,23,.08); --radius:18px;
-  --v-gap: clamp(28px, 5vw, 64px);
-
-  /* Butter pills */
-  --butter-strength: 84;
-  --butter-edge:#fff4c7; --butter-1:#ffe69a; --butter-2:#ffd36a; --butter-brd:#e9c86a;
-  --butter-ink:#1e1500; --butter-sub:#5c4700;
-}
-
-/* Reset */
-*{box-sizing:border-box} html,body{margin:0;padding:0}
-body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--text);background:var(--bg)}
-a{color:var(--brand);text-decoration:none} a:hover{opacity:.92}
-img{max-width:100%;height:auto;display:block}
-
-/* Containers */
-.container{max-width:1100px;margin:0 auto;padding:0 16px}
-
-/* Nav */
-.nav{ position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--ring);backdrop-filter:saturate(140%) blur(4px) }
-.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0}
-.brand img{ height:52px; width:auto; display:block; margin:-6px 0; }
-@media (min-width:900px){ .brand img{ height:64px; } }
-.menu{ display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
-.menu a{ padding:8px 12px; border-radius:12px; color:#0a2e63; }
-
-/* Buttons */
-.btn{ display:inline-flex; align-items:center; gap:10px; border-radius:14px; padding:10px 14px; border:2px solid transparent; transition:transform .15s ease, box-shadow .15s ease, filter .15s ease; }
-.btn:hover{ transform:translateY(-2px); }
-.btn-outline{ background:#fff; border-color:#d2d9e7; color:#0a2e63; }
-
-/* Dark page baseline */
-.page-dark{background:#0b1220;color:#eaf2ff}
-.page-dark .nav{background:#0c1324;border-color:#15223a}
-.page-dark .menu a{color:#e5e7eb}
-.page-dark .btn-outline{background:#0c1324;border-color:#21314c;color:#eaf2ff}
-.page-dark .footer{border-color:#21314c;color:#9fb2d3}
-
-/* Hero */
-.ag-hero{padding:40px 0 22px;text-align:center}
-.grad-title{
-  font-size:clamp(32px,6vw,56px);margin:0;
-  background:linear-gradient(90deg,#38bdf8,#2dd4bf);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.day-date{ color:#9fb2d3; margin-top:6px; }
-
-/* Tabs */
-.tabs{display:flex;gap:12px;justify-content:center;margin:14px 0 6px}
-.tab{ padding:10px 16px; border-radius:14px; border:2px solid #d2d9e7; background:#111827; color:#e5e7eb; cursor:pointer; transition:background .18s,color .18s,border-color .18s, box-shadow .18s,transform .18s,filter .18s; }
-.tab:hover{ transform:translateY(-2px); filter:brightness(1.05); }
-.tab.active{ background:#ffffff; color:#0b2d2d; border-color:#eef3fb; box-shadow:0 10px 24px rgba(2,6,23,.16), 0 0 0 2px rgba(255,255,255,.85) inset; }
-.tab:focus-visible{ outline:3px solid #80e1e6; outline-offset:2px; }
-
-/* Footer */
-.footer{border-top:1px solid var(--ring);padding:22px 0;color:#577}
-
-/* ================= Agenda Grid ================= */
-.card.schedule{
-  background: linear-gradient(180deg,#0d1628,#0b1220);
-  border:1px solid #1c2b48; border-radius:18px;
-  box-shadow: 0 10px 26px rgba(2,6,23,.28); padding:12px;
-}
-.day-head{ margin:0 0 8px; }
-
-/* Grid base */
-.schedule-grid{
-  --step:30; --row-h:32px; --time-col:96px; --tracks:2;
-  position:relative; display:grid;
-  grid-template-columns: var(--time-col) repeat(var(--tracks), 1fr);
-  grid-auto-rows: var(--row-h);
-  gap:0 12px; border-radius:14px; padding:8px 8px 8px 0;
-  overflow:hidden; background:#0f1b2e;
-}
-.schedule-grid.tracks-2{ --tracks:2; }
-.schedule-grid.tracks-3{ --tracks:3; }
-
-.schedule-grid::before{
-  content:""; position:absolute; inset:0 0 0 var(--time-col);
-  background-image:
-    repeating-linear-gradient(to bottom, rgba(255,255,255,.05) 0, rgba(255,255,255,.05) 1px, transparent 1px, transparent var(--row-h)),
-    repeating-linear-gradient(to bottom, rgba(255,255,255,.08) 0, rgba(255,255,255,.08) 2px, transparent 2px, transparent calc(var(--row-h)*2));
-  pointer-events:none;
-}
-
-/* Time labels */
-.schedule-grid .time{
-  grid-column:1;
-  grid-row: calc((var(--at) - var(--day-start)) / var(--step) + 1);
-  align-self:start; padding-left:12px; color:#a9c6e8; font-size:12px; letter-spacing:.02em; position:relative;
-}
-.schedule-grid .time::after{ content:""; position:absolute; right:-6px; top:.8em; width:4px; height:1px; background:#32507a; opacity:.8; }
-
-/* Events */
-.schedule-grid .event{
-  grid-column: calc(var(--col) + 1);
-  grid-row: calc((var(--start) - var(--day-start)) / var(--step) + 1) / span calc(var(--dur) / var(--step));
-  align-self:stretch; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;
-  margin:4px 0; padding:12px 14px; border-radius:14px;
-  background: linear-gradient(180deg,#162942,#112237); border:1px solid rgba(120,164,255,.18); color:#eaf2ff;
-  box-shadow: 0 6px 18px rgba(0,0,0,.30); transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
-}
-.schedule-grid .event:hover{ transform:translateY(-1px); box-shadow:0 12px 30px rgba(0,0,0,.38); filter:saturate(1.05); }
-.schedule-grid .event.span-all{ grid-column: 2 / -1; }
-.schedule-grid .ev-title{ font-weight:700; line-height:1.2; }
-.schedule-grid .ev-meta{ font-size:12px; opacity:.9; margin-top:4px; }
-
-/* Break/Lunch pills */
-.schedule-grid .event.break,
-.schedule-grid .event.lunch{
-  background:
-    linear-gradient(to top, rgba(255,255,255,.24), rgba(255,255,255,0) 42%),
-    linear-gradient(180deg,
-      color-mix(in oklab, var(--butter-1) var(--butter-strength)%, transparent),
-      color-mix(in oklab, var(--butter-2) var(--butter-strength)%, transparent)
-    );
-  border: 1px solid color-mix(in oklab, var(--butter-brd) 88%, transparent);
-  color:#2a2200;
-  box-shadow:
-    0 8px 18px color-mix(in oklab, var(--butter-brd) 28%, transparent),
-    inset 0 1px 0 var(--butter-edge);
-  backdrop-filter: blur(1.8px) saturate(120%) brightness(1.02);
-  -webkit-backdrop-filter: blur(1.8px) saturate(120%) brightness(1.02);
-}
-.schedule-grid .event.break .ev-title,
-.schedule-grid .event.lunch .ev-title{
-  color:#ffda68; text-shadow:0 0 8px rgba(255,218,104,.5), 0 1px 1px rgba(0,0,0,.4);
-  font-weight:800; letter-spacing:.02em;
-}
-.schedule-grid .event.break .ev-meta,
-.schedule-grid .event.lunch .ev-meta{
-  color:rgba(255,240,200,.92); font-weight:600; text-shadow:0 0 5px rgba(255,215,100,.4);
-}
-
-/* Agenda button in event */
-.ev-btn{
-  margin-top:10px; display:inline-flex; align-items:center; gap:10px;
-  padding:10px 14px; border-radius:14px; cursor:pointer;
-  background:linear-gradient(180deg,#162942,#112237); color:#eaf2ff; font-weight:700;
-  border:1px solid rgba(120,164,255,.28);
-  box-shadow:0 8px 22px rgba(2,6,23,.35), inset 0 0 0 1px rgba(255,255,255,.06);
-  transition:transform .15s ease, filter .15s ease, box-shadow .15s ease;
-}
-.ev-btn:hover{ transform:translateY(-2px); filter:saturate(1.05); }
-.ev-btn:focus-visible{ outline:3px solid #38bdf8; outline-offset:2px; }
-.ev-btn-dot{ width:10px; height:10px; border-radius:50%; background:linear-gradient(90deg,#2dd4bf,#38bdf8); box-shadow:0 0 10px rgba(56,189,248,.6); }
-
-/* Modal */
-.modal{ border:0; padding:0; background:transparent; color:#eaf2ff; max-width:none; width:min(680px, calc(100% - 32px)); }
-.modal::backdrop{
-  background: radial-gradient(600px 400px at 60% 30%, rgba(56,189,248,.16), transparent 60%),
-              radial-gradient(800px 520px at 40% 70%, rgba(45,212,191,.14), transparent 65%),
-              rgba(2,6,23,.72);
-  backdrop-filter: blur(3px);
-}
-.modal-card{
-  margin: 10vh auto 0; background: linear-gradient(180deg,#0f1b2e,#0b1220);
-  border:1px solid #1c2b48; border-radius:18px; padding:16px 16px 14px;
-  box-shadow: 0 18px 48px rgba(2,6,23,.55), inset 0 0 0 1px rgba(255,255,255,.04); position:relative;
-}
-.modal-close{
-  position:absolute; top:8px; right:10px; width:32px; height:32px; border-radius:10px;
-  border:1px solid #2a3e61; background:#0c1629; color:#eaf2ff; font-size:20px; line-height:1; cursor:pointer;
-}
-.modal-kicker{ display:inline-block; font-weight:800; letter-spacing:.08em; text-transform:uppercase; font-size:12px; color:#cfe1ff; background:#0e2038; border:1px solid #20375f; padding:4px 8px; border-radius:999px; margin-bottom:6px; }
-.modal-title{ margin:6px 0 8px; font-size:clamp(22px,3.4vw,28px); background:linear-gradient(90deg,#38bdf8,#2dd4bf); -webkit-background-clip:text; background-clip:text; color:transparent; }
-.modal-body{ color:#cfe1ff; line-height:1.6; }
-.modal-footer{ margin-top:12px; display:flex; justify-content:flex-end; }
-.oc-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:12px; margin:8px 0 14px; }
-@media (max-width:720px){ .oc-grid{ grid-template-columns:1fr; } }
-.oc-chip{ display:flex; gap:10px; align-items:center; padding:10px 12px; border-radius:12px; background:linear-gradient(180deg,#0f1b2e,#0b1220); border:1px solid #203758; box-shadow: inset 0 0 0 1px rgba(255,255,255,.04); }
-.oc-ico{ font-size:18px; line-height:1; }
-.oc-label{ font-size:12px; color:#9fb2d3; margin-bottom:2px; }
-.oc-val{ font-weight:700; color:#eaf2ff; }
-.oc-sub{ margin:8px 0 6px; color:#eaf2ff; }
-.prog{ list-style:none; padding:0; margin:0; display:grid; gap:8px; }
-.prog li{ display:grid; grid-template-columns: 130px 1fr; gap:12px; align-items:start; padding:10px 12px; border-radius:12px; background:linear-gradient(180deg,#0f1b2e,#0b1220); border:1px solid rgba(120,164,255,.18); }
-.prog .t{ font-weight:700; color:#7dd3fc; white-space:nowrap; }
-.prog .d{ color:#cfe1ff; }
-@media (max-width:560px){ .prog li{ grid-template-columns:1fr; } .prog .t{ order:-1; } }
-
-/* =================== Mobile Responsiveness =================== */
-/* Collapse timeline to single column, add track badges, tighten text */
-@media (max-width:760px){
-  .schedule-grid{
-    --tracks:1;                 /* collapse to one content column */
-    --time-col:68px;            /* slimmer time rail */
-    --row-h:40px;               /* taller rows = better tap targets */
-    padding-left:2px;
-    gap:0 8px;
-  }
-  .schedule-grid .time{ font-size:10px; padding-left:6px; }
-  .schedule-grid .event{ grid-column: 2 / -1; margin:6px 6px; padding:12px; }
-  .schedule-grid .event .ev-title{ font-size:15px; }
-  .schedule-grid .event .ev-meta{ font-size:11px; }
-
-  /* Track badge shows only on mobile when we stack parallel sessions */
-  .schedule-grid .event[data-track]{
-    position:relative;
-    padding-top:26px; /* space for badge */
-    text-align:left; align-items:flex-start;
-  }
-  .schedule-grid .event[data-track]::before{
-    content: attr(data-track);
-    position:absolute; left:12px; top:8px;
-    font-size:11px; font-weight:800; letter-spacing:.04em;
-    padding:4px 8px; border-radius:999px;
-    color:#cfe1ff; background:#0e2038; border:1px solid #20375f;
-  }
-
-  /* Break/Lunch keep centered text on mobile */
-  .schedule-grid .event.break,
-  .schedule-grid .event.lunch{
-    text-align:center; align-items:center; padding:14px 16px;
-  }
-}
-
-/* Extra-small phones */
-@media (max-width:380px){
-  .schedule-grid{ --time-col:60px; }
-  .schedule-grid .event .ev-title{ font-size:14px; }
-  .schedule-grid .event .ev-meta{ font-size:10.5px; }
-  .tab{ padding:8px 12px; }
-}
-
-
-/* ===== FIX: Always show every parallel session on mobile ===== */
-@media (max-width:760px){
-  /* stop using the grid rows so items don't overlap */
-  .schedule-grid{
-    display:block;                 /* break out of grid layout */
-    padding:8px;                   /* comfy edges */
-    background:#0f1b2e;
-  }
-  .schedule-grid .time{ display:none; }   /* hide the left time rail on phones */
-
-  /* each event becomes a full-width card, stacked vertically */
-  .schedule-grid .event{
-    grid-column:auto;
-    grid-row:auto !important;      /* ignore inline grid-row from desktop */
-    margin:12px 6px;
-    padding:14px 16px;
-    text-align:left;
-    align-items:flex-start;
-    border-radius:16px;
-  }
-
-  /* keep the track badge so users know the room/track */
-  .schedule-grid .event[data-track]{ padding-top:30px; }
-  .schedule-grid .event[data-track]::before{
-    content: attr(data-track);
-    position:absolute; left:16px; top:10px;
-    font-size:11px; font-weight:800; letter-spacing:.04em;
-    padding:4px 8px; border-radius:999px;
-    color:#cfe1ff; background:#0e2038; border:1px solid #20375f;
-  }
-
-  /* break/lunch stay centered */
-  .schedule-grid .event.break,
-  .schedule-grid .event.lunch{
-    text-align:center; align-items:center;
-  }
-}
-
