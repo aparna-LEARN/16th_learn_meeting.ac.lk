@@ -672,6 +672,76 @@ window.addEventListener('orientationchange', () =>
   show('platinum'); // default
 })();
 
+/* ===========================================================
+   Our Sponsors — continuous right-to-left scroll (seamless)
+   =========================================================== */
+(function initSponsorsRibbon(){
+  const track = document.getElementById('srTrack');
+  if (!track) return;
+
+  // Respect reduced motion
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+
+  // The track already contains two identical sets of logos.
+  // We measure half the total width to know when to wrap.
+  let halfWidth = 0;
+
+  function measure(){
+    // total width of all children (two sets)
+    const total = Array.from(track.children)
+      .reduce((sum, el) => sum + el.getBoundingClientRect().width + 16 /* gap */, 0);
+    halfWidth = total / 2;
+  }
+
+  // Measure once images are loaded
+  const imgs = Array.from(track.querySelectorAll('img'));
+  let loaded = 0;
+  function maybeMeasure(){
+    loaded++;
+    if (loaded >= imgs.length){ measure(); }
+  }
+  imgs.forEach(img => {
+    if (img.complete) maybeMeasure();
+    else img.addEventListener('load', maybeMeasure, { once: true });
+  });
+  // also re-measure on resize/orientation
+  addEventListener('resize', () => { measure(); });
+  addEventListener('orientationchange', () => setTimeout(measure, 120));
+
+  // animation loop
+  let x = 0;
+  const SPEED = 26;  // px/sec — tune for taste
+  let last = performance.now();
+  let raf = 0;
+  let paused = false;
+
+  function step(now){
+    if (!paused){
+      const dt = (now - last) / 1000; last = now;
+      x -= SPEED * dt;
+      if (halfWidth > 0 && -x >= halfWidth){ x += halfWidth; }  // wrap at half
+      track.style.transform = `translate3d(${x}px,0,0)`;
+    }else{
+      last = now; // keep delta sane while paused
+    }
+    raf = requestAnimationFrame(step);
+  }
+
+  // pause on hover/focus for accessibility
+  const wrap = track.parentElement; // .sr-wrap
+  if (wrap){
+    wrap.addEventListener('pointerenter', () => paused = true);
+    wrap.addEventListener('pointerleave', () => paused = false);
+    wrap.addEventListener('focusin',      () => paused = true);
+    wrap.addEventListener('focusout',     () => paused = false);
+  }
+
+  // kick off
+  requestAnimationFrame((t)=>{ last = t; step(t); });
+})();
+
+
 
 
 /* ===== Animated grid background for Sponsorship (canvas) ===== */
