@@ -611,6 +611,11 @@ section.container > *:first-child{ margin-top:0; }
   .sr-track{ transform: none !important; }
 }
 
+@media (prefers-reduced-motion: reduce){
+  .sr-track{ justify-content: center; display: flex; flex-wrap: nowrap; gap: 16px; }
+}
+
+
 
 /* ===========================================================
    Carousel (scroll-snap + arrows + dots)
