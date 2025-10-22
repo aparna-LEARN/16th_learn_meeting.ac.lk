@@ -673,63 +673,93 @@ window.addEventListener('orientationchange', () =>
 })();
 
 /* ===========================================================
-   Our Sponsors — continuous right-to-left scroll (seamless)
+   Our Sponsors — auto-tiling + seamless right-to-left scroll
    =========================================================== */
 (function initSponsorsRibbon(){
   const track = document.getElementById('srTrack');
   if (!track) return;
 
-  // Respect reduced motion
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) return;
+  const wrap = track.closest('.sr-wrap');
 
-  // The track already contains two identical sets of logos.
-  // We measure half the total width to know when to wrap.
+  // ---- helpers -------------------------------------------------
+  const GAP = () => parseFloat(getComputedStyle(track).gap || '0');
+
+  function widthOf(nodes){
+    // sum actual rendered widths + gaps between items
+    const w = nodes.reduce((s, el) => s + el.getBoundingClientRect().width, 0);
+    const gaps = Math.max(0, nodes.length - 1) * GAP();
+    return w + gaps;
+  }
+
+  // Build a "first half" sequence from the markup (the first half of children)
+  function extractFirstHalf(){
+    const kids = Array.from(track.children);
+    const baseLen = Math.max(1, Math.floor(kids.length / 2)); // tolerate any initial count
+    return kids.slice(0, baseLen);
+  }
+
+  function retile(){
+    if (!wrap) return;
+
+    // 1) Take the current first half as the base sequence
+    let first = extractFirstHalf();
+    if (!first.length) return;
+
+    // 2) Auto-tile the base until it’s at least ~1.6× the wrapper width
+    //    (that buffer keeps the loop visually full and smooth for small counts)
+    const target = wrap.getBoundingClientRect().width * 1.6;
+    while (widthOf(first) < target){
+      first = first.concat(first.map(n => n.cloneNode(true)));
+    }
+
+    // 3) Rebuild the track: [first half] + [identical second half]
+    const frag1 = document.createDocumentFragment();
+    const frag2 = document.createDocumentFragment();
+    first.forEach(n => frag1.appendChild(n.cloneNode(true)));
+    first.forEach(n => frag2.appendChild(n.cloneNode(true)));
+
+    track.replaceChildren(frag1, frag2);
+
+    // 4) Return the pixel width of one half for the scroller to wrap on
+    return widthOf(Array.from(track.children).slice(0, track.children.length / 2));
+  }
+
+  // ---- initial tile + (re)measure on image loads & resizes ----
   let halfWidth = 0;
+  function measureAndTile(){ halfWidth = retile() || 0; }
 
-  function measure(){
-    // total width of all children (two sets)
-    const total = Array.from(track.children)
-      .reduce((sum, el) => sum + el.getBoundingClientRect().width + 16 /* gap */, 0);
-    halfWidth = total / 2;
-  }
-
-  // Measure once images are loaded
+  // wait for images so widths are correct
   const imgs = Array.from(track.querySelectorAll('img'));
-  let loaded = 0;
-  function maybeMeasure(){
-    loaded++;
-    if (loaded >= imgs.length){ measure(); }
+  let ready = 0;
+  const maybeGo = () => { ready++; if (ready >= imgs.length) measureAndTile(); };
+  if (imgs.length){
+    imgs.forEach(img => img.complete ? maybeGo() : img.addEventListener('load', maybeGo, { once:true }));
+  }else{
+    measureAndTile();
   }
-  imgs.forEach(img => {
-    if (img.complete) maybeMeasure();
-    else img.addEventListener('load', maybeMeasure, { once: true });
-  });
-  // also re-measure on resize/orientation
-  addEventListener('resize', () => { measure(); });
-  addEventListener('orientationchange', () => setTimeout(measure, 120));
 
-  // animation loop
+  addEventListener('resize', () => { measureAndTile(); });
+  addEventListener('orientationchange', () => setTimeout(measureAndTile, 120));
+
+  // ---- scroll loop (seamless) ---------------------------------
+  if (reduce) return; // no motion preference
+
   let x = 0;
-  const SPEED = 26;  // px/sec — tune for taste
+  const SPEED = 26; // px/sec
   let last = performance.now();
-  let raf = 0;
   let paused = false;
 
   function step(now){
-    if (!paused){
-      const dt = (now - last) / 1000; last = now;
+    const dt = (now - last) / 1000; last = now;
+    if (!paused && halfWidth > 0){
       x -= SPEED * dt;
-      if (halfWidth > 0 && -x >= halfWidth){ x += halfWidth; }  // wrap at half
+      if (-x >= halfWidth){ x += halfWidth; }   // wrap after one full half
       track.style.transform = `translate3d(${x}px,0,0)`;
-    }else{
-      last = now; // keep delta sane while paused
     }
-    raf = requestAnimationFrame(step);
+    requestAnimationFrame(step);
   }
 
-  // pause on hover/focus for accessibility
-  const wrap = track.parentElement; // .sr-wrap
   if (wrap){
     wrap.addEventListener('pointerenter', () => paused = true);
     wrap.addEventListener('pointerleave', () => paused = false);
@@ -737,9 +767,9 @@ window.addEventListener('orientationchange', () =>
     wrap.addEventListener('focusout',     () => paused = false);
   }
 
-  // kick off
   requestAnimationFrame((t)=>{ last = t; step(t); });
 })();
+
 
 
 
