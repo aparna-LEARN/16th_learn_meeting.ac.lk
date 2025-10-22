@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -17,7 +18,7 @@
       </a>
       <div class="menu">
         <a href="./">Home</a>
-        <a href="agenda.html" aria-current="page">Agenda</a>
+        <a href="agenda.html">Agenda</a>
         <a href="last-year.html">Last Year</a>
       </div>
     </div>
@@ -26,15 +27,17 @@
   <!-- PAGE HERO -->
   <header class="ag-hero">
     <div class="container">
-      <h1 class="grad-title">Event Agenda</h1>
+      <h1 style="background:linear-gradient(90deg,#38bdf8,#2dd4bf);-webkit-background-clip:text;background-clip:text;color:transparent">
+        Event Agenda
+      </h1>
       <p class="muted" style="color:#9fb2d3">Two days packed with WGs, sessions, and networking.</p>
 
-      <div class="tabs" role="tablist" aria-label="Agenda Days">
-        <button id="tabDay1" class="tab active" role="tab" aria-selected="true" aria-controls="day1" onclick="switchDay('day1')">Day 1</button>
-        <button id="tabDay2" class="tab" role="tab" aria-selected="false" aria-controls="day2" onclick="switchDay('day2')">Day 2</button>
+      <div class="tabs">
+        <button id="tabDay1" class="tab active" onclick="switchDay('day1')">Day 1</button>
+        <button id="tabDay2" class="tab" onclick="switchDay('day2')">Day 2</button>
       </div>
 
-      <div id="dayDate" class="day-date">Thursday, October 23, 2025</div>
+      <div id="dayDate" style="color:#9fb2d3">Thursday, October 23, 2025</div>
     </div>
   </header>
 
@@ -45,7 +48,7 @@
       <!-- DAY 1 -->
       <div id="day1">
         <div class="card schedule">
-          <h3 class="day-head">Day 1</h3>
+          <h3 style="margin:0 0 8px">Day 1</h3>
 
           <div id="gridDay1"
                class="schedule-grid tracks-2"
@@ -65,27 +68,27 @@
             </div>
 
             <!-- 11:00–12:30 -->
-            <div class="event" data-track="WG 1" style="--start:660; --dur:90; --col:1;">
+            <div class="event" style="--start:660; --dur:90; --col:1;">
               <div class="ev-title">WG 1: Agriculture Technology (AgroTec WG)</div>
               <div class="ev-meta">11:00 – 12:30</div>
             </div>
-            <div class="event" data-track="WG 2" style="--start:660; --dur:90; --col:2;">
+            <div class="event" style="--start:660; --dur:90; --col:2;">
               <div class="ev-title">WG 2: Generative AI for Productivity (GenAI WG)</div>
               <div class="ev-meta">11:00 – 12:30</div>
             </div>
 
             <!-- 12:30–13:30 | lunch -->
-            <div class="event break lunch span-all" style="--start:750; --dur:60;">
+            <div class="event break span-all" style="--start:750; --dur:60;">
               <div class="ev-title">Lunch</div>
               <div class="ev-meta">12:30 – 01:30</div>
             </div>
 
             <!-- 13:30–15:00 -->
-            <div class="event" data-track="WG 1" style="--start:810; --dur:90; --col:1;">
+            <div class="event" style="--start:810; --dur:90; --col:1;">
               <div class="ev-title">WG 1: Agriculture Technology (AgroTec WG)</div>
               <div class="ev-meta">01:30 – 03:00</div>
             </div>
-            <div class="event" data-track="WG 2" style="--start:810; --dur:90; --col:2;">
+            <div class="event" style="--start:810; --dur:90; --col:2;">
               <div class="ev-title">WG 2: Generative AI for Productivity (GenAI WG)</div>
               <div class="ev-meta">01:30 – 03:00</div>
             </div>
@@ -97,11 +100,11 @@
             </div>
 
             <!-- 15:30–17:00 -->
-            <div class="event" data-track="WG 1" style="--start:930; --dur:90; --col:1;">
+            <div class="event" style="--start:930; --dur:90; --col:1;">
               <div class="ev-title">WG 1: Agriculture Technology (AgroTec WG)</div>
               <div class="ev-meta">03:30 – 05:00</div>
             </div>
-            <div class="event" data-track="WG 2" style="--start:930; --dur:90; --col:2;">
+            <div class="event" style="--start:930; --dur:90; --col:2;">
               <div class="ev-title">WG 2: Generative AI for Productivity (GenAI WG)</div>
               <div class="ev-meta">03:30 – 05:00</div>
             </div>
@@ -126,7 +129,7 @@
       <!-- DAY 2 -->
       <div id="day2" style="display:none">
         <div class="card schedule">
-          <h3 class="day-head">Day 2</h3>
+          <h3 style="margin:0 0 8px">Day 2</h3>
 
           <div id="gridDay2"
                class="schedule-grid tracks-3"
@@ -149,7 +152,7 @@
               <div class="ev-meta">10:30 – 11:00</div>
             </div>
 
-            <!-- 11:00–12:30 | services awareness -->
+            <!-- 11:00–12:30 | three parallel sessions -->
             <div class="event span-all" style="--start:660; --dur:90;">
               <div class="ev-title">LEARN Services Awareness Session in Partnership with IEEE GRSS</div>
               <div class="ev-meta">11:00 – 12:30</div>
@@ -159,24 +162,27 @@
             </div>
 
             <!-- 12:30–13:30 | lunch -->
-            <div class="event break lunch span-all" style="--start:750; --dur:60;">
+            <div class="event break span-all" style="--start:750; --dur:60;">
               <div class="ev-title">Lunch</div>
               <div class="ev-meta">12:30 – 01:30</div>
             </div>
 
-            <!-- 13:30–15:00 | three parallel sessions -->
-            <div class="event" data-track="WG 1" style="--start:810; --dur:90; --col:1;">
+            <!-- 13:30–15:00 | plenary -->
+
+            <div class="event" style="--start:810; --dur:90; --col:1;">
               <div class="ev-title">WG 1: Agriculture Technology (AgroTec WG)</div>
               <div class="ev-meta">01:30 – 03:00</div>
             </div>
-            <div class="event" data-track="WG 2" style="--start:810; --dur:90; --col:2;">
+            <div class="event" style="--start:810; --dur:90; --col:2;">
               <div class="ev-title">WG 2: Generative AI for Productivity (GenAI WG)</div>
               <div class="ev-meta">01:30 – 03:00</div>
             </div>
-            <div class="event" data-track="AGM" style="--start:810; --dur:90; --col:3;">
+            <div class="event" style="--start:810; --dur:90; --col:3;">
               <div class="ev-title">LEARN36 Annual General Meeting (AGM)</div>
               <div class="ev-meta">01:30 – 03:00</div>
             </div>
+            
+
 
             <!-- 15:00–15:30 | break -->
             <div class="event break span-all" style="--start:900; --dur:30;">
@@ -204,90 +210,137 @@
   </footer>
 
   <!-- Opening Ceremony Agenda Modal -->
+  
   <dialog id="oc-agenda" class="modal" aria-labelledby="oc-title">
     <div class="modal-card">
       <button class="modal-close" aria-label="Close" onclick="closeModal('oc-agenda')">×</button>
-
+  
       <div class="modal-kicker">Opening Ceremony</div>
       <h3 id="oc-title" class="modal-title">LEARN36 Meeting — Opening Ceremony</h3>
-
+  
+      <!-- quick meta row -->
       <div class="oc-grid">
-        <div class="oc-chip"><span class="oc-ico" aria-hidden="true">📅</span><div><div class="oc-label">Date</div><div class="oc-val">Friday, October 24, 2025</div></div></div>
-        <div class="oc-chip"><span class="oc-ico" aria-hidden="true">⏰</span><div><div class="oc-label">Time</div><div class="oc-val">09:00 AM – 10:30 AM</div></div></div>
-        <div class="oc-chip"><span class="oc-ico" aria-hidden="true">📍</span><div><div class="oc-label">Venue</div><div class="oc-val">Galle Face Hotel, Colombo</div></div></div>
+        <div class="oc-chip">
+          <span class="oc-ico" aria-hidden="true">📅</span>
+          <div>
+            <div class="oc-label">Date</div>
+            <div class="oc-val">Friday, October 24, 2025</div>
+          </div>
+        </div>
+        <div class="oc-chip">
+          <span class="oc-ico" aria-hidden="true">⏰</span>
+          <div>
+            <div class="oc-label">Time</div>
+            <div class="oc-val">09:00 AM – 10:30 AM</div>
+          </div>
+        </div>
+        <div class="oc-chip">
+          <span class="oc-ico" aria-hidden="true">📍</span>
+          <div>
+            <div class="oc-label">Venue</div>
+            <div class="oc-val">Galle Face Hotel, Colombo</div>
+          </div>
+        </div>
       </div>
-
+  
+      <!-- programme -->
       <div class="modal-body">
         <h4 class="oc-sub">Programme</h4>
         <ul class="prog">
-          <li><span class="t">08:30 – 09:00</span><span class="d">Registration of Participants</span></li>
-          <li><span class="t">09:00 – 09:05</span><span class="d">Arrival of Guests &amp; Lighting of the Oil Lamp</span></li>
-          <li><span class="t">09:05 – 09:10</span><span class="d">Introductory Video on LEARN</span></li>
-          <li><span class="t">09:10 – 09:20</span><span class="d">Welcome Address by the CEO, LEARN</span></li>
-          <li><span class="t">09:20 – 09:30</span><span class="d">Opening Remarks by the Chairman, LEARN</span></li>
-          <li><span class="t">09:30 – 09:45</span><span class="d">Address by the Chief Guest</span></li>
-          <li><span class="t">09:45 – 10:10</span><span class="d">Keynote — <b>Dr. Veerachai Tanpipat</b>, ThaiREN (Thailand)</span></li>
-          <li><span class="t">10:10 – 10:25</span><span class="d">“LEARN Today and Tomorrow” — CTO, LEARN</span></li>
-          <li><span class="t">10:25 – 10:30</span><span class="d">Vote of Thanks &amp; Group Photo</span></li>
+          <li>
+            <span class="t">08:30 – 09:00</span>
+            <span class="d">Registration of Participants</span>
+          </li>
+          <li>
+            <span class="t">09:00 – 09:05</span>
+            <span class="d">Arrival of Guests, Dignitaries &amp; Traditional Lighting of the Oil Lamp</span>
+          </li>
+          <li>
+            <span class="t">09:05 – 09:10</span>
+            <span class="d">Introductory Video on LEARN </span>
+          </li>
+          <li>
+            <span class="t">09:10 – 09:20</span>
+            <span class="d">Welcome Address by the CEO, LEARN</span>
+          </li>
+          <li>
+            <span class="t">09:20 – 09:30</span>
+            <span class="d">Opening Remarks by the Chairman, LEARN</span>
+          </li>
+          <li>
+            <span class="t">09:30 – 09:45</span>
+            <span class="d">Address by the Chief Guest </span>
+          </li>
+
+          <li>
+            <span class="t">09:45 – 10:10</span>
+            <span class="d">Keynote Address — <b>Dr. Veerachai Tanpipat</b>, ThaiREN (Thailand)</span>
+          </li>
+          <li>
+            <span class="t">10:10 – 10:25</span>
+            <span class="d">Presentation: <b>“LEARN Today and Tomorrow”</b> — Chief Technology Officer, LEARN</span>
+          </li>
+          <li>
+            <span class="t">10:25 – 10:30</span>
+            <span class="d">Vote of Thanks &amp; Group Photo Session</span>
+          </li>
         </ul>
       </div>
-
+  
       <div class="modal-footer">
         <button class="btn btn-outline" onclick="closeModal('oc-agenda')">Close</button>
       </div>
     </div>
   </dialog>
 
+
   <!-- Optional canvases if used elsewhere -->
   <canvas id="net-bg"></canvas>
   <canvas id="hero-net"></canvas>
 
   <!-- Scripts -->
+  <script src="assets/app.js"></script>
+
+  <!-- Hour labels generator (kept from your version) -->
   <script>
-    // Time labels
-    (function(){
-      document.querySelectorAll('.schedule-grid').forEach(grid => {
-        const start = +grid.dataset.start || 480;
-        const end   = +grid.dataset.end   || 1440;
-        const step  = +grid.dataset.labelStep || 60;
-        for (let t = start; t <= end; t += step){
-          const div = document.createElement('div');
-          div.className = 'time';
-          div.style.setProperty('--at', t);
-          div.textContent = toLabel(t);
-          grid.appendChild(div);
-        }
-      });
-      function toLabel(min){
-        const m = ((min % 1440) + 1440) % 1440;
-        const h24 = Math.floor(m/60), mm = String(m%60).padStart(2,'0');
-        const h12 = h24 % 12 === 0 ? 12 : h24 % 12;
-        const ampm = h24 < 12 ? 'AM' : 'PM';
-        return `${h12}:${mm} ${ampm}`;
+  (function(){
+    document.querySelectorAll('.schedule-grid').forEach(grid => {
+      const start = +grid.dataset.start || 480;
+      const end   = +grid.dataset.end   || 1440;
+      const step  = +grid.dataset.labelStep || 60;
+
+      for (let t = start; t <= end; t += step){
+        const div = document.createElement('div');
+        div.className = 'time';
+        div.style.setProperty('--at', t);
+        div.textContent = toLabel(t);
+        grid.appendChild(div);
       }
-    })();
+    });
 
-    // Tabs
-    function switchDay(which){
-      const d1 = document.getElementById('day1');
-      const d2 = document.getElementById('day2');
-      const t1 = document.getElementById('tabDay1');
-      const t2 = document.getElementById('tabDay2');
-      d1.style.display = (which==='day1') ? '' : 'none';
-      d2.style.display = (which==='day2') ? '' : 'none';
-      t1.classList.toggle('active', which==='day1');
-      t2.classList.toggle('active', which==='day2');
-      document.getElementById('dayDate').textContent =
-        (which==='day1') ? 'Thursday, October 23, 2025' : 'Friday, October 24, 2025';
+    function toLabel(min){
+      const m = ((min % 1440) + 1440) % 1440;
+      const h24 = Math.floor(m/60), mm = String(m%60).padStart(2,'0');
+      const h12 = h24 % 12 === 0 ? 12 : h24 % 12;
+      const ampm = h24 < 12 ? 'AM' : 'PM';
+      return `${h12}:${mm} ${ampm}`;
     }
-
-    // Modal helpers
-    function openModal(id){ const el = document.getElementById(id); if(el && !el.open) el.showModal(); }
-    function closeModal(id){ const el = document.getElementById(id); if(el && el.open) el.close(); }
-
-    // Footer year
-    document.getElementById('y').textContent = new Date().getFullYear();
+  })();
   </script>
+
+  <!-- Tabs fallback (already in app.js, but safe) -->
+  <script>
+  window.switchDay = window.switchDay || function(which){
+    document.getElementById('day1').style.display = (which==='day1') ? '' : 'none';
+    document.getElementById('day2').style.display = (which==='day2') ? '' : 'none';
+    document.getElementById('tabDay1').classList.toggle('active', which==='day1');
+    document.getElementById('tabDay2').classList.toggle('active', which==='day2');
+    document.getElementById('dayDate').textContent =
+      (which==='day1') ? 'Thursday, October 23, 2025' : 'Friday, October 24, 2025';
+  };
+  </script>
+
+  <!-- Footer year -->
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>
-
