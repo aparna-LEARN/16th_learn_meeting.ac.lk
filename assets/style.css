@@ -615,6 +615,34 @@ section.container > *:first-child{ margin-top:0; }
   .sr-track{ justify-content: center; display: flex; flex-wrap: nowrap; gap: 16px; }
 }
 
+/* Sponsors ribbon sizing */
+.sponsors-ribbon .sr-item {
+  display:flex; align-items:center; justify-content:center;
+  padding: 18px 22px;           /* roomy card padding */
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--ring);
+  min-width: clamp(220px, 26vw, 360px);
+}
+
+.sponsors-ribbon .sr-item img {
+  display:block;
+  max-height: 58px;             /* default logo height */
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: transform .2s ease;
+}
+
+.sponsors-ribbon .sr-item img.sr-big {
+  max-height: 78px;             /* bump just these ones */
+}
+
+/* optional: tiny hover lift for vibe */
+.sponsors-ribbon .sr-item:hover img { transform: translateY(-1px); }
+
+
 
 
 /* ===========================================================
