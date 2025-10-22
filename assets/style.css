@@ -524,6 +524,94 @@ section.container > *:first-child{ margin-top:0; }
   .s-badge{ width:66px; height:66px; border-radius:18px; }
 }
 
+
+
+
+/* ===========================================================
+   Our Sponsors — animated ribbon
+   =========================================================== */
+.sponsors-ribbon { padding-top: 10px; padding-bottom: 0; }
+.sponsors-ribbon .section-title { margin-bottom: 10px; }
+
+/* glassy card wrapper */
+.sr-wrap{
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  padding: 12px;                     /* inner breathing room */
+  background: linear-gradient(180deg,#fbfdff,#f7fbff);
+  border: 1px solid var(--ring);
+  box-shadow: var(--shadow);
+}
+
+/* soft brand-colored ambient glows */
+.sr-wrap::before,
+.sr-wrap::after{
+  content:"";
+  position:absolute; inset: -20%;
+  background:
+    radial-gradient(600px 280px at 12% 40%, rgba(56,189,248,.14), transparent 60%),
+    radial-gradient(520px 260px at 88% 60%, rgba(45,212,191,.14), transparent 60%);
+  filter: blur(12px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* subtle top/bottom mask for depth */
+.sr-mask{
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,255,255,0) 16% 84%, rgba(255,255,255,.8)),
+    radial-gradient(120% 40% at 50% 0%, rgba(10,46,99,.06), transparent 60%);
+  mix-blend-mode: lighten;
+}
+
+/* the moving track */
+.sr-track{
+  position: relative;
+  display: inline-flex;              /* width grows with content */
+  align-items: stretch;
+  gap: 16px;
+  z-index: 2;
+  will-change: transform;
+}
+
+/* each logo tile */
+.sr-item{
+  display: grid; place-items: center;
+  min-width: 180px;                  /* consistent width per tile */
+  height: 92px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid var(--ring);
+  box-shadow: 0 8px 22px rgba(2,6,23,.08), inset 0 0 0 1px rgba(255,255,255,.65);
+  transition: transform .15s ease, filter .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+.sr-item img{
+  max-height: 56px; width: auto; height: auto; display: block;
+  filter: grayscale(18%) opacity(.95);
+}
+
+/* hover: slight lift + restore brand colors */
+.sr-item:hover{ transform: translateY(-2px); box-shadow: 0 12px 28px rgba(2,6,23,.14); border-color:#dfe6f4; }
+.sr-item:hover img{ filter: none; }
+
+/* small screens */
+@media (max-width: 680px){
+  .sr-item{ min-width: 160px; height: 86px; }
+  .sr-item img{ max-height: 50px; }
+}
+
+.s-note{ margin: 10px 2px 0; font-size: 14px; color: var(--muted); }
+
+/* reduced motion: stop animation (JS also checks, double-safe) */
+@media (prefers-reduced-motion: reduce){
+  .sr-track{ transform: none !important; }
+}
+
+
 /* ===========================================================
    Carousel (scroll-snap + arrows + dots)
    =========================================================== */
